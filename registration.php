@@ -60,7 +60,7 @@ return true;
 <div class="container">
   <div class="row login-container column-seperation">  
         <div class="col-md-5 col-md-offset-1">
-          <h2>Sign in to CRM</h2>
+          <h2>Acceder a CRM Duramas</h2>
           <p>            <a href="login.php">Sign in Now!</a> for a webarch account,It's free and always will be..</p>
           <br>
 

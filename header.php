@@ -6,7 +6,7 @@
           <div class="iconset top-menu-toggle-white"></div>
           </a> </li>
       </ul>
-      <a href="dashboard.php" style="color:#FFF; font-size:24px; margin-top:20%;">CRM</a>
+      <a href="dashboard.php" style="color:#FFF; font-size:24px; margin-top:20%;">CRM | Duramas</a>
       <ul class="nav pull-right notifcation-center">
         <li class="dropdown" id="header_task_bar"> <a href="dashboard.php" class="dropdown-toggle active" data-toggle="">
           <div class="iconset top-home"></div>
@@ -25,9 +25,9 @@
             <div class="iconset top-settings-dark "></div>
             </a>
             <ul class="dropdown-menu  pull-right" role="menu" aria-labelledby="user-options">
-              <li><a href="profile.php"> My Account</a> </li>
+              <li><a href="profile.php"> Mi Cuenta</a> </li>
               <li class="divider"></li>
-              <li><a href="logout.php"><i class="fa fa-power-off"></i>&nbsp;&nbsp;Log Out</a></li>
+              <li><a href="logout.php"><i class="fa fa-power-off"></i>&nbsp;&nbsp;Salir</a></li>
             </ul>
           </li>
 

@@ -66,9 +66,9 @@ exit();
 <div class="container">
   <div class="row login-container column-seperation">  
         <div class="col-md-5 col-md-offset-1">
-          <h2>Sign in to CRM</h2>
+          <h2>Acceder a CRM Duramas</h2>
           <p>
-            <a href="registration.php">Sign up Now!</a> for a webarch account,It's free and always will be..</p>
+            <a href="registration.php">Registrate Ahora!</a> ...</p>
           <br>
 
 		   
@@ -89,7 +89,7 @@ exit();
           </div>
 		  <div class="row"> 
           <div class="form-group col-md-10">
-            <label class="form-label">Password</label>
+            <label class="form-label">Contraseña</label>
             <span class="help"></span>
             <div class="controls">
 				<div class="input-with-icon  right">                                       
@@ -101,7 +101,7 @@ exit();
           </div>
 		  <div class="row">
           <div class="control-group  col-md-10">
-            <div class="checkbox checkbox check-success"> <a href="forgot-password.php">Forgot Password </a>&nbsp;&nbsp;
+            <div class="checkbox checkbox check-success"> <a href="forgot-password.php">Olvido su Contraseña</a>&nbsp;&nbsp;
          </div>
           </div>
           </div>
