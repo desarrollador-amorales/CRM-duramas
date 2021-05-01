@@ -386,7 +386,7 @@ check_login();
                     <div class="panel-body">
                         <div id="morris-line-chart"></div>
                         <div class="text-right">
-                            <a href=manage-users.php>View Details <i class="fa fa-arrow-circle-right"></i></a>
+                            <a href=manage-users.php>Ver Asesores <i class="fa fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                 </div>

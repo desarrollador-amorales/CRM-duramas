@@ -59,7 +59,7 @@ if(isset($_POST['submit']))
     <div class="container">
         <div class="row login-container column-seperation">
             <div class="col-md-5 col-md-offset-1">
-                <h2>Acceder a CRM Duramas</h2>
+                <h2>Registrate a CRM Duramas</h2>
                 <p> <a href="login.php">Accede Ahora!</a> Si ya eres usuario de CRM Duramas..</p>
                 <br>
 

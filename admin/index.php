@@ -16,7 +16,7 @@ exit();
 }
 else
 {
-$_SESSION['action1']="*Invalid username or password";
+$_SESSION['action1']="*Usuario o Contraseña invalido";
 $extra="index.php";
 
 echo "<script>window.location.href='".$extra."'</script>";
@@ -51,19 +51,19 @@ exit();
     <div class="container">
         <div class="wrapper fadeInDown">
             <!--class="row login-container column-seperation"-->
-            <div class="col-md-5 col-md-offset-1">
+            <div class="col-md-12 col-md-offset-1">
                 <h1>CRM Admin Duramas</h1>
 
                 <br>
 
 
             </div>
-            <div class="col-md-5 "> <br>
+            <div class="col-md-6 "> <br>
                 <form id="login-form" class="login-form" action="" method="post">
                     <p style="color: #F00"><?php echo $_SESSION['action1'];?><?php echo $_SESSION['action1']="";?></p>
                     <div class="row">
                         <div class="form-group col-md-10">
-                            <label class="form-label">Username</label>
+                            <label class="form-label">Usuario</label>
                             <div class="controls">
                                 <div class="input-with-icon  right">
                                     <i class=""></i>
@@ -74,7 +74,7 @@ exit();
                     </div>
                     <div class="row">
                         <div class="form-group col-md-10">
-                            <label class="form-label">Password</label>
+                            <label class="form-label">Contraseña</label>
                             <span class="help"></span>
                             <div class="controls">
                                 <div class="input-with-icon  right">

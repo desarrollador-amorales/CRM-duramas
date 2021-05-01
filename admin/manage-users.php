@@ -9,7 +9,7 @@ check_login();
 <head>
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 <meta charset="utf-8" />
-<title>Admin | Manage Users</title>
+<title>Admin | Administracion de Usuarios</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <meta content="" name="description" />
 <meta content="" name="author" />
@@ -45,17 +45,10 @@ check_login();
             </div>
             <div class="clearfix"></div>
             <div class="content">
-                <ul class="breadcrumb">
-                    <li>
-                        <p>YOU ARE HERE</p>
-                    </li> 
-                    <li><a href="#" class="active">Manage Users</a>
 
-                    </li>
-                </ul>
                 <div class="page-title">	<i class="icon-custom-left"></i>
 
-                    	<h3>Manage Users </h3>	
+                    	<h3>Administracion de Usuarios</h3>	
                 </div>
              
                 <div class="row">
@@ -64,7 +57,7 @@ check_login();
                             <div class="col-md-12">
                                 <div class="grid simple ">
                                     <div class="grid-title no-border">
-                                        	<h4>All Users Details</h4>
+                                        	<h4>Detalles de Usuarios</h4>
                                         <div class="tools">	<a href="javascript:;" class="collapse"></a>
 											<a href="#grid-config" data-toggle="modal" class="config"></a>
 											<a href="javascript:;" class="reload"></a>
@@ -77,11 +70,11 @@ check_login();
                                                 <thead>
                                                     <tr>
                                                         <th>#</th>
-                                                        <th>Full Name</th>
+                                                        <th>Nombres</th>
                                                         <th>Email ID </th>
-                                                        <th>Contact No</th>
-                                                        <th>Registration Date</th>
-                                                        <th>Action</th>
+                                                        <th>No Celular</th>
+                                                        <th>Fecha de Registro</th>
+                                                        <th>Accion</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
