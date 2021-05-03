@@ -6,15 +6,65 @@ include("dbconnection.php");
 if(isset($_POST['update']))
 {
 $name=$_POST['name'];
-$altemail=$_POST['altemail'];
-$contact=$_POST['contact'];
-$address=$_POST['address'];
-$gender=$_POST['gender'];
-$userid=$_GET['id'];
-	$ret=mysqli_query($con,"update user set name='$name', alt_email='$altemail',mobile='$contact',gender='$gender',address='$address' where id='$userid'");
+$distribution=$_POST['reparto'];
+$warehouse_id=$_GET['id_warehouse_gen'];
+	$ret=mysqli_query($con,"update warehouse set name='$name', distribution='$distribution' where id_warehouse_gen='$warehouse_id'");
 	if($ret)
 	{
-	echo "<script>alert('Data Updated');</script>";	
+        ?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Admin | Administracion de Locales</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <link href="../assets/plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="../assets/plugins/boostrapv3/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/plugins/boostrapv3/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/plugins/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/css/animate.min.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/plugins/jquery-scrollbar/jquery.scrollbar.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/css/responsive.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/css/custom-icon-set.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <?php include("header.php");?>
+    <div class="page-container row">
+
+        <?php include("leftbar.php");?>
+
+        <div class="clearfix"></div>
+        <!-- END SIDEBAR MENU -->
+    </div>
+    </div>
+
+    <div class="page-content">
+        <h2>Alert Methods</h2>
+
+        <div class="alert alert-info" id="myAlert">
+            <a href="manage-warehouse.php" class="close"></a>
+            <strong>Local Actualizado Correctamente..!</strong>.
+        </div>
+    </div>
+
+    <script>
+    $(document).ready(function() {
+        $(".close").click(function() {
+            $("#myAlert").alert("close");
+        });
+    });
+    </script>
+
+</body>
+
+</html>
+
+<?php
 	}
 	}
 ?>
@@ -25,7 +75,7 @@ $userid=$_GET['id'];
 <head>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
     <meta charset="utf-8" />
-    <title>CRM | Editar Usuario </title>
+    <title>CRM | Editar Local </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta content="" name="description" />
     <meta content="" name="author" />
@@ -65,75 +115,29 @@ $userid=$_GET['id'];
         </div>
         <div class="clearfix"></div>
         <div class="content">
-            <div class="page-title"> <i> <a href="manage-users.php" class="icon-custom-left"></a> </i>
+            <div class="page-title"> <i> <a href="manage-warehouse.php" class="icon-custom-left"></a> </i>
 
-                <h3>Administracion de Usuarios</h3>
+                <h3>Administracion de Locales</h3>
             </div>
 
             <div class="page-title">
-                <?php $rt=mysqli_query($con,"select * from user where id='".$_GET['id']."'");
+                <?php $rt=mysqli_query($con,"select * from warehouse where id_warehouse_gen='".$_GET['id_warehouse_gen']."'");
 			  while($rw=mysqli_fetch_array($rt))
 			  {?>
-                <h3>Usuario: <?php echo $rw['name'];?> </h3>
+                <h3>Local: <?php echo $rw['name'];?> </h3>
 
                 <form name="muser" method="post" action="" enctype="multipart/form-data">
 
                     <table width="100%" border="0">
                         <tr>
-                            <td height="42">Nombres</td>
+                            <td height="42">Nombre</td>
                             <td><input type="text" name="name" id="name" value="<?php echo $rw['name'];?>"
                                     class="form-control"></td>
                         </tr>
                         <tr>
-                            <td height="42">Email Principal</td>
-                            <td><input type="text" name="email" id="email" value="<?php echo $rw['email'];?>"
-                                    class="form-control" readonly></td>
-                        </tr>
-                        <tr>
-                            <td height="42">Email Secundario</td>
-                            <td><input type="text" name="altemail" id="altemail" value="<?php echo $rw['alt_email'];?>"
+                            <td height="42">Reparto</td>
+                            <td><input type="text" name="reparto" id="reparto" value="<?php echo $rw['distribution'];?>"
                                     class="form-control"></td>
-                        </tr>
-                        <tr>
-                            <td height="42">Contact no.</td>
-                            <td><input type="text" name="contact" id="contact" value="<?php echo $rw['mobile'];?>"
-                                    class="form-control"></td>
-                        </tr>
-                        <tr>
-                            <td height="42">Genero</td>
-                            <td><select name="gender" class="form-control">
-                                    <option value="<?php echo $rw['gender'];?>">
-                                  <?php $a=$rw['gender'];
-                          if($a=='m')
-                          {
-                          echo "Masculino";
-                          }
-                            if($a=='f')
-                          {
-                          echo "Femenino";
-                          }
-                         
-                          
-                            if($a=='others')
-                          {
-                          echo "Otro";
-                          }
-                                                  
-                          ?> 
-                          </option>
-                                    <option value="">___________</option>
-                                    <option value="m">Masculino</option>
-                                    <option value="f">Femenino</option>
-                                    <option value="others">Otro</option>
-                                </select>
-
-                            </td>
-                        </tr>
-
-
-                        <tr>
-                            <td height="42">Direccion</td>
-                            <td><textarea name="address" cols="64" rows="4"><?php echo $rw['address'];?></textarea></td>
                         </tr>
                         <tr>
                             <td>&nbsp;</td>

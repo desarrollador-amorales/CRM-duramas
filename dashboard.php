@@ -85,7 +85,7 @@ include("dbconnection.php");
 				?>
                                 <div class="heading"> <span class="animate-number" data-value="<?php echo $num;?>"
                                         data-animation-duration="1200">0</span>| <a href="view-tickets.php"
-                                        style="color:#FFF"> View Tickets </a></div>
+                                        style="color:#FFF"> Solicitud </a></div>
 
                                 <div class="progress transparent progress-small no-radius">
                                     <div class="progress-bar progress-bar-white animate-progress-bar"
@@ -102,7 +102,7 @@ include("dbconnection.php");
                                         href="javascript:;" class="remove"></a> </div>
 
                                 <div class="heading"> <span class="fa fa-ticket"></span>
-                                    <a href="get-quote.php" style="color:#FFF">Get Quote</a>
+                                    <a href="get-quote.php" style="color:#FFF">Seguimiento</a>
                                 </div>
                                 <div class="progress transparent progress-small no-radius">
                                     <div class="progress-bar progress-bar-white animate-progress-bar"
@@ -119,7 +119,7 @@ include("dbconnection.php");
                                         href="javascript:;" class="remove"></a> </div>
 
                                 <div class="heading"> <span class="fa fa-user"></span>
-                                    <a href="profile.php" style="color:#FFF">My Profile</a>
+                                    <a href="profile.php" style="color:#FFF">Concretado</a>
                                 </div>
                                 <div class="progress transparent progress-white progress-small no-radius">
                                     <div class="progress-bar progress-bar-white animate-progress-bar"
@@ -137,7 +137,7 @@ include("dbconnection.php");
 
                                 <div class="row-fluid">
                                     <div class="heading"> <span class="fa fa-ticket"></span>
-                                        <a href="create-ticket.php" style="color:#FFF">Create </a>
+                                        <a href="create-ticket.php" style="color:#FFF">Cancelado </a>
                                     </div>
                                     <div class="progress transparent progress-white progress-small no-radius">
                                         <div class="progress-bar progress-bar-white animate-progress-bar"

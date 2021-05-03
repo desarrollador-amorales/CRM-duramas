@@ -4,13 +4,14 @@ include("dbconnection.php");
 include("checklogin.php");
 check_login();
 ?>
+
 <!DOCTYPE html>
 <html>
 
 <head>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
     <meta charset="utf-8" />
-    <title>Admin | Administracion de Usuarios</title>
+    <title>Admin | Administracion de Locales</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta content="" name="description" />
     <meta content="" name="author" />
@@ -50,16 +51,16 @@ check_login();
 
             <div class="page-title"> <i> <a href="home.php" class="icon-custom-left"></a> </i>
 
-                <h3>Administracion de Usuarios</h3>
+                <h3>Administracion de Locales</h3>
             </div>
 
             <div class="pull-right">
-            <a href="../registration-admin.php" class="btn btn-primary "><span class="fa fa-plus"></span> Añadir Usuario</a>
+                <a href="../registration.php" class="btn btn-primary "><span class="fa fa-plus"></span> Añadir Local</a>
                 <p></p>
                 <p></p>
             </div>
 
-                                           
+
 
             <div class="row">
                 <div class="col-md-12">
@@ -67,7 +68,7 @@ check_login();
                         <div class="col-md-12">
                             <div class="grid simple ">
                                 <div class="grid-title no-border">
-                                    <h4>Detalles de Usuarios</h4>
+                                    <h4>Detalles de Locales</h4>
                                     <div class="tools"> <a href="javascript:;" class="collapse"></a>
                                         <a href="#grid-config" data-toggle="modal" class="config"></a>
                                         <a href="javascript:;" class="reload"></a>
@@ -80,33 +81,36 @@ check_login();
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Nombres</th>
-                                                <th>Email ID </th>
-                                                <th>No Celular</th>
-                                                <th>Fecha de Registro</th>
+                                                <th>Nombre</th>
+                                                <th>Reparto</th>
                                                 <th>Accion</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php $ret=mysqli_query($con,"select * from user");
+                                            <?php $ret=mysqli_query($con,"select * from warehouse");
 												$cnt=1;
 												while($row=mysqli_fetch_array($ret))
 												{
-													$_SESSION['ids']=$row['id'];
+													$_SESSION['ids']=$row['id_warehouse_gen'];
 												?>
                                             <tr>
                                                 <td><?php echo $cnt;?></td>
                                                 <td><?php echo $row['name'];?></td>
-                                                <td><?php echo $row['email'];?></td>
-                                                <td><?php echo $row['mobile'];?></td>
-                                                <td><?php echo $row['posting_date'];?></td>
+                                                <td><?php echo $row['distribution'];?></td>
+
                                                 <td>
                                                     <form name="abc" action="" method="post">
-                                                        <a href="edit-user.php?id=<?php echo $row['id'];?>"
+                                                        <a href="edit-warehouse.php?id_warehouse_gen=<?php echo $row['id_warehouse_gen'];?>"
                                                             class="btn btn-primary btn-xs btn-mini">Editar</a>
 
-                                                        <a href="delete-user.php?id=<?php echo $row['id'];?>"
-                                                            class="btn btn-danger btn-xs btn-mini">Eliminar</a>
+                                                    
+                                                            <a href="delete-warehouse.php?id_warehouse_gen=<?php echo $row['id_warehouse_gen'];?>"
+                                                                class="btn btn-danger btn-xs btn-mini">Eliminar</a>
+
+                                                       <!-- <button type="submit" class="btn btn-danger btn-xs btn-mini"
+                                                            data-toggle="modal" data-target="#myModal"
+                                                            name="delete">Eliminar</button> -->
+
                                                     </form>
                                                 </td>
                                             </tr>

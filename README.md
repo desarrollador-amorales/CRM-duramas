@@ -1,3 +1,2 @@
 # CRM-duramas
-Desarrollo de CRM Duramas por completar
-test
+Desarrollo de CRM Duramas

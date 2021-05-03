@@ -33,9 +33,9 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
+          <!--<li class="nav-item">
             <a class="nav-link" href="registration.php">Registarse</a>
-          </li>
+          </li> -->
           <li class="nav-item">
             <a class="nav-link" href="login.php">Acceder</a>
           </li>
@@ -52,7 +52,7 @@
     <div class="masthead-content">
       <div class="container">
         <h1 class="masthead-heading mb-0">CRM Duramas</h1>
-        <a href="registration.php" class="btn btn-primary btn-xl rounded-pill mt-5">Registrarse</a>
+        <a href="login.php" class="btn btn-primary btn-xl rounded-pill mt-5">Acceder</a>
       </div>
     </div>
 <!--
