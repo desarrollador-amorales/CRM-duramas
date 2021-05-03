@@ -6,8 +6,8 @@
           <div class="iconset top-menu-toggle-white"></div>
           </a> </li>
       </ul>
-      <a href="home.php" style="color:#FFF; font-size:24px; padding-top:15px;"> CRM | Admin</a>
-      <ul class="nav pull-right notifcation-center">
+      <a  href="home.php" style="color:#FFF; font-size:24px; padding: 10px 40px; "> CRM | Admin</a>
+    <ul class="nav pull-left notifcation-center">
         
       
       </ul>
@@ -27,7 +27,7 @@
             </a>
             <ul class="dropdown-menu  pull-right" role="menu" aria-labelledby="user-options">
               <li class="divider"></li>
-              <li><a href="logout.php"><i class="fa fa-power-off"></i>&nbsp;&nbsp;Log Out</a></li>
+              <li><a href="logout.php"><i class="fa fa-power-off"></i>&nbsp;&nbsp;Cerrar Sesion</a></li>
             </ul>
           </li>
          
