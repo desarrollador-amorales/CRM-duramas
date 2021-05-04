@@ -47,11 +47,10 @@ exit();
 
 </head>
 
-<body>
-    <div class="container">
-        <div class="wrapper fadeInDown">
-            <!--class="row login-container column-seperation"-->
-            <div class="col-md-12 col-md-offset-1">
+<body class="error-body no-top">
+<div class="container">
+        <div class="row login-container column-seperation">
+            <div class="col-md-5 col-md-offset-1">
                 <h1>CRM Admin Duramas</h1>
 
                 <br>

@@ -73,7 +73,7 @@ include("dbconnection.php");
         <div class="clearfix"></div>
         <div class="content">
             <div class="page-title">
-                <h3>Dashboard</h3>
+                <h3>Escritorio</h3>
                 <div class="row 2col">
                     <div class="col-md-3 col-sm-6 spacing-bottom-sm spacing-bottom">
                         <div class="tiles blue added-margin">

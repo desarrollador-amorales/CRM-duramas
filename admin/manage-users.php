@@ -54,7 +54,7 @@ check_login();
             </div>
 
             <div class="pull-right">
-            <a href="../registration-admin.php" class="btn btn-primary "><span class="fa fa-plus"></span> Añadir Usuario</a>
+            <a href="registration-admin.php" class="btn btn-primary "><span class="fa fa-plus"></span> Añadir Usuario</a>
                 <p></p>
                 <p></p>
             </div>
@@ -83,6 +83,7 @@ check_login();
                                                 <th>Nombres</th>
                                                 <th>Email ID </th>
                                                 <th>No Celular</th>
+                                                <th>Ciudad</th>
                                                 <th>Fecha de Registro</th>
                                                 <th>Accion</th>
                                             </tr>
@@ -99,6 +100,7 @@ check_login();
                                                 <td><?php echo $row['name'];?></td>
                                                 <td><?php echo $row['email'];?></td>
                                                 <td><?php echo $row['mobile'];?></td>
+                                                <td><?php echo $row['city_warehouse'];?></td>
                                                 <td><?php echo $row['posting_date'];?></td>
                                                 <td>
                                                     <form name="abc" action="" method="post">

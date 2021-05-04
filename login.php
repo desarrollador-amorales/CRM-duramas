@@ -8,30 +8,30 @@ $ret=mysqli_query($con,"SELECT * FROM user WHERE email='".$_POST['email']."' and
 $num=mysqli_fetch_array($ret);
 if($num>0)
 {
-$_SESSION['login']=$_POST['email'];
-$_SESSION['id']=$num['id'];
-$_SESSION['name']=$num['name'];
-$val3 =date("Y/m/d");
-date_default_timezone_set("Asia/Calcutta");
-$time=date("h:i:sa");
-$tim = $time;
-$ip_address=$_SERVER['REMOTE_ADDR'];
-$geopluginURL='http://www.geoplugin.net/php.gp?ip='.$ip_address;
-$addrDetailsArr = unserialize(file_get_contents($geopluginURL)); 
-$city = $addrDetailsArr['geoplugin_city']; 
-$country = $addrDetailsArr['geoplugin_countryName'];
-ob_start();
-system('ipconfig /all');
-$mycom=ob_get_contents();
-ob_clean();
-$findme = "Physical";
-$pmac = strpos($mycom, $findme);
-$mac=substr($mycom,($pmac+36),17);
-$ret=mysqli_query($con,"insert into usercheck(logindate,logintime,user_id,username,email,ip,mac,city,country)values('".$val3."','".$tim."','".$_SESSION['id']."','".$_SESSION['name']."','".$_SESSION['login']."','$ip_address','$mac','$city','$country')");
+    $_SESSION['login']=$_POST['email'];
+    $_SESSION['id']=$num['id'];
+    $_SESSION['name']=$num['name'];
+    $val3 =date("Y/m/d");
+    date_default_timezone_set("America/Guayaquil");
+    $time=date("h:i:sa");
+    $tim = $time;
+    $ip_address=$_SERVER['REMOTE_ADDR'];
+    $geopluginURL='http://www.geoplugin.net/php.gp?ip='.$ip_address;
+    $addrDetailsArr = unserialize(file_get_contents($geopluginURL)); 
+    $city = $addrDetailsArr['geoplugin_city']; 
+    $country = $addrDetailsArr['geoplugin_countryName'];
+    ob_start();
+    system('ipconfig /all');
+    $mycom=ob_get_contents();
+    ob_clean();
+    $findme = "Physical";
+    $pmac = strpos($mycom, $findme);
+    $mac=substr($mycom,($pmac+36),17);
+    $ret=mysqli_query($con,"insert into usercheck(logindate,logintime,user_id,username,email,ip,mac,city,country)values('".$val3."','".$tim."','".$_SESSION['id']."','".$_SESSION['name']."','".$_SESSION['login']."','$ip_address','$mac','$city','$country')");
 
-$extra="dashboard.php";
-echo "<script>window.location.href='".$extra."'</script>";
-exit();
+    $extra="dashboard.php";
+    echo "<script>window.location.href='".$extra."'</script>";
+    exit();
 }
 else
 {
@@ -69,9 +69,9 @@ exit();
         <div class="row login-container column-seperation">
             <div class="col-md-5 col-md-offset-1">
                 <h2>Acceder a CRM Duramas</h2>
-                <p>
+                <!--<p>
                     <a href="registration.php">Registrate Ahora!</a> ...
-                </p>
+                </p>-->
                 <br>
 
 
@@ -106,9 +106,9 @@ exit();
                     </div>
                     <div class="row">
                         <div class="control-group  col-md-10">
-                            <div class="checkbox checkbox check-success"> <a href="forgot-password.php">Olvido su
+                            <!--<div class="checkbox checkbox check-success"> <a href="forgot-password.php">Olvido su
                                     Contraseña</a>&nbsp;&nbsp;
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                     <div class="row">

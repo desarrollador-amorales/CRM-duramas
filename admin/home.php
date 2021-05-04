@@ -242,7 +242,8 @@ check_login();
             <div class="col-lg-12" style="min-height:280px;">
                 <div class="panel panel-red">
                     <div class="panel-heading">
-                        <h3 class="panel-title"><i class="fa fa-long-arrow-right"></i> Visita de todos los Asesores </h3>
+                        <h3 class="panel-title"><i class="fa fa-long-arrow-right"></i> Visita de todos los Asesores
+                        </h3>
 
                         <script type="text/javascript">
                         var visitorsCount = [];
@@ -393,7 +394,7 @@ check_login();
             </div>
 
         </div>
-	
+
 
         <!-- END DASHBOARD CHART -->
 

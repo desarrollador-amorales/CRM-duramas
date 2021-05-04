@@ -21,6 +21,7 @@ $warehouse_id=$_GET['id_warehouse_gen'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta content="" name="description" />
     <meta content="" name="author" />
+    
     <link href="../assets/plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="../assets/plugins/boostrapv3/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="../assets/plugins/boostrapv3/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
@@ -79,6 +80,7 @@ $warehouse_id=$_GET['id_warehouse_gen'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta content="" name="description" />
     <meta content="" name="author" />
+    
     <link href="../assets/plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="../assets/plugins/boostrapv3/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="../assets/plugins/boostrapv3/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
@@ -117,7 +119,7 @@ $warehouse_id=$_GET['id_warehouse_gen'];
         <div class="content">
             <div class="page-title"> <i> <a href="manage-warehouse.php" class="icon-custom-left"></a> </i>
 
-                <h3>Administracion de Locales</h3>
+                <h3>Editar Local</h3>
             </div>
 
             <div class="page-title">
@@ -136,8 +138,26 @@ $warehouse_id=$_GET['id_warehouse_gen'];
                         </tr>
                         <tr>
                             <td height="42">Reparto</td>
-                            <td><input type="text" name="reparto" id="reparto" value="<?php echo $rw['distribution'];?>"
-                                    class="form-control"></td>
+                            <td><select type="text" name="reparto" id="reparto" class="form-control">
+                                    <option value="<?php echo $rw['distribution'];?>">
+                                        <?php $a=$rw['distribution'];
+                                            if($a=='Naipe')
+                                            {
+                                            echo "Naipe";
+                                            }
+                                                if($a=='Shark Tank')
+                                            {
+                                            echo "Shark Tank";
+                                            }                    
+                                    ?>
+                                    </option>
+                                    <option value="">___________</option>
+                                    <option value="Naipe">Naipe</option>
+                                    <option value="Shark Tank">Shark Tank</option>
+
+                                </select>
+
+                            </td>
                         </tr>
                         <tr>
                             <td>&nbsp;</td>

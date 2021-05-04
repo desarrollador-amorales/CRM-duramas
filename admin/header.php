@@ -6,7 +6,7 @@
           <div class="iconset top-menu-toggle-white"></div>
           </a> </li>
       </ul>
-      <a  href="home.php" style="color:#FFF; font-size:24px; padding: 10px 40px; "> CRM | Admin</a>
+      <a  href="home.php" style="color:#FFF; font-size:24px; padding: 10px 30px; "> CRM | Admin</a>
     <ul class="nav pull-left notifcation-center">
         
       

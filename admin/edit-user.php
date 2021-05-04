@@ -10,13 +10,68 @@ $altemail=$_POST['altemail'];
 $contact=$_POST['contact'];
 $address=$_POST['address'];
 $gender=$_POST['gender'];
+$city=$_POST['city'];
 $userid=$_GET['id'];
-	$ret=mysqli_query($con,"update user set name='$name', alt_email='$altemail',mobile='$contact',gender='$gender',address='$address' where id='$userid'");
+	$ret=mysqli_query($con,"update user set name='$name', alt_email='$altemail',mobile='$contact',gender='$gender',address='$address', city_warehouse='$city' where id='$userid'");
 	if($ret)
-	{
-	echo "<script>alert('Data Updated');</script>";	
-	}
-	}
+  {
+    ?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Admin | Administracion de Usuarios</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+
+    <link href="../assets/plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="../assets/plugins/boostrapv3/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/plugins/boostrapv3/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/plugins/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/css/animate.min.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/plugins/jquery-scrollbar/jquery.scrollbar.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/css/responsive.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/css/custom-icon-set.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <?php include("header.php");?>
+    <div class="page-container row">
+
+        <?php include("leftbar.php");?>
+
+        <div class="clearfix"></div>
+        <!-- END SIDEBAR MENU -->
+    </div>
+    </div>
+
+    <div class="page-content">
+        <h2>Alert Methods</h2>
+
+        <div class="alert alert-info" id="myAlert">
+            <a href="manage-users.php" class="close"></a>
+            <strong>Usuario Actualizado Correctamente..!</strong>.
+        </div>
+    </div>
+
+    <script>
+    $(document).ready(function() {
+        $(".close").click(function() {
+            $("#myAlert").alert("close");
+        });
+    });
+    </script>
+
+</body>
+
+</html>
+
+<?php
+}
+}
 ?>
 
 <!DOCTYPE html>
@@ -67,7 +122,7 @@ $userid=$_GET['id'];
         <div class="content">
             <div class="page-title"> <i> <a href="manage-users.php" class="icon-custom-left"></a> </i>
 
-                <h3>Administracion de Usuarios</h3>
+                <h3>Editar Usuario</h3>
             </div>
 
             <div class="page-title">
@@ -103,7 +158,7 @@ $userid=$_GET['id'];
                             <td height="42">Genero</td>
                             <td><select name="gender" class="form-control">
                                     <option value="<?php echo $rw['gender'];?>">
-                                  <?php $a=$rw['gender'];
+                                        <?php $a=$rw['gender'];
                           if($a=='m')
                           {
                           echo "Masculino";
@@ -119,12 +174,30 @@ $userid=$_GET['id'];
                           echo "Otro";
                           }
                                                   
-                          ?> 
-                          </option>
+                          ?>
+                                    </option>
                                     <option value="">___________</option>
                                     <option value="m">Masculino</option>
                                     <option value="f">Femenino</option>
                                     <option value="others">Otro</option>
+                                </select>
+
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td height="42">Ciudad</td>
+                            <td><select name="city" class="form-control">
+                                    <option value="<?php echo $rw['city_warehouse'];?>"><?php echo $rw['city_warehouse'];?></option>
+                                    <option value="">____________________________________</option>
+                                    <?php 
+                                    $rt=mysqli_query($con,"select * from warehouse where active = 1");
+                                    
+                                    while($almacen= mysqli_fetch_array($rt)) {?>
+                                    <option value="<?php echo $almacen['name'];?>"> 
+                                        <?php echo $almacen['name'];?>
+                                    </option>
+                                    <?php }?>
                                 </select>
 
                             </td>
