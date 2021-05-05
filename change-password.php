@@ -11,12 +11,12 @@ $num=mysqli_fetch_array($sql);
 if($num>0)
 {
  $con=mysqli_query($con,"update  user set password='".$_POST['newpass']."' where email='".$_SESSION['login']."'");
-$_SESSION['msg1']="Password Changed Successfully !!";
+$_SESSION['msg1']="Se cambió la contraseña con exito !!";
 //header('location:user.php');
 }
 else
 {
-$_SESSION['msg1']="Old Password not match !!";
+$_SESSION['msg1']="Su contraseña actual no coincide !!";
 }
 }
 ?>
@@ -27,7 +27,7 @@ $_SESSION['msg1']="Old Password not match !!";
 <head>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
     <meta charset="utf-8" />
-    <title>CRM | Change Password</title>
+    <title>CRM | Cambiar Contraseña</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta content="" name="description" />
     <meta content="" name="author" />
@@ -44,27 +44,27 @@ $_SESSION['msg1']="Old Password not match !!";
     <script language="javascript" type="text/javascript">
     function valid() {
         if (document.form1.oldpass.value == "") {
-            alert(" Old Password Field Empty !!");
+            alert(" Debe llenar el campo: Contraseña Actual !!");
             document.form1.oldpass.focus();
             return false;
         } else if (document.form1.newpass.value == "") {
-            alert(" New Password Field Empty !!");
+            alert(" Debe llenar el campo: Nueva Contraseña !!");
             document.form1.newpass.focus();
             return false;
         } else if (document.form1.confirmpassword.value == "") {
-            alert(" Re-Type Password Field Empty !!");
+            alert(" Debe llenar el campo: Confirmar Contraseña !!");
             document.form1.confirmpassword.focus();
             return false;
         } else if (document.form1.newpass.value.length < 6) {
-            alert(" Password Field length must be atleast of 6 characters !!");
+            alert(" Campo Nueva Contraseña debe al menos tener 6 caracteres !!");
             document.form1.newpass.focus();
             return false;
         } else if (document.form1.confirmpassword.value.length < 6) {
-            alert(" Re-Type Password Field less than 6 characters !!");
+            alert(" Campo Confirmar Contraseña debe al menos tener 6 caracteres !!");
             document.form1.confirmpassword.focus();
             return false;
         } else if (document.form1.newpass.value != document.form1.confirmpassword.value) {
-            alert("Password and Re-Type Password Field do not match  !!");
+            alert("Nueva Contraseña y Confirmar Contraseña no coincide  !!");
             document.form1.newpass.focus();
             return false;
         }

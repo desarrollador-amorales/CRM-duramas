@@ -11,7 +11,7 @@ if(isset($_POST['submit']))
 	$gender=$_POST['gender'];
     $city=$_POST['city'];
 
-    $values = $_POST['city'];
+    $values_city = implode(', ',$_POST['city']);
     $rol=$_POST['rol'];
 	$query=mysqli_query($con,"select email from user where email='$email'");
 	$num=mysqli_fetch_array($query);
@@ -23,18 +23,16 @@ if(isset($_POST['submit']))
 	else
 	{
 
-        
-        
-        for ($i=0;$i<count($values);$i++)    
+    mysqli_query($con,"insert into user(name,email,password,mobile,gender,city_warehouse,rol) values('$name','$email','$password','$mobile','$gender','$values_city','$rol')");
+    $id_user= mysqli_insert_id($con);
+
+    for ($i=0;$i<count($city);$i++)    
             {     
-            echo "<br> Ciudad " . $i . ": " . $values[$i];    
-            } 
-       // foreach ($values as $a){
-         //   echo $a;
-       // }
-    //mysqli_query($con,"insert into user(name,email,password,mobile,gender,city_warehouse,rol) values('$name','$email','$password','$mobile','$gender','$city','$rol')");
-    //echo "<script>alert('Registro exitoso !!.');</script>";  
-    //echo "<script>window.location.href='manage-users.php'</script>";
+            mysqli_query($con,"insert into user_warehouse(id_user,name_warehouse) values('$id_user','$city[$i]')");
+            }
+    
+    echo "<script>alert('Registro exitoso !!.');</script>";  
+    echo "<script>window.location.href='manage-users.php'</script>";
 }
 	}
 ?>
@@ -48,6 +46,7 @@ if(isset($_POST['submit']))
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta content="" name="description" />
     <meta content="" name="author" />
+
     <link href="../assets/plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="../assets/plugins/boostrapv3/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="../assets/plugins/boostrapv3/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
@@ -58,9 +57,12 @@ if(isset($_POST['submit']))
     <link href="../assets/css/custom-icon-set.css" rel="stylesheet" type="text/css" />
 
 
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha256-aAr2Zpq8MZ+YA/D6JtRD3xtrwpEz2IqOS+pWD/7XKIw=" crossorigin="anonymous" /> 
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha256-OFRAJNoaD8L3Br5lglV7VyLRf0itmoBzWUoM+Sji4/8=" crossorigin="anonymous"></script>-->
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha256-aAr2Zpq8MZ+YA/D6JtRD3xtrwpEz2IqOS+pWD/7XKIw=" crossorigin="anonymous" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha256-OFRAJNoaD8L3Br5lglV7VyLRf0itmoBzWUoM+Sji4/8=" crossorigin="anonymous"></script>
+    <!-- script para la seleccion multiple-->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
@@ -74,11 +76,9 @@ if(isset($_POST['submit']))
         }
         return true;
     }
-    </script>
 
-    <script type="text/javascript">
     $(document).ready(function() {
-        $('.js-example-basic-multiple').select2();
+        $('.citySelect').select2();
     });
     </script>
 
@@ -109,7 +109,7 @@ if(isset($_POST['submit']))
                     </div>
                     <div class="row">
                         <div class="form-group col-md-10">
-                            <label class="form-label">Email id</label>
+                            <label class="form-label">Email</label>
                             <div class="controls">
                                 <div class="input-with-icon  right">
                                     <input type="email" name="email" id="email" class="form-control" required="true">
@@ -160,9 +160,8 @@ if(isset($_POST['submit']))
                             <span class="help"></span>
                             <div class="controls">
                                 <div class="input-with-icon  right">
-                                    <select class="js-example-basic-multiple related-post form-control" multiple="multiple" name=" city[]"
+                                    <select class="citySelect form-control" multiple id="selectCity" name="city[]"
                                         required>
-                                        <option value="">Seleccione</option>
                                         <?php 
                                     $rt=mysqli_query($con,"select * from warehouse where active = 1");
                                     
@@ -209,6 +208,7 @@ if(isset($_POST['submit']))
                             </div>
                         </div>
                     </div>
+
                     <div class="row">
                         <div class="col-md-10">
                             <input class="btn btn-primary btn-cons pull-right" name="submit" value="Registrarse"
@@ -221,11 +221,13 @@ if(isset($_POST['submit']))
             </div>
         </div>
     </div>
-    <script src="../assets/plugins/jquery-1.8.3.min.js" type="text/javascript"></script>
+
+
+    <!-- <script src="../assets/plugins/jquery-1.8.3.min.js" type="text/javascript"></script>
     <script src="../assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="../assets/plugins/pace/pace.min.js" type="text/javascript"></script>
     <script src="../assets/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
-    <script src="../assets/js/login.js" type="text/javascript"></script>
+    <script src="../assets/js/login.js" type="text/javascript"></script> -->
 
 </body>
 

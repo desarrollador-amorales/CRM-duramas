@@ -10,9 +10,16 @@ $altemail=$_POST['altemail'];
 $contact=$_POST['contact'];
 $address=$_POST['address'];
 $gender=$_POST['gender'];
-$city=$_POST['city'];
+$city=implode(', ',$_POST['city']);
+$city_values= $_POST['city'];
 $userid=$_GET['id'];
+
 	$ret=mysqli_query($con,"update user set name='$name', alt_email='$altemail',mobile='$contact',gender='$gender',address='$address', city_warehouse='$city' where id='$userid'");
+  mysqli_query($con,"delete from user_warehouse where id_user='$userid'");
+  for ($i=0;$i<count($city_values);$i++)    
+    {     
+    mysqli_query($con,"insert into user_warehouse(id_user,name_warehouse) values('$userid','$city_values[$i]')");
+    }
 	if($ret)
   {
     ?>
@@ -93,6 +100,17 @@ $userid=$_GET['id'];
     <link href="../assets/css/style.css" rel="stylesheet" type="text/css" />
     <link href="../assets/css/responsive.css" rel="stylesheet" type="text/css" />
     <link href="../assets/css/custom-icon-set.css" rel="stylesheet" type="text/css" />
+
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $('.cityEditSelect').select2();
+    });
+    </script>
 </head>
 
 <body class="">
@@ -187,24 +205,40 @@ $userid=$_GET['id'];
 
                         <tr>
                             <td height="42">Ciudad</td>
-                            <td><select name="city" class="form-control">
-                                    <option value="<?php echo $rw['city_warehouse'];?>"><?php echo $rw['city_warehouse'];?></option>
-                                    <option value="">____________________________________</option>
+
+                            <?php
+                                  if (isset($_GET['id'])){
+                                    $user_id = $_GET['id'];
+                                    $user_city = mysqli_query($con,"select name_warehouse from user_warehouse where id_user= '$user_id'");
+                                    $user_city_array = [];
+
+                                    foreach($user_city as $name_warehouse){
+                                     // echo ' // '.$name_warehouse['name_warehouse']; ver que locales tiene asignado
+                                      $user_city_array[]= $name_warehouse['name_warehouse'];
+                                    }
+                                  }
+                              ?>
+
+                            <td><select multiple name="city[]" class="cityEditSelect form-control" required>
                                     <?php 
                                     $rt=mysqli_query($con,"select * from warehouse where active = 1");
                                     
                                     while($almacen= mysqli_fetch_array($rt)) {?>
-                                    <option value="<?php echo $almacen['name'];?>"> 
+
+                                    <option value="<?php echo $almacen['name'];?>"
+                                        <?php echo in_array($almacen['name'],$user_city_array) ? 'selected':''?>>
                                         <?php echo $almacen['name'];?>
                                     </option>
                                     <?php }?>
                                 </select>
 
                             </td>
-                        </tr>
 
+                        </tr>
+                        
 
                         <tr>
+                        <br>
                             <td height="42">Direccion</td>
                             <td><textarea name="address" cols="64" rows="4"><?php echo $rw['address'];?></textarea></td>
                         </tr>
@@ -226,8 +260,8 @@ $userid=$_GET['id'];
     </div>
     </div>
     </div>
-    <script src="../assets/plugins/jquery-1.8.3.min.js" type="text/javascript"></script>
-    <script src="../assets/plugins/jquery-ui/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
+    <!--<script src="../assets/plugins/jquery-1.8.3.min.js" type="text/javascript"></script>
+    <script src="../assets/plugins/jquery-ui/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script> -->
     <script src="../assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="../assets/plugins/breakpoints.js" type="text/javascript"></script>
     <script src="../assets/plugins/jquery-unveil/jquery.unveil.min.js" type="text/javascript"></script>

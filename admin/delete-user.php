@@ -7,6 +7,7 @@ if(isset($_GET['id']))
 {
 $userid=$_GET['id'];
 	$ret=mysqli_query($con,"delete from user where id='$userid'");
+    mysqli_query($con,"delete from user_warehouse where id_user='$userid'");
 	if($ret)
     {
         ?>

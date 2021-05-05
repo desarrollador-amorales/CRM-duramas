@@ -29,6 +29,8 @@ if($num>0)
     $mac=substr($mycom,($pmac+36),17);
     $ret=mysqli_query($con,"insert into usercheck(logindate,logintime,user_id,username,email,ip,mac,city,country)values('".$val3."','".$tim."','".$_SESSION['id']."','".$_SESSION['name']."','".$_SESSION['login']."','$ip_address','$mac','$city','$country')");
 
+    
+
     $extra="dashboard.php";
     echo "<script>window.location.href='".$extra."'</script>";
     exit();
