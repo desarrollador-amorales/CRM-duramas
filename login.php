@@ -4,7 +4,7 @@ error_reporting(0);
 include("dbconnection.php");
 if(isset($_POST['login']))
 {
-$ret=mysqli_query($con,"SELECT * FROM user WHERE email='".$_POST['email']."' and password='".$_POST['password']."'");
+$ret=mysqli_query($con,"SELECT * FROM user WHERE email='".$_POST['email']."' and password='".$_POST['password']."'and status = 1");
 $num=mysqli_fetch_array($ret);
 if($num>0)
 {
@@ -28,8 +28,77 @@ if($num>0)
     $pmac = strpos($mycom, $findme);
     $mac=substr($mycom,($pmac+36),17);
     $ret=mysqli_query($con,"insert into usercheck(logindate,logintime,user_id,username,email,ip,mac,city,country)values('".$val3."','".$tim."','".$_SESSION['id']."','".$_SESSION['name']."','".$_SESSION['login']."','$ip_address','$mac','$city','$country')");
-
     
+    //empieza la distribucion de los leads pendientes a los asesores y su actualizacion
+    $name_warehouse_user=mysqli_query($con,"SELECT name_warehouse FROM user_warehouse where id_user = '".$num['id']."' order by name_warehouse");
+    //echo 'contador de ciudades'.$name_warehouse_user->num_rows;
+    //echo "<br>";
+
+     
+      while($city_user=mysqli_fetch_array($name_warehouse_user)){
+       // echo"<br>";  
+        //echo '<h3>'.$city_user['name_warehouse'].'</h3>';
+        //echo"<br>";
+
+          $list_lead=mysqli_query($con,"SELECT * FROM lead where status = 'P' and city_warehouse= '".$city_user['name_warehouse']."'");          
+          $row_cnt_leads =$list_lead->num_rows;
+
+          //echo 'contador de leads-->'.$row_cnt_leads;
+          //echo "<br>";
+          //echo "<br>";
+
+         $contUser=0;
+         $contLead=0;
+          while($lead= mysqli_fetch_array($list_lead)){
+            $contUserLoop=0;
+
+            //if ($contLead == 0) {
+                $list_users=mysqli_query($con, "SELECT u.email, u.name, u.id FROM user_warehouse uw, user u where u.id=uw.id_user and uw.name_warehouse='".$city_user['name_warehouse']."' and u.status = 1 and uw.last_assignment != 1 order by uw.last_assignment asc");
+                $row_cnt_users = $list_users->num_rows;
+                //mysqli_query($con,"update user_warehouse set last_assignment = '0' where name_warehouse='".$city_user['name_warehouse']."'");
+            //}
+            
+            while($user= mysqli_fetch_array($list_users)){
+
+                if($contUserLoop == $contUser){
+                    //asignar y actualizar a la tabla de leads
+                   // echo 'El cliente '.$lead['name_lead'].' fue asignado a el usuario '.$user['name'];                   
+                    //mysqli_query($con,"update lead set status='A' where id_lead_gen='".$lead['id_lead_gen']."'");
+                    //echo "<br>";
+                    break;
+               }
+            
+                $contUserLoop+=1;
+        
+                continue;  
+                
+            }
+            $contUser+=1;
+            $contLead+=1;
+
+            if($contUser == $row_cnt_users){
+                //echo "<br>";
+                //echo 'pasa por aqui---- ultimo y actualiza';
+                //echo "<br>";
+               mysqli_query($con,"update user_warehouse set last_assignment = '0' where name_warehouse='".$city_user['name_warehouse']."'");
+               $contUser = 0;
+            }
+
+            if($contLead == $row_cnt_leads ){
+                //cuando el contador de leads sea el mismo al de su tamaño de la lista de leads
+                //actualizaremos el ultimo asignado en la tabla user
+                //echo "<br>";
+                //echo'ultimo asesor '.$user['name'].' con id = '.$user['id'].' asignado en el local '.$city_user['name_warehouse'].' contador-->'.$contLead;
+                
+                mysqli_query($con,"update user_warehouse set last_assignment = '1' where id_user='".$user['id']."' and name_warehouse='".$city_user['name_warehouse']."'");
+                //echo "<br>";
+                
+
+            }          
+
+        }
+
+      }
 
     $extra="dashboard.php";
     echo "<script>window.location.href='".$extra."'</script>";
