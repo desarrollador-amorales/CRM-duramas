@@ -99,7 +99,7 @@ $_SESSION['msg1']="Su contraseña actual no coincide !!";
         <div class="clearfix"></div>
         <div class="content">
             <div class="page-title">
-                <h3>Change Password</h3>
+                <h3>Cambiar Contraseña</h3>
                 <div class="row">
                     <div class="col-md-12">
 
@@ -111,7 +111,7 @@ $_SESSION['msg1']="Su contraseña actual no coincide !!";
                                     <p align="center" style="color:#FF0000">
                                         <?php echo $_SESSION['msg1'];?><?php echo $_SESSION['msg1']="";?></p>
                                     <div class="form-group">
-                                        <label class="col-md-3 col-xs-12 control-label">Current Password</label>
+                                        <label class="col-md-3 col-xs-12 control-label">Contraseña Actual</label>
                                         <div class="col-md-6 col-xs-12">
                                             <div class="input-group">
                                                 <span class="input-group-addon"><span
@@ -125,7 +125,7 @@ $_SESSION['msg1']="Su contraseña actual no coincide !!";
 
 
                                     <div class="form-group">
-                                        <label class="col-md-3 col-xs-12 control-label">New Password</label>
+                                        <label class="col-md-3 col-xs-12 control-label">Nueva Contraseña</label>
                                         <div class="col-md-6 col-xs-12">
                                             <div class="input-group">
                                                 <span class="input-group-addon"><span
@@ -136,7 +136,7 @@ $_SESSION['msg1']="Su contraseña actual no coincide !!";
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-3 col-xs-12 control-label">Confirm Password</label>
+                                        <label class="col-md-3 col-xs-12 control-label">Confirmar Contraseña</label>
                                         <div class="col-md-6 col-xs-12">
                                             <div class="input-group">
                                                 <span class="input-group-addon"><span
@@ -148,9 +148,10 @@ $_SESSION['msg1']="Su contraseña actual no coincide !!";
                                     </div>
                                 </div>
                                 <div class="panel-footer">
-                                    <button class="btn btn-default">Clear Form</button>
+                                    <!--<button class="btn btn-default">Clear Form</button>
                                     <input type="submit" value="Change" name="change"
-                                        class="btn btn-primary pull-right">
+                                        class="btn btn-primary pull-right">-->
+                                        <button class="btn btn-primary" >Cambiar</button>
                                 </div>
                             </div>
                         </form>

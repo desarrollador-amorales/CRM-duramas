@@ -5,7 +5,8 @@ include("checklogin.php");
 check_login();
 
 $txt_name=(isset($_POST['txt_name']))?$_POST['txt_name']:"";
-$txt_reparto=(isset($_POST['txt_reparto']))?$_POST['txt_reparto']:null;
+$txt_status=(isset($_POST['txt_status']))?$_POST['txt_status']:null;
+$txt_orden=(isset($_POST['txt_orden']))?$_POST['txt_orden']:0;
 //$txt_parent_category=(isset($_POST['txt_parent_category']))?$_POST['txt_parent_category']:null;
 
 $accion=(isset($_POST['accion']))?$_POST['accion']:""; // validar si accion tiene valor.
@@ -20,7 +21,7 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
     case 'btnAgregar':
 
 
-        mysqli_query($con,"insert into warehouse(name,distribution) values('$txt_name','$txt_reparto')");
+        mysqli_query($con,"insert into status (order_status,name,status) values('$txt_orden','$txt_name','$txt_status')");
 
         //header('#');
         $mostrarCloseModal=true;
@@ -39,7 +40,7 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
 <head>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
     <meta charset="utf-8" />
-    <title>Admin | Administracion de Locales</title>
+    <title>Admin | Administracion de Estados</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta content="" name="description" />
     <meta content="" name="author" />
@@ -53,7 +54,9 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
     <link href="../assets/css/style.css" rel="stylesheet" type="text/css" />
     <link href="../assets/css/responsive.css" rel="stylesheet" type="text/css" />
     <link href="../assets/css/custom-icon-set.css" rel="stylesheet" type="text/css" />
-
+  <!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
 </head>
 
 <body class="">
@@ -81,13 +84,13 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
 
             <div class="page-title"> <i> <a href="home.php" class="icon-custom-left"></a> </i>
 
-                <h3>Administracion de Locales</h3>
+                <h3>Administracion de Estados</h3>
             </div>
 
             <div class="pull-right">
 
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                    <span class="fa fa-plus"></span> Añadir Local</button>
+                    <span class="fa fa-plus"></span> Añadir Estado</button>
 
                 <p></p>
                 <p></p>
@@ -104,7 +107,7 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
-                                <h2 class="modal-title" id="exampleModalLabel">Local</h2>
+                                <h2 class="modal-title" id="exampleModalLabel">Estado</h2>
                             </div>
                             <div class="modal-body">
                                 <div class="form-row">
@@ -117,15 +120,25 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
                                         <br>
                                     </div>
 
-                                    <div class="form-group col-md-12">
-                                        <label for="">Reparto:</label>
-                                        <select class="form-control" name="txt_reparto" id="txt_reparto" required>
+
+                                    <div class="form-group col-md-6">
+                                        <label for="">Estado:</label>
+                                        <select class="form-control" name="txt_status" id="txt_status" required>
                                             <option value="">Seleccione</option>
-                                            <option value="Naipe">Naipe</option>
-                                            <option value="Shark Tank">Shark Tank</option>
+                                            <option value="1">Activo</option>
+                                            <option value="0">Inactivo</option>
                                         </select>
                                         <br>
                                     </div>
+
+                                    <div class="form-group col-md-6">
+                                        <label for="">Orden:</label>
+                                        <input class="form-control" required="true" type="number" name="txt_orden"
+                                            value="" placeholder="" id="txt_orden">
+                                        <!-- ^^^^^^^^^^^^^^^^^^^^^^^^^ para mostrar la informacion que nosotros enviamos a traves del formulario y no se pierda-->
+                                        <br>
+                                    </div>
+
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -149,7 +162,7 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
                             <h2 class="modal-title">CRM Duramas</h2>
                         </div>
                         <div class="modal-body">
-                            <p>El local fue registrado con exito!.</p>
+                            <p>El Estado fue registrado con exito!.</p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -165,7 +178,7 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
                         <div class="col-md-12">
                             <div class="grid simple ">
                                 <div class="grid-title no-border">
-                                    <h4>Detalles de Locales</h4>
+                                    <h4>Detalles de Estados</h4>
                                     <div class="tools"> <a href="javascript:;" class="collapse"></a>
                                         <a href="#grid-config" data-toggle="modal" class="config"></a>
                                         <a href="javascript:;" class="reload"></a>
@@ -178,22 +191,32 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
                                         <thead>
                                             <tr>
                                                 <th>#</th>
+                                                <th>Orden</th>
                                                 <th>Nombre</th>
-                                                <th>Reparto</th>
+                                                <th>Estado</th>
                                                 <th>Accion</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php $ret=mysqli_query($con,"select * from warehouse");
+                                            <?php $ret=mysqli_query($con,"select * from status");
 												$cnt=1;
 												while($row=mysqli_fetch_array($ret))
 												{
-													$_SESSION['ids']=$row['id_warehouse_gen'];
+													$_SESSION['ids']=$row['status_id_gen'];
 												?>
                                             <tr>
                                                 <td><?php echo $cnt;?></td>
+                                                <td><?php echo $row['order_status'];?></td>
                                                 <td><?php echo $row['name'];?></td>
-                                                <td><?php echo $row['distribution'];?></td>
+                                                <td><?php $status=$row['status'];
+                                                        if ($status == 1){
+                                                            echo "Activo";
+                                                        }
+                                                        if ($status == 0){
+                                                            echo "Inactivo";
+                                                        }
+                                                
+                                                ?></td>
 
                                                 <td>
                                                     <form name="abc" action="" method="post">
@@ -201,7 +224,7 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
                                                         <button type="button" class="btn btn-info btn-xs"
                                                             data-toggle="tooltip" data-placement="top"
                                                             title="Editar Registro"
-                                                            onclick="location.href='edit-warehouse.php?id_warehouse_gen=<?php echo $row['id_warehouse_gen'];?>'"><i
+                                                            onclick="location.href='edit-status.php?status_id_gen=<?php echo $row['status_id_gen'];?>'"><i
                                                                 class=" fa fa-edit text-white mr-0"></i>
                                                         </button>
 
@@ -209,10 +232,9 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
                                                         <button type="button" class="btn btn-danger btn-sm px-3"
                                                             data-toggle="tooltip" data-placement="top"
                                                             title="Eliminar Registro"
-                                                            onclick="location.href='delete-warehouse.php?id_warehouse_gen=<?php echo $row['id_warehouse_gen'];?>'"><i
+                                                            onclick="location.href='delete-status.php?status_id_gen=<?php echo $row['status_id_gen'];?>'"><i
                                                                 class="fa fa-trash-o text-white mr-0"></i>
                                                         </button>
-
                                                     </form>
                                                 </td>
                                             </tr>
@@ -240,6 +262,7 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
     </div>
     <!-- END CONTAINER -->
     <!-- BEGIN CORE JS FRAMEWORK-->
+    
     <script src="../assets/plugins/jquery-1.8.3.min.js" type="text/javascript"></script>
     <script src="../assets/plugins/jquery-ui/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
     <script src="../assets/plugins/boostrapv3/js/bootstrap.min.js" type="text/javascript"></script>
@@ -247,6 +270,7 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
     <script src="../assets/plugins/jquery-unveil/jquery.unveil.min.js" type="text/javascript"></script>
     <!-- END CORE JS FRAMEWORK -->
     <!-- BEGIN PAGE LEVEL JS -->
+
     <script src="../assets/plugins/pace/pace.min.js" type="text/javascript"></script>
     <script src="../assets/plugins/jquery-scrollbar/jquery.scrollbar.min.js" type="text/javascript"></script>
     <script src="../assets/plugins/jquery-block-ui/jqueryblockui.js" type="text/javascript"></script>
@@ -261,6 +285,7 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
     <!-- END PAGE LEVEL PLUGINS -->
 
     <!-- BEGIN CORE TEMPLATE JS -->
+    
     <script src="../assets/js/core.js" type="text/javascript"></script>
     <script src="../assets/js/chat.js" type="text/javascript"></script>
     <script src="../assets/js/demo.js" type="text/javascript"></script>

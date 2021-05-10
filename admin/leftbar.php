@@ -25,9 +25,9 @@
              <li><a href="manage-tickets.php"><span class="fa fa-ticket"></span> Administracion de Tickets</a></li>
              <!--<li><a href="manage-quotes.php"> <span class="fa fa-tasks"></span> Manage Quotes</a></li>-->
              <li><a href="manage-warehouse.php"> <span class="fa fa-flag"></span> Locales</a></li>
-             <li><a href="manage-warehouse.php"> <span class="fa fa-check-circle"></span> Estados</a></li>
+             <li><a href="manage-status.php"> <span class="fa fa-check-circle"></span> Estados</a></li>
              <li><a href="manage-warehouse.php"> <span class="fa fa-users"></span> Contactos</a></li>
-             <li><a href="manage-warehouse.php"> <span class="fa fa-tasks"></span> Campañas</a></li>
+             <li><a href="manage-campaing.php"> <span class="fa fa-tasks"></span> Campañas</a></li>
              <li><a href="user-access-log.php"><span class="fa fa-shield"></span>&nbsp;&nbsp;Log Acceso de Usuarios</a>
              </li>
 

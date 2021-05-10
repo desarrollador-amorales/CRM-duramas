@@ -65,7 +65,8 @@ check_login();
                             <h4>Table <span class="semi-bold">Styles</span></h4>
                             <div class="tools"> <a href="javascript:;" class="collapse"></a> <a href="#grid-config"
                                     data-toggle="modal" class="config"></a> <a href="javascript:;" class="reload"></a>
-                                <a href="javascript:;" class="remove"></a> </div>
+                                <a href="javascript:;" class="remove"></a>
+                            </div>
                         </div>
                         <div class="grid-body ">
                             <table class="table table-hover table-condensed" id="example">
@@ -103,9 +104,11 @@ check_login();
                                 </tbody>
                             </table>
                         </div>
+
                     </div>
                 </div>
-            </div>
+            </div> 
+
         </div>
 
         <div class="addNewRow"></div>
@@ -131,6 +134,7 @@ check_login();
     <script src="../assets/js/core.js" type="text/javascript"></script>
     <script src="../assets/js/chat.js" type="text/javascript"></script>
     <script src="../assets/js/demo.js" type="text/javascript"></script>
+
 </body>
 
 </html>
