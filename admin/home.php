@@ -71,13 +71,13 @@ check_login();
                         <div class="tiles-body">
                             <div class="controller"> <a href="javascript:;" class="reload"></a> <a href="javascript:;"
                                     class="remove"></a> </div>
-                            <div class="tiles-title text-black">Overall Visitors </div>
+                            <div class="tiles-title text-black">Visitas Generales </div>
                             <div class="widget-stats">
                                 <div class="wrapper transparent">
                                     <?php $ov=mysqli_query($con,"select * from usercheck");
 					  $num=mysqli_num_rows($ov);
 					  ?>
-                                    <span class="item-title">Overall Visitors</span> <span
+                                    <span class="item-title">Visitas Generales</span> <span
                                         class="item-count animate-number semi-bold" data-value="<?php echo $num;?>"
                                         data-animation-duration="700">0</span>
                                 </div>
@@ -95,7 +95,7 @@ check_login();
 
 
 
-                                    <span class="item-title">Today</span> <span
+                                    <span class="item-title">Hoy</span> <span
                                         class="item-count animate-number semi-bold" data-value="<?php echo $num11;?>"
                                         data-animation-duration="700">0</span> <?php									
 									
@@ -114,12 +114,12 @@ check_login();
                         <div class="tiles-body">
                             <div class="controller"> <a href="javascript:;" class="reload"></a> <a href="javascript:;"
                                     class="remove"></a> </div>
-                            <div class="tiles-title text-black">Registered Users </div>
+                            <div class="tiles-title text-black">Usuarios Registrados </div>
                             <div class="widget-stats">
                                 <div class="wrapper transparent">
                                     <?php $rt=mysqli_query($con,"select * from user");
 					  $rw=mysqli_num_rows($rt);?>
-                                    <span class="item-title">Registered Users</span> <span
+                                    <span class="item-title">Usuarios Registrados</span> <span
                                         class="item-count animate-number semi-bold" data-value="<?php echo $rw;?>" data-
                                         animation-duration="700">0</span>
                                 </div>
@@ -128,9 +128,9 @@ check_login();
                                 <div class="wrapper last">
                                     <?php 
 					  $utd=date('Y-m-d');
-					  $rt1=mysqli_query($con,"select * from user where posting_date='$utd'");
+					  $rt1=mysqli_query($con,"select * from user where DATE_FORMAT(posting_date,'%Y-%m-%d')='$utd'");
 					  $rw1=mysqli_num_rows($rt1);?>
-                                    <span class="item-title">Today's</span> <span
+                                    <span class="item-title">Hoy</span> <span
                                         class="item-count animate-number semi-bold" data-value="<?php echo $rw1;?>"
                                         data-animation-duration="700">0</span>
                                 </div>
@@ -139,18 +139,18 @@ check_login();
                     </div>
                 </div>
                 <div class="col-md-4 col-vlg-3 col-sm-6">
-                    <div class="tiles purple m-b-10">
+                    <div class="tiles red m-b-10">
                         <div class="tiles-body">
                             <div class="controller"> <a href="javascript:;" class="reload"></a> <a href="javascript:;"
                                     class="remove"></a> </div>
-                            <div class="tiles-title text-black">Quote Requests </div>
+                            <div class="tiles-title text-black">Leads </div>
                             <div class="widget-stats">
                                 <div class="wrapper transparent">
                                     <?php
-                      $qr=mysqli_query($con,"select * from prequest");
+                      $qr=mysqli_query($con,"select * from lead where status = 'P'");
 					  $oq=mysqli_num_rows($qr);
 					  ?>
-                                    <span class="item-title">Overall Quotes</span> <span
+                                    <span class="item-title">Solicitud</span> <span
                                         class="item-count animate-number semi-bold" data-value="<?php echo $oq?>"
                                         data-animation-duration="700">0</span>
                                 </div>
@@ -161,7 +161,7 @@ check_login();
                       $qr1=mysqli_query($con,"select * from prequest where status='0'");
 					  $oq1=mysqli_num_rows($qr1);
 					  ?>
-                                    <span class="item-title">New Quotes's</span> <span
+                                    <span class="item-title">Seguimiento</span> <span
                                         class="item-count animate-number semi-bold" data-value="<?php echo $oq1;?>"
                                         data-animation-duration="700">0</span>
                                 </div>
@@ -172,67 +172,27 @@ check_login();
                       $qr2=mysqli_query($con,"select * from prequest where status='1'");
 					  $oq2=mysqli_num_rows($qr2);
 					  ?>
-                                    <span class="item-title">In Progress</span> <span
+                                    <span class="item-title">Concretado</span> <span
                                         class="item-count animate-number semi-bold" data-value="<?php echo $oq2;?>"
                                         data-animation-duration="700">0</span>
                                 </div>
                             </div>
 
-
-                        </div>
-                    </div>
-                </div>
-
-
-
-
-                <div class="row">
-                    <div class="col-md-3 col-vlg-3 col-sm-6">
-                        <div class="tiles red m-b-10">
-                            <div class="tiles-body">
-                                <div class="controller"> <a href="javascript:;" class="reload"></a> <a
-                                        href="javascript:;" class="remove"></a> </div>
-                                <div class="tiles-title text-black">Overall Tickets </div>
-                                <div class="widget-stats">
-                                    <div class="wrapper transparent">
-                                        <?php $vt=mysqli_query($con,"select * from ticket");
-					  $ovt=mysqli_num_rows($vt);
+                            <div class="widget-stats">
+                                <div class="wrapper transparent">
+                                    <?php
+                      $qr=mysqli_query($con,"select * from lead");
+					  $oq=mysqli_num_rows($qr);
 					  ?>
-                                        <span class="item-title">All Tickets</span> <span
-                                            class="item-count animate-number semi-bold" data-value="<?php echo $ovt;?>"
-                                            data-animation-duration="700">0</span>
-                                    </div>
+                                    <span class="item-title">Cancelado</span> <span
+                                        class="item-count animate-number semi-bold" data-value="<?php echo $oq?>"
+                                        data-animation-duration="800">0</span>
                                 </div>
-
-
-                                <div class="widget-stats ">
-                                    <div class="wrapper last">
-                                        <?php
-					   $tdate=date("Y/m/d");
-					  
-					    $otv=mysqli_query($con,"select * from ticket where status='Open'");
-					  $otv1=mysqli_num_rows($otv);
-					  ?>
-
-
-
-                                        <span class="item-title">Pending Tickets</span> <span
-                                            class="item-count animate-number semi-bold" data-value="<?php echo $otv1;?>"
-                                            data-animation-duration="700">0</span> <?php									
-									
-									?>
-                                    </div>
-                                </div>
-
-
                             </div>
+
                         </div>
-
-
                     </div>
-
                 </div>
-
             </div>
             <!-- END DASHBOARD TILES -->
             <!-- START DASHBOARD CHART -->
@@ -288,9 +248,9 @@ check_login();
 										while($row = mysqli_fetch_row($results))
 										{
 											$user_date = $row[0];
-											$dateArray = explode('/',$user_date);
+											$dateArray = explode('-',$user_date);
 											$year = $dateArray[0];
-											$monthName = date("M", mktime(0, 0, 0, $dateArray[1], 10));
+											 $monthName = date("M", mktime(0, 0, 0, $dateArray[1], 10));
 											 $currentMonth = date('m',mktime(0, 0, 0, $dateArray[1], 10));
 											// echo $monthName; 
 											//$month = date("M", strtotime($user_date));
@@ -321,7 +281,6 @@ check_login();
                         <?php									
 									}
 									?>
-
 
 
 

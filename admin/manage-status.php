@@ -142,6 +142,7 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
                                 </div>
                             </div>
                             <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
                                 <button class="btn btn-success" <?php echo $accionAgregar?> value="btnAgregar"
                                     type="submit" name="accion">Agregar</button>
                             </div>

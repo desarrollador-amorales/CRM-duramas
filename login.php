@@ -31,21 +31,21 @@ if($num>0)
     
     //empieza la distribucion de los leads pendientes a los asesores y su actualizacion
     $name_warehouse_user=mysqli_query($con,"SELECT name_warehouse FROM user_warehouse where id_user = '".$num['id']."' order by name_warehouse");
-    //echo 'contador de ciudades'.$name_warehouse_user->num_rows;
-    //echo "<br>";
+    echo 'contador de ciudades'.$name_warehouse_user->num_rows;
+    echo "<br>";
 
      
       while($city_user=mysqli_fetch_array($name_warehouse_user)){
-       // echo"<br>";  
+        //echo"<br>";  
         //echo '<h3>'.$city_user['name_warehouse'].'</h3>';
         //echo"<br>";
 
           $list_lead=mysqli_query($con,"SELECT * FROM lead where status = 'P' and city_warehouse= '".$city_user['name_warehouse']."'");          
           $row_cnt_leads =$list_lead->num_rows;
 
-          //echo 'contador de leads-->'.$row_cnt_leads;
-          //echo "<br>";
-          //echo "<br>";
+         // echo 'contador de leads-->'.$row_cnt_leads;
+         // echo "<br>";
+         // echo "<br>";
 
          $contUser=0;
          $contLead=0;
@@ -62,7 +62,7 @@ if($num>0)
 
                 if($contUserLoop == $contUser){
                     //asignar y actualizar a la tabla de leads
-                   // echo 'El cliente '.$lead['name_lead'].' fue asignado a el usuario '.$user['name'];                   
+                    //echo 'El cliente '.$lead['name_lead'].' fue asignado a el usuario '.$user['name'];                   
                     //mysqli_query($con,"update lead set status='A' where id_lead_gen='".$lead['id_lead_gen']."'");
                     //echo "<br>";
                     break;

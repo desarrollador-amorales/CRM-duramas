@@ -5,8 +5,7 @@ include("checklogin.php");
 check_login();
 
 $txt_name=(isset($_POST['txt_name']))?$_POST['txt_name']:"";
-$txt_descripcion=(isset($_POST['txt_descripcion']))?$_POST['txt_descripcion']:null;
-
+$txt_reparto=(isset($_POST['txt_reparto']))?$_POST['txt_reparto']:null;
 //$txt_parent_category=(isset($_POST['txt_parent_category']))?$_POST['txt_parent_category']:null;
 
 $accion=(isset($_POST['accion']))?$_POST['accion']:""; // validar si accion tiene valor.
@@ -21,7 +20,7 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
     case 'btnAgregar':
 
 
-        mysqli_query($con,"insert into campaing (name,description) values('$txt_name','$txt_descripcion')");
+        mysqli_query($con,"insert into warehouse(name,distribution) values('$txt_name','$txt_reparto')");
 
         //header('#');
         $mostrarCloseModal=true;
@@ -40,7 +39,7 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
 <head>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
     <meta charset="utf-8" />
-    <title>Admin | Administracion de Campañas</title>
+    <title>Admin | Administracion de Contactos</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta content="" name="description" />
     <meta content="" name="author" />
@@ -54,6 +53,7 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
     <link href="../assets/css/style.css" rel="stylesheet" type="text/css" />
     <link href="../assets/css/responsive.css" rel="stylesheet" type="text/css" />
     <link href="../assets/css/custom-icon-set.css" rel="stylesheet" type="text/css" />
+
 
 </head>
 
@@ -82,13 +82,13 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
 
             <div class="page-title"> <i> <a href="home.php" class="icon-custom-left"></a> </i>
 
-                <h3>Administracion de Campañas</h3>
+                <h3>Administracion de Contactos</h3>
             </div>
 
             <div class="pull-right">
 
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                    <span class="fa fa-plus"></span> Añadir Campaña</button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#dataRegister">
+                    <span class="fa fa-plus"></span> Añadir Contacto</button>
 
                 <p></p>
                 <p></p>
@@ -105,7 +105,7 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
-                                <h2 class="modal-title" id="exampleModalLabel">Campaña</h2>
+                                <h2 class="modal-title" id="exampleModalLabel">Local</h2>
                             </div>
                             <div class="modal-body">
                                 <div class="form-row">
@@ -114,20 +114,22 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
                                         <label for="">Nombre:</label>
                                         <input class="form-control" required type="text" name="txt_name" value=""
                                             placeholder="" id="txt_name">
+                                        <!-- ^^^^^^^^^^^^^^^^^^^^^^^^^ para mostrar la informacion que nosotros enviamos a traves del formulario y no se pierda-->
                                         <br>
                                     </div>
 
                                     <div class="form-group col-md-12">
-                                        <label for="">Descripcion:</label>
-                                        <input class="form-control" required="true" type="text" name="txt_descripcion"
-                                            value="" placeholder="" id="txt_descripcion">
+                                        <label for="">Reparto:</label>
+                                        <select class="form-control" name="txt_reparto" id="txt_reparto" required>
+                                            <option value="">Seleccione</option>
+                                            <option value="Naipe">Naipe</option>
+                                            <option value="Shark Tank">Shark Tank</option>
+                                        </select>
                                         <br>
                                     </div>
-
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
                                 <button class="btn btn-success" <?php echo $accionAgregar?> value="btnAgregar"
                                     type="submit" name="accion">Agregar</button>
                             </div>
@@ -136,6 +138,58 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
                 </div>
             </form>
             <!-- End Modal -->
+
+            <!-- Inicio Nuevo Modal de prueba-->
+            <form method="post" action="" enctype="multipart/form-data">
+                <div class="modal fade" id="dataRegister" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="exampleModalLabel">Agregar Contacto</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div id="datos_ajax_register"></div>
+                                <div class="form-group">
+                                    <label for="codigo0" class="control-label">Código:</label>
+                                    <input type="text" class="form-control" id="codigo0" name="codigo" required
+                                        maxlength="2">
+                                </div>
+                                <div class="form-group">
+                                    <label for="nombre0" class="control-label">Nombre:</label>
+                                    <input type="text" class="form-control" id="nombre0" name="nombre" required
+                                        maxlength="45">
+                                </div>
+                                <div class="form-group">
+                                    <label for="moneda0" class="control-label">Moneda:</label>
+                                    <input type="text" class="form-control" id="moneda0" name="moneda" required
+                                        maxlength="3">
+                                </div>
+                                <div class="form-group">
+                                    <label for="capital0" class="control-label">Capital:</label>
+                                    <input type="text" class="form-control" id="capital0" name="capital" required
+                                        maxlength="30">
+                                </div>
+                                <div class="form-group">
+                                    <label for="continente0" class="control-label">Continente:</label>
+                                    <input type="text" class="form-control" id="continente0" name="continente" required
+                                        maxlength="15">
+                                </div>
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn btn-primary">Guardar datos</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <!-- Fin Nuevo Modal de prueba-->
+
 
             <!--Modal aviso-->
             <div class="modal" id="closeModal" tabindex="-1" ole="dialog">
@@ -148,7 +202,7 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
                             <h2 class="modal-title">CRM Duramas</h2>
                         </div>
                         <div class="modal-body">
-                            <p>La Campaña fue registrada con exito..!</p>
+                            <p>El local fue registrado con exito!.</p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -164,7 +218,7 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
                         <div class="col-md-12">
                             <div class="grid simple ">
                                 <div class="grid-title no-border">
-                                    <h4>Detalles de Campañas</h4>
+                                    <h4>Detalles de Contactos</h4>
                                     <div class="tools"> <a href="javascript:;" class="collapse"></a>
                                         <a href="#grid-config" data-toggle="modal" class="config"></a>
                                         <a href="javascript:;" class="reload"></a>
@@ -173,28 +227,26 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
                                 </div>
                                 <div class="grid-body no-border">
 
-                                    <!--<table class="table table-hover table-condensed">-->
                                     <table class="table table-hover table-condensed">
-
                                         <thead>
                                             <tr>
-                                                <th>ID</th>
+                                                <th>#</th>
                                                 <th>Nombre</th>
-                                                <th>Descripcion</th>
+                                                <th>Reparto</th>
                                                 <th>Accion</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php $ret=mysqli_query($con,"select * from campaing");
+                                            <?php $ret=mysqli_query($con,"select * from warehouse");
 												$cnt=1;
 												while($row=mysqli_fetch_array($ret))
 												{
-													$_SESSION['ids']=$row['campaing_id_gen'];
+													$_SESSION['ids']=$row['id_warehouse_gen'];
 												?>
                                             <tr>
-                                                <td><?php echo $row['campaing_id_gen'];?></td>
+                                                <td><?php echo $cnt;?></td>
                                                 <td><?php echo $row['name'];?></td>
-                                                <td><?php echo $row['description'];?></td>
+                                                <td><?php echo $row['distribution'];?></td>
 
                                                 <td>
                                                     <form name="abc" action="" method="post">
@@ -202,7 +254,7 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
                                                         <button type="button" class="btn btn-info btn-xs"
                                                             data-toggle="tooltip" data-placement="top"
                                                             title="Editar Registro"
-                                                            onclick="location.href='edit-campaing.php?campaing_id_gen=<?php echo $row['campaing_id_gen'];?>'"><i
+                                                            onclick="location.href='edit-warehouse.php?id_warehouse_gen=<?php echo $row['id_warehouse_gen'];?>'"><i
                                                                 class=" fa fa-edit text-white mr-0"></i>
                                                         </button>
 
@@ -210,9 +262,10 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
                                                         <button type="button" class="btn btn-danger btn-sm px-3"
                                                             data-toggle="tooltip" data-placement="top"
                                                             title="Eliminar Registro"
-                                                            onclick="location.href='delete-campaing.php?campaing_id_gen=<?php echo $row['campaing_id_gen'];?>'"><i
+                                                            onclick="location.href='delete-warehouse.php?id_warehouse_gen=<?php echo $row['id_warehouse_gen'];?>'"><i
                                                                 class="fa fa-trash-o text-white mr-0"></i>
                                                         </button>
+
                                                     </form>
                                                 </td>
                                             </tr>
@@ -240,7 +293,6 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
     </div>
     <!-- END CONTAINER -->
     <!-- BEGIN CORE JS FRAMEWORK-->
-
     <script src="../assets/plugins/jquery-1.8.3.min.js" type="text/javascript"></script>
     <script src="../assets/plugins/jquery-ui/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
     <script src="../assets/plugins/boostrapv3/js/bootstrap.min.js" type="text/javascript"></script>
@@ -248,7 +300,6 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
     <script src="../assets/plugins/jquery-unveil/jquery.unveil.min.js" type="text/javascript"></script>
     <!-- END CORE JS FRAMEWORK -->
     <!-- BEGIN PAGE LEVEL JS -->
-
     <script src="../assets/plugins/pace/pace.min.js" type="text/javascript"></script>
     <script src="../assets/plugins/jquery-scrollbar/jquery.scrollbar.min.js" type="text/javascript"></script>
     <script src="../assets/plugins/jquery-block-ui/jqueryblockui.js" type="text/javascript"></script>
@@ -263,7 +314,6 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
     <!-- END PAGE LEVEL PLUGINS -->
 
     <!-- BEGIN CORE TEMPLATE JS -->
-
     <script src="../assets/js/core.js" type="text/javascript"></script>
     <script src="../assets/js/chat.js" type="text/javascript"></script>
     <script src="../assets/js/demo.js" type="text/javascript"></script>

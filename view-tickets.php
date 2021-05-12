@@ -66,9 +66,9 @@ check_login();
      $num=mysqli_num_rows($rt);
 if($num>0){
 
-													while($row=mysqli_fetch_array($rt))
-													{
-													?>
+            while($row=mysqli_fetch_array($rt))
+            {
+            ?>
             <div class="row">
                 <div class="col-md-12">
                     <div class="grid simple no-border">

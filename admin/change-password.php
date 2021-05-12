@@ -151,10 +151,9 @@ $_SESSION['msg1']="Su contraseña actual no coincide !!";
                                     </div>
                                 </div>
                                 <div class="panel-footer">
-                                   
-                                    <!--<input type="submit" value="Cambiar" name="change"
-                                        class="btn btn-primary pull-right">-->
-                                        <button class="btn btn-primary" >Cambiar</button>
+
+                                    <input type="submit" value="Cambiar" name="change" class="btn btn-primary ">
+
                                 </div>
                             </div>
                         </form>

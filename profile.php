@@ -13,7 +13,7 @@ if(isset($_POST['update']))
 	$a=mysqli_query($con,"update user set name='$name',mobile='$mobile',gender='$gender',alt_email='$aemail',address='$address' where email='".$_SESSION['login']."'");
 if($a)
 {
-echo "<script>alert('Your profile updated successfully.');</script>";
+echo "<script>alert('Se actualizo el perfil satisfactoriamente.');</script>";
 }
 }
 
@@ -77,7 +77,7 @@ $query=mysqli_query($con,"select * from user where email='".$_SESSION['login']."
                 <div class="row">
                     <div class="col-md-12">
 
-                        <form class="form-horizontal" method="post" enctype="multipart/form-data">
+                        <form class="form-horizontal" method="post" >
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h3 class="panel-title"><strong>Perfil</h3>
@@ -196,10 +196,9 @@ $query=mysqli_query($con,"select * from user where email='".$_SESSION['login']."
                                 </div>
                                 <?php } ?>
                                 <div class="panel-footer">
-                                    <!-- <button class="btn btn-default" type="reset">Clear Form</button>
-                                    <input type="submit" value="Update" name="update"
-                                        class="btn btn-primary pull-right">-->
-                                    <button class="btn btn-primary">Actualizar</button>
+                                    <!-- <button class="btn btn-default" type="reset">Clear Form</button> -->
+                                    <input type="submit" value="Actualizar" name="update"
+                                        class="btn btn-primary">
                                 </div>
                             </div>
                         </form>
