@@ -4,15 +4,17 @@ include("dbconnection.php");
 include("checklogin.php");
 check_login();
 
-$txt_name=(isset($_POST['txt_name']))?$_POST['txt_name']:"";
-$txt_reparto=(isset($_POST['txt_reparto']))?$_POST['txt_reparto']:null;
+$name=(isset($_POST['name']))?$_POST['name']:"";
+$email=(isset($_POST['email']))?$_POST['email']:"";
+$mobile=(isset($_POST['mobile']))?$_POST['mobile']:"";
+$city=(isset($_POST['city']))?$_POST['city']:"";
 //$txt_parent_category=(isset($_POST['txt_parent_category']))?$_POST['txt_parent_category']:null;
 
 $accion=(isset($_POST['accion']))?$_POST['accion']:""; // validar si accion tiene valor.
 
 $error=array();
 
-$accionAgregar =$accionCancelar=""; // manera para habilitar los botones
+$accionAgregar =""; // manera para habilitar los botones
 //$accionModificar=$accionEliminar=$accionCancelar="disabled"; //manera para desahilitar los botones
 $mostrarCloseModal=false;
 
@@ -20,7 +22,7 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
     case 'btnAgregar':
 
 
-        mysqli_query($con,"insert into warehouse(name,distribution) values('$txt_name','$txt_reparto')");
+        mysqli_query($con,"insert into contact(name,email,mobile,name_warehouse) values('$name','$email','$mobile','$city')");
 
         //header('#');
         $mostrarCloseModal=true;
@@ -54,6 +56,9 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
     <link href="../assets/css/responsive.css" rel="stylesheet" type="text/css" />
     <link href="../assets/css/custom-icon-set.css" rel="stylesheet" type="text/css" />
 
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.datatables.net/buttons/1.6.5/css/buttons.dataTables.min.css">
 
 </head>
 
@@ -94,52 +99,7 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
                 <p></p>
             </div>
 
-            <form method="post" action="" enctype="multipart/form-data">
-                <!-- Modal -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                                <h2 class="modal-title" id="exampleModalLabel">Local</h2>
-                            </div>
-                            <div class="modal-body">
-                                <div class="form-row">
-
-                                    <div class="form-group col-md-12">
-                                        <label for="">Nombre:</label>
-                                        <input class="form-control" required type="text" name="txt_name" value=""
-                                            placeholder="" id="txt_name">
-                                        <!-- ^^^^^^^^^^^^^^^^^^^^^^^^^ para mostrar la informacion que nosotros enviamos a traves del formulario y no se pierda-->
-                                        <br>
-                                    </div>
-
-                                    <div class="form-group col-md-12">
-                                        <label for="">Reparto:</label>
-                                        <select class="form-control" name="txt_reparto" id="txt_reparto" required>
-                                            <option value="">Seleccione</option>
-                                            <option value="Naipe">Naipe</option>
-                                            <option value="Shark Tank">Shark Tank</option>
-                                        </select>
-                                        <br>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button class="btn btn-success" <?php echo $accionAgregar?> value="btnAgregar"
-                                    type="submit" name="accion">Agregar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-            <!-- End Modal -->
-
-            <!-- Inicio Nuevo Modal de prueba-->
+            <!-- Inicio  Modal de Contactos-->
             <form method="post" action="" enctype="multipart/form-data">
                 <div class="modal fade" id="dataRegister" tabindex="-1" role="dialog"
                     aria-labelledby="exampleModalLabel">
@@ -148,47 +108,48 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                         aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title" id="exampleModalLabel">Agregar Contacto</h4>
+                                <h4 class="modal-title" id="exampleModalLabel"><b>Agregar Contacto</b></h4>
                             </div>
                             <div class="modal-body">
                                 <div id="datos_ajax_register"></div>
                                 <div class="form-group">
-                                    <label for="codigo0" class="control-label">Código:</label>
-                                    <input type="text" class="form-control" id="codigo0" name="codigo" required
-                                        maxlength="2">
+                                    <label for="name" class="control-label"><b>Nombre:</b></label>
+                                    <input type="text" class="form-control" id="name" name="name" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="nombre0" class="control-label">Nombre:</label>
-                                    <input type="text" class="form-control" id="nombre0" name="nombre" required
-                                        maxlength="45">
+                                    <label for="email" class="control-label">Correo Electronico:</label>
+                                    <input type="email" class="form-control" id="email" name="email" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="moneda0" class="control-label">Moneda:</label>
-                                    <input type="text" class="form-control" id="moneda0" name="moneda" required
-                                        maxlength="3">
+                                    <label for="mobile" class="control-label">Telefono:</label>
+                                    <input type="text" class="form-control" id="mobile" name="mobile" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="capital0" class="control-label">Capital:</label>
-                                    <input type="text" class="form-control" id="capital0" name="capital" required
-                                        maxlength="30">
+                                    <label for="name_warehouse" class="control-label">Local:</label>
+                                    <select class="form-control" id="selectCity" name="city" required>
+                                        <option value="">Seleccione</option>
+                                        <?php 
+                                    $rt=mysqli_query($con,"select * from warehouse where active = 1");
+                                    
+                                    while($almacen= mysqli_fetch_array($rt)) {?>
+                                        <option value="<?php echo $almacen['name'];?>">
+                                            <?php echo $almacen['name'];?>
+                                        </option>
+                                        <?php }?>
+                                    </select>
                                 </div>
-                                <div class="form-group">
-                                    <label for="continente0" class="control-label">Continente:</label>
-                                    <input type="text" class="form-control" id="continente0" name="continente" required
-                                        maxlength="15">
-                                </div>
-
 
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                                <button type="submit" class="btn btn-primary">Guardar datos</button>
+                                <button type="submit" class="btn btn-primary" <?php echo $accionAgregar?>
+                                    value="btnAgregar" name="accion">Guardar datos</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </form>
-            <!-- Fin Nuevo Modal de prueba-->
+            <!-- Fin Nuevo Modal de Contactos-->
 
 
             <!--Modal aviso-->
@@ -202,7 +163,7 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
                             <h2 class="modal-title">CRM Duramas</h2>
                         </div>
                         <div class="modal-body">
-                            <p>El local fue registrado con exito!.</p>
+                            <p>El Contacto fue registrado con exito!.</p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -227,26 +188,30 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
                                 </div>
                                 <div class="grid-body no-border">
 
-                                    <table class="table table-hover table-condensed">
+                                    <table id="manage-contacts" class="table table-hover table-condensed">
                                         <thead>
                                             <tr>
-                                                <th>#</th>
-                                                <th>Nombre</th>
-                                                <th>Reparto</th>
-                                                <th>Accion</th>
+                                                <th><label class="control-label"><b>ID</b></label></th>
+                                                <th><label class="control-label"><b>Nombre</b></label></th>
+                                                <th><label class="control-label"><b>Email</b></label></th>
+                                                <th><label class="control-label"><b>Teléfono</b></label></th>
+                                                <th><label class="control-label"><b>Local</b></label></th>
+                                                <th><label class="control-label"><b>Accion</b></label></th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php $ret=mysqli_query($con,"select * from warehouse");
+                                            <?php $ret=mysqli_query($con,"select * from contact");
 												$cnt=1;
 												while($row=mysqli_fetch_array($ret))
 												{
-													$_SESSION['ids']=$row['id_warehouse_gen'];
+													$_SESSION['ids']=$row['contact_id_gen'];
 												?>
                                             <tr>
-                                                <td><?php echo $cnt;?></td>
+                                                <td><?php echo $row['contact_id_gen'];?></td>
                                                 <td><?php echo $row['name'];?></td>
-                                                <td><?php echo $row['distribution'];?></td>
+                                                <td><?php echo $row['email'];?></td>
+                                                <td><?php echo $row['mobile'];?></td>
+                                                <td><?php echo $row['name_warehouse'];?></td>
 
                                                 <td>
                                                     <form name="abc" action="" method="post">
@@ -254,7 +219,7 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
                                                         <button type="button" class="btn btn-info btn-xs"
                                                             data-toggle="tooltip" data-placement="top"
                                                             title="Editar Registro"
-                                                            onclick="location.href='edit-warehouse.php?id_warehouse_gen=<?php echo $row['id_warehouse_gen'];?>'"><i
+                                                            onclick="location.href='edit-contact.php?contact_id_gen=<?php echo $row['contact_id_gen'];?>'"><i
                                                                 class=" fa fa-edit text-white mr-0"></i>
                                                         </button>
 
@@ -262,7 +227,7 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
                                                         <button type="button" class="btn btn-danger btn-sm px-3"
                                                             data-toggle="tooltip" data-placement="top"
                                                             title="Eliminar Registro"
-                                                            onclick="location.href='delete-warehouse.php?id_warehouse_gen=<?php echo $row['id_warehouse_gen'];?>'"><i
+                                                            onclick="location.href='delete-contact.php?contact_id_gen=<?php echo $row['contact_id_gen'];?>'"><i
                                                                 class="fa fa-trash-o text-white mr-0"></i>
                                                         </button>
 
@@ -291,33 +256,24 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
     </div>
 
     </div>
-    <!-- END CONTAINER -->
-    <!-- BEGIN CORE JS FRAMEWORK-->
     <script src="../assets/plugins/jquery-1.8.3.min.js" type="text/javascript"></script>
     <script src="../assets/plugins/jquery-ui/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
     <script src="../assets/plugins/boostrapv3/js/bootstrap.min.js" type="text/javascript"></script>
-    <script src="../assets/plugins/breakpoints.js" type="text/javascript"></script>
-    <script src="../assets/plugins/jquery-unveil/jquery.unveil.min.js" type="text/javascript"></script>
-    <!-- END CORE JS FRAMEWORK -->
-    <!-- BEGIN PAGE LEVEL JS -->
-    <script src="../assets/plugins/pace/pace.min.js" type="text/javascript"></script>
-    <script src="../assets/plugins/jquery-scrollbar/jquery.scrollbar.min.js" type="text/javascript"></script>
-    <script src="../assets/plugins/jquery-block-ui/jqueryblockui.js" type="text/javascript"></script>
-    <script src="../assets/plugins/jquery-sparkline/jquery-sparkline.js"></script>
-    <script src="../assets/plugins/jquery-numberAnimate/jquery.animateNumbers.js" type="text/javascript"></script>
-    <script src="../assets/plugins/jquery-datatable/js/jquery.dataTables.min.js" type="text/javascript"></script>
-    <script src="../assets/plugins/jquery-datatable/extra/js/dataTables.tableTools.min.js" type="text/javascript">
-    </script>
-    <script type="text/javascript" src="../assets/plugins/datatables-responsive/js/datatables.responsive.js"></script>
-    <script type="text/javascript" src="../assets/plugins/datatables-responsive/js/lodash.min.js"></script>
-    <script src="../assets/js/datatables.js" type="text/javascript"></script>
-    <!-- END PAGE LEVEL PLUGINS -->
 
-    <!-- BEGIN CORE TEMPLATE JS -->
-    <script src="../assets/js/core.js" type="text/javascript"></script>
-    <script src="../assets/js/chat.js" type="text/javascript"></script>
-    <script src="../assets/js/demo.js" type="text/javascript"></script>
-    <!-- END CORE TEMPLATE JS -->
+    <!--incio nuevo-->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
+
 
     <!--funcion que servira para mostrar el registro en el modal cuando el usuario la seleccione-->
     <?php if($mostrarCloseModal) {?>
@@ -325,6 +281,23 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
     $('#closeModal').modal('show');
     </script>
     <?php }?>
+
+    <script>
+    $(document).ready(function() {
+        $('#manage-contacts').DataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+            }, 
+            /**
+            Sirve para exportar a csv excel pdf o imprimir
+            dom: 'Blfrtip',
+            buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]**/
+        });
+    });
+    </script>
+
 </body>
 
 </html>

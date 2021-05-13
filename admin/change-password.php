@@ -114,7 +114,7 @@ $_SESSION['msg1']="Su contraseña actual no coincide !!";
                                     <p align="center" style="color:#FF0000">
                                         <?php echo $_SESSION['msg1'];?><?php echo $_SESSION['msg1']="";?></p>
                                     <div class="form-group">
-                                        <label class="col-md-3 col-xs-12 control-label">Contraseña Actual</label>
+                                        <label class="col-md-3 col-xs-12 control-label"><b>Contraseña Actual</b></label>
                                         <div class="col-md-6 col-xs-12">
                                             <div class="input-group">
                                                 <span class="input-group-addon"><span
@@ -128,7 +128,7 @@ $_SESSION['msg1']="Su contraseña actual no coincide !!";
 
 
                                     <div class="form-group">
-                                        <label class="col-md-3 col-xs-12 control-label">Nueva Contraseña</label>
+                                        <label class="col-md-3 col-xs-12 control-label"><b>Nueva Contraseña</b></label>
                                         <div class="col-md-6 col-xs-12">
                                             <div class="input-group">
                                                 <span class="input-group-addon"><span
@@ -139,7 +139,7 @@ $_SESSION['msg1']="Su contraseña actual no coincide !!";
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-3 col-xs-12 control-label">Confirmar Contraseña</label>
+                                        <label class="col-md-3 col-xs-12 control-label"><b>Confirmar Contraseña</b></label>
                                         <div class="col-md-6 col-xs-12">
                                             <div class="input-group">
                                                 <span class="input-group-addon"><span

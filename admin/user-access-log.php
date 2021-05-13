@@ -100,7 +100,7 @@ check_login();
                             </div>
 
 
-                            <table class="table table-hover table-condensed" id="example1">
+                            <table class="table table-hover table-condensed" id="table-user-access">
                                 <thead>
                                     <tr>
                                         <br>
@@ -158,7 +158,7 @@ check_login();
     function load_data(initial_date, final_date) {
         var ajax_url = "jquery-ajax-usercheck.php";
 
-        $('#example1').DataTable({
+        $('#table-user-access').DataTable({
             "order": [
                 [0, "desc"]
             ],
@@ -183,6 +183,9 @@ check_login();
                     "final_date": final_date
                 },
                 "dataSrc": "records"
+            },
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
             },
             "columns": [{
                     "data": "counter"
@@ -224,7 +227,7 @@ check_login();
         //var gender = $("#gender").val();
 
         if (initial_date == '' && final_date == '') {
-            $('#example1').DataTable().destroy();
+            $('#table-user-access').DataTable().destroy();
             load_data("", ""); // filter immortalize only
         } else {
             var date1 = new Date(initial_date);
@@ -239,7 +242,7 @@ check_login();
                     $("#error_log").html("Warning: La fecha Hasta debe ser mayor quela fecha Desde .");
                 } else {
                     $("#error_log").html("");
-                    $('#example1').DataTable().destroy();
+                    $('#table-user-access').DataTable().destroy();
                     load_data(initial_date, final_date);
                 }
             }
@@ -256,8 +259,6 @@ check_login();
     <!--fin de lo nuevo-->
 
 
-
-
     <script type="text/javascript">
     $(document).ready(function() {
         $('#example').DataTable({
@@ -269,8 +270,7 @@ check_login();
     });
     </script>
 
-
-
+    <!--fin de lo nuevo-->
 
 </body>
 

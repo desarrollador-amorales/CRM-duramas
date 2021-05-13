@@ -3,6 +3,42 @@ session_start();
 include("dbconnection.php");
 include("checklogin.php");
 check_login();
+
+if(isset($_POST['submit']))
+{
+	$name=$_POST['name'];
+	$email=$_POST['email'];
+	$password=$_POST['password'];
+	$mobile=$_POST['phone'];
+	$gender=$_POST['gender'];
+    $city=$_POST['city'];
+
+    $values_city = implode(', ',$_POST['city']);
+    $rol=$_POST['rol'];
+	$query=mysqli_query($con,"select email from user where email='$email'");
+	$num=mysqli_fetch_array($query);
+	if($num>1)
+	{
+    echo "<script>alert('Email-id ya esta registrado. Porfavor intenta con un email id diferente.');</script>";
+    echo "<script>window.location.href='#'</script>";
+	}
+	else
+	{
+
+    mysqli_query($con,"insert into user(name,email,password,mobile,gender,city_warehouse,rol) values('$name','$email','$password','$mobile','$gender','$values_city','$rol')");
+    $id_user= mysqli_insert_id($con);
+
+    for ($i=0;$i<count($city);$i++)    
+            {     
+            mysqli_query($con,"insert into user_warehouse(id_user,name_warehouse) values('$id_user','$city[$i]')");
+            }
+    
+    echo "<script>alert('Registro exitoso !!.');</script>";  
+    echo "<script>window.location.href='#'</script>";
+}
+	}
+
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -23,6 +59,18 @@ check_login();
     <link href="../assets/css/style.css" rel="stylesheet" type="text/css" />
     <link href="../assets/css/responsive.css" rel="stylesheet" type="text/css" />
     <link href="../assets/css/custom-icon-set.css" rel="stylesheet" type="text/css" />
+
+    <!--librerias para un select2 o select multiple-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.datatables.net/buttons/1.6.5/css/buttons.dataTables.min.css">
+
+
 </head>
 
 <body class="">
@@ -54,11 +102,114 @@ check_login();
             </div>
 
             <div class="pull-right">
-                <a href="registration-admin.php" class="btn btn-primary "><span class="fa fa-plus"></span> Añadir
-                    Usuario</a>
+
+                <a class="btn btn-primary btn-cons pull-left" name="" value="Regresar" type=""
+                    href="registration-admin.php"><span class="fa fa-plus"></span> Añadir Usuario</a>
+                <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#dataRegister">
+                    <span class="fa fa-plus"></span> Añadir Usuario</button>-->
                 <p></p>
                 <p></p>
             </div>
+
+
+            <!-- Inicio Nuevo Modal de prueba-->
+            <form id="signup" name="signup" class="login-form" onsubmit="return checkpass();" method="post">
+                <div class="modal fade" id="dataRegister" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="exampleModalLabel"><b>Agregar Usuario</b></h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-row">
+                                    <input type="hidden" required name="txt_id" value="" placeholder="" id="txt_id"
+                                        require="">
+
+                                    <div class="form-group col-md-6">
+                                        <label for="">Nombres:</label>
+                                        <input type="text" name="name" id="name" class="form-control" required="true">
+                                        <br>
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <label for="">Email:</label>
+                                        <input type="email" name="email" id="email" class="form-control"
+                                            required="true">
+                                        <br>
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <label for="">Contraseña:</label>
+                                        <input type="password" name="password" id="password" class="form-control"
+                                            required="true">
+                                        <br>
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <label for="">Confirmar Contraseña:</label>
+                                        <input type="password" name="cpassword" id="cpassword" class="form-control"
+                                            required="true">
+                                        <br>
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <label for="">No Celular:</label>
+                                        <input type="text" name="phone" id="txtpassword" class="form-control"
+                                            pattern="[0-9]{10}" title="Solo 10 caracteres numericos" required="true">
+                                        <br>
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <label for="">Cuidad:</label>
+                                        <select class="citySelect form-control" multiple id="selectCity" name="city[]"
+                                            required>
+                                            <?php 
+                                        $rt=mysqli_query($con,"select * from warehouse where active = 1");
+                                        
+                                        while($almacen= mysqli_fetch_array($rt)) {?>
+                                            <option value="<?php echo $almacen['name'];?>">
+                                                <?php echo $almacen['name'];?>
+                                            </option>
+                                            <?php }?>
+                                        </select>
+                                        <br>
+                                    </div>
+
+                                    <div class="form-group col-md-12">
+                                        <label for="">Rol:</label>
+                                        <select name="rol" class="form-control" required>
+                                            <option value="">Seleccione</option>
+                                            <option value="">___________</option>
+                                            <option value="admin">Administrador</option>
+                                            <option value="user">Asesor</option>
+                                        </select>
+                                        <br>
+                                    </div>
+
+                                    <div class="form-group col-md-12">
+                                        <label for="">Género:</label>
+                                        <select name="gender" class="form-control" required>
+                                            <option value="">Seleccione</option>
+                                            <option value="">___________</option>
+                                            <option value="m">Masculino</option>
+                                            <option value="f">Femenino</option>
+                                        </select>
+                                        <br>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <input class="btn btn-success" name="submit" value="Registrar" type="submit" />
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <!-- Fin Nuevo Modal de prueba-->
 
 
 
@@ -77,16 +228,17 @@ check_login();
                                 </div>
                                 <div class="grid-body no-border">
 
-                                    <table class="table table-hover no-more-tables">
+                                    <table id="manage-users" class="table table-hover table-condensed">
                                         <thead>
                                             <tr>
-                                                <th>#</th>
-                                                <th>Nombres</th>
-                                                <th>Email ID </th>
-                                                <th># Celular</th>
-                                                <th>Ciudad</th>
-                                                <th>Fecha de Registro</th>
-                                                <th>Accion</th>
+                                                <th><label class="control-label"><b>#</b></label></th>
+                                                <th><label class="control-label"><b>Nombres</b></label></th>
+                                                <th><label class="control-label"><b>Email ID</b></label></th>
+                                                <th><label class="control-label"><b># Celular</b></label></th>
+                                                <th style="width:30%"><label class="control-label"><b>Ciudad</b></label>
+                                                </th>
+                                                <th><label class="control-label"><b>Fecha de Registro</b></label></th>
+                                                <th><label class=" control-label"><b>Accion</b></label></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -141,44 +293,59 @@ check_login();
     </div>
 
     </div>
-    <!-- END CONTAINER -->
-    <!-- BEGIN CORE JS FRAMEWORK-->
-    <script src="../assets/plugins/jquery-1.8.3.min.js" type="text/javascript"></script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="../assets/plugins/jquery-ui/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
     <script src="../assets/plugins/boostrapv3/js/bootstrap.min.js" type="text/javascript"></script>
-    <script src="../assets/plugins/breakpoints.js" type="text/javascript"></script>
-    <script src="../assets/plugins/jquery-unveil/jquery.unveil.min.js" type="text/javascript"></script>
-    <!-- END CORE JS FRAMEWORK -->
-    <!-- BEGIN PAGE LEVEL JS -->
-    <script src="../assets/plugins/pace/pace.min.js" type="text/javascript"></script>
-    <script src="../assets/plugins/jquery-scrollbar/jquery.scrollbar.min.js" type="text/javascript"></script>
-    <script src="../assets/plugins/jquery-block-ui/jqueryblockui.js" type="text/javascript"></script>
-    <script src="../assets/plugins/jquery-sparkline/jquery-sparkline.js"></script>
-    <script src="../assets/plugins/jquery-numberAnimate/jquery.animateNumbers.js" type="text/javascript"></script>
-    <!-- END PAGE LEVEL PLUGINS -->
+
+    <!--incio nuevo -->
+
+
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap.min.js"></script>
+
+
+
     <script>
-    //Too Small for new file - Helps the to tick all options in the table 
-    $('table .checkbox input').click(function() {
-        if ($(this).is(':checked')) {
-            $(this).parent().parent().parent().toggleClass('row_selected');
-        } else {
-            $(this).parent().parent().parent().toggleClass('row_selected');
-        }
-    });
-    // Demo charts - not required 
-    $('.customer-sparkline').each(function() {
-        $(this).sparkline('html', {
-            type: $(this).attr("data-sparkline-type"),
-            barColor: $(this).attr("data-sparkline-color"),
-            enableTagOptions: true
+    $(document).ready(function() {
+        $('#manage-users').DataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+            },
+            /**
+            Sirve para exportar a csv excel pdf o imprimir
+            dom: 'Blfrtip',
+            buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]**/
         });
     });
+
+    function checkpass() {
+        if (document.signup.password.value != document.signup.cpassword.value) {
+            alert('Las contraseñas no coinciden');
+            document.signup.cpassword.focus();
+            return false;
+        }
+        return true;
+    }
+
+    $('#selectCity').select2({
+        dropdownParent: $("#dataRegister")
+    });
+
+    /**$(document).ready(function() {
+        $('#selectCity').select2({
+            dropdownParent: $("#dataRegister")
+        });
+    });**/
     </script>
-    <!-- BEGIN CORE TEMPLATE JS -->
-    <script src="../assets/js/core.js" type="text/javascript"></script>
-    <script src="../assets/js/chat.js" type="text/javascript"></script>
-    <script src="../assets/js/demo.js" type="text/javascript"></script>
-    <!-- END CORE TEMPLATE JS -->
 </body>
 
 </html>

@@ -207,26 +207,32 @@ check_login();
 
                         <script type="text/javascript">
                         var visitorsCount = [];
+                        var visitorsCount2 = [];
                         var myCat = [];
                         </script>
                         <?php
 								$totaldays = cal_days_in_month(CAL_GREGORIAN, date("m"), date("Y")); 
 								
 								$month_array=array();
+                                $month_array2=array();
 								for($i=1; $i<=$totaldays; $i++)
 								{
-									if(!array_key_exists($i,$month_array))
+									if(!array_key_exists($i,$month_array) )
 									{
 										$key = '';
 										if($i<10)
 										{
 											$key = '0'.$i;
 											$month_array[$key] = 0;
+
 										}
 										else
 										{
 											$month_array[$i] = 0;
+                                            
 										}
+
+
 										?>
                         <script type="text/javascript">
                         var myKey = "Dia " + '<?php echo $i; ?>';
@@ -236,22 +242,23 @@ check_login();
                         <?php
 										
 									}
-									
-									
-								}
+                                    }
+
 								//print_r($month_array);
 								$results = mysqli_query($con,"SELECT logindate FROM usercheck");
 					                //$f2=mysql_num_rows($a2);
 									
+                                    //$month_array2= $month_array;
 									if(mysqli_num_rows($results) >0)
 									{
+                                                                               
 										while($row = mysqli_fetch_row($results))
 										{
 											$user_date = $row[0];
-											$dateArray = explode('-',$user_date);
+                                            $dateArray = explode('-',$user_date);
 											$year = $dateArray[0];
-											 $monthName = date("M", mktime(0, 0, 0, $dateArray[1], 10));
-											 $currentMonth = date('m',mktime(0, 0, 0, $dateArray[1], 10));
+											$monthName = date("M", mktime(0, 0, 0, $dateArray[1], 10));
+											$currentMonth = date('m',mktime(0, 0, 0, $dateArray[1], 10));
 											// echo $monthName; 
 											//$month = date("M", strtotime($user_date));
 											//echo $month;
@@ -266,21 +273,36 @@ check_login();
 												
 												if(array_key_exists($dateArray[2],$month_array))
 												{
-													$month_array[$dateArray[2]] = $month_array[$dateArray[2]] + 1;
+													$month_array[$dateArray[2]] = $month_array[$dateArray[2]] + 1; //por cada vez que encuentra una fecha se va sumando 1
 												}
-											}											
+											}
+
+                                            /**                                            
+                                            if($year == date("Y") && $currentMonth == date("m"))
+											{
+												
+												if(array_key_exists($dateArray[2],$month_array2))
+												{
+                                                    $month_array2[$dateArray[2]] = ($month_array2[$dateArray[2]] + 2);
+                                                    echo $month_array2[$dateArray[2]];
+                                                    echo "</br>";
+												}
+											}	**/
 										}
+                                        //$month_array2= $month_array; // se puede asignar el mismo array a uno nuevo y aumentar en 1 el contador para mostrar en otro push
 									}
 									//print_r($month_array);
+                                    //print_r($month_array2);
 									foreach($month_array as $key=>$value)
 									{
-									?>
-                        <script type="text/javascript">
-                        visitorsCount.push(<?php echo $value;?>);
-                        </script>
-                        <?php									
+                                    ?>
+                                        <script type="text/javascript">
+                                        visitorsCount.push(<?php echo $value;?>);
+                                        //visitorsCount2.push(<?php echo ($value)+6;?>); // se puede recorrer el mismo bucle asignando otros valores a la otra leyenda
+                                        </script>
+                                    <?php									
 									}
-									?>
+                                    ?>
 
 
 
@@ -334,9 +356,14 @@ check_login();
                                     borderWidth: 0
                                 },
                                 series: [{
-                                    name: 'Visitantes',
-                                    data: visitorsCount
-                                }]
+                                        name: 'Visitantes',
+                                        data: visitorsCount
+                                    },
+                                    {
+                                        name: 'Visitantes 2',
+                                        data: visitorsCount2
+                                    }
+                                ]
                             });
                         });
                         </script>

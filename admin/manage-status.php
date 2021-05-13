@@ -107,7 +107,7 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
-                                <h2 class="modal-title" id="exampleModalLabel">Estado</h2>
+                                <h4 class="modal-title" id="exampleModalLabel"><b>Estado</b></h4>
                             </div>
                             <div class="modal-body">
                                 <div class="form-row">

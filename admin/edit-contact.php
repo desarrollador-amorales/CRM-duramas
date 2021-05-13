@@ -6,20 +6,13 @@ include("dbconnection.php");
 if(isset($_POST['update']))
 {
 $name=$_POST['name'];
-$altemail=$_POST['altemail'];
-$contact=$_POST['contact'];
-$address=$_POST['address'];
-$gender=$_POST['gender'];
-$city=implode(', ',$_POST['city']);
-$city_values= $_POST['city'];
-$userid=$_GET['id'];
+$email=$_POST['email'];
+$mobile=$_POST['mobile'];
+$name_warehouse=$_POST['city'];
+$contactid=$_GET['contact_id_gen'];
 
-  $ret=mysqli_query($con,"update user set name='$name', alt_email='$altemail',mobile='$contact',gender='$gender',address='$address', city_warehouse='$city' where id='$userid'");
-  mysqli_query($con,"delete from user_warehouse where id_user='$userid'");
-  for ($i=0;$i<count($city_values);$i++)    
-    {     
-    mysqli_query($con,"insert into user_warehouse(id_user,name_warehouse) values('$userid','$city_values[$i]')");
-    }
+   $ret=mysqli_query($con,"update contact set name='$name', email='$email',mobile='$mobile',name_warehouse='$name_warehouse' where contact_id_gen='$contactid'");
+  
 	if($ret)
   {
     ?>
@@ -28,7 +21,7 @@ $userid=$_GET['id'];
 <html lang="en">
 
 <head>
-    <title>Admin | Administracion de Usuarios</title>
+    <title>Admin | Administracion de Contactos</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta content="" name="description" />
     <meta content="" name="author" />
@@ -59,8 +52,8 @@ $userid=$_GET['id'];
         <h2>Alert Methods</h2>
 
         <div class="alert alert-info" id="myAlert">
-            <a href="manage-users.php" class="close"></a>
-            <strong>Usuario Actualizado Correctamente..!</strong>.
+            <a href="manage-contacts.php" class="close"></a>
+            <strong>Contacto Actualizado Correctamente..!</strong>.
         </div>
     </div>
 
@@ -102,15 +95,6 @@ $userid=$_GET['id'];
     <link href="../assets/css/custom-icon-set.css" rel="stylesheet" type="text/css" />
 
 
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
-
-    <script type="text/javascript">
-    $(document).ready(function() {
-        $('.cityEditSelect').select2();
-    });
-    </script>
 </head>
 
 <body class="">
@@ -138,114 +122,58 @@ $userid=$_GET['id'];
         </div>
         <div class="clearfix"></div>
         <div class="content">
-            <div class="page-title"> <i> <a href="manage-users.php" class="icon-custom-left"></a> </i>
+            <div class="page-title"> <i> <a href="manage-contacts.php" class="icon-custom-left"></a> </i>
 
-                <h3>Editar Usuario</h3>
+                <h3>Editar Contacto</h3>
             </div>
 
             <div class="page-title">
-                <?php $rt=mysqli_query($con,"select * from user where id='".$_GET['id']."'");
+                <?php $rt=mysqli_query($con,"select * from contact where contact_id_gen='".$_GET['contact_id_gen']."'");
 			  while($rw=mysqli_fetch_array($rt))
 			  {?>
                 <h3>Usuario: <?php echo $rw['name'];?> </h3>
 
                 <form name="muser" method="post" action="" enctype="multipart/form-data">
 
-                    <table width="100%" border="0">
+                    <table width="75%" border="0">
                         <tr>
-                            <td height="42"><label class="control-label"><b>Nombres</b></label></td>
+                            <td><label class="control-label"><b>Nombres</b></label></td>
                             <td><input type="text" name="name" id="name" value="<?php echo $rw['name'];?>"
-                                    class="form-control"></td>
+                                    class="form-control"><br>
+                                </td>
+                            
                         </tr>
                         <tr>
-                            <td height="42"><label class="control-label"><b>Email Principal</b></label></td>
+                            <td><label class="control-label"><b>Correo Electronico</b></label></td>
                             <td><input type="text" name="email" id="email" value="<?php echo $rw['email'];?>"
-                                    class="form-control" readonly></td>
+                                    class="form-control"><br></td>
                         </tr>
                         <tr>
-                            <td height="42"><label class="control-label"><b>Email Secundario</b></label></td>
-                            <td><input type="text" name="altemail" id="altemail" value="<?php echo $rw['alt_email'];?>"
-                                    class="form-control"></td>
+                            <td><label class="control-label"><b>Teléfono</b></label></td>
+                            <td><input type="text" name="mobile" id="mobile" value="<?php echo $rw['mobile'];?>"
+                                    class="form-control"><br></td>
                         </tr>
                         <tr>
-                            <td height="42"><label class="control-label"><b>No. Contacto.</b></label></td>
-                            <td><input type="text" name="contact" id="contact" value="<?php echo $rw['mobile'];?>"
-                                    class="form-control"></td>
-                        </tr>
-                        <tr>
-                            <td height="42"><label class="control-label"><b>Genero</b></label></td>
-                            <td><select name="gender" class="form-control">
-                                    <option value="<?php echo $rw['gender'];?>">
-                                        <?php $a=$rw['gender'];
-                          if($a=='m')
-                          {
-                          echo "Masculino";
-                          }
-                            if($a=='f')
-                          {
-                          echo "Femenino";
-                          }
-                         
-                          
-                            if($a=='others')
-                          {
-                          echo "Otro";
-                          }
-                                                  
-                          ?>
-                                    </option>
-                                    <option value="">___________</option>
-                                    <option value="m">Masculino</option>
-                                    <option value="f">Femenino</option>
-                                    <option value="others">Otro</option>
-                                </select>
-
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td height="42"><label class="control-label"><b>Ciudad</b></label></td>
-
-                            <?php
-                                  if (isset($_GET['id'])){
-                                    $user_id = $_GET['id'];
-                                    $user_city = mysqli_query($con,"select name_warehouse from user_warehouse where id_user= '$user_id'");
-                                    $user_city_array = [];
-
-                                    foreach($user_city as $name_warehouse){
-                                     // echo ' // '.$name_warehouse['name_warehouse']; ver que locales tiene asignado
-                                      $user_city_array[]= $name_warehouse['name_warehouse'];
-                                    }
-                                  }
-                              ?>
-
-                            <td><select multiple name="city[]" class="cityEditSelect form-control" required>
-                                    <?php 
+                            <td><label class="control-label"><b>Local</b></label></td>
+                            <td>
+                            <select class="form-control" id="selectCity" name="city"
+                                        required>
+                                        <option value="<?php echo $rw['name_warehouse'];?>"><?php echo $rw['name_warehouse'];?></option>
+                                        <?php 
                                     $rt=mysqli_query($con,"select * from warehouse where active = 1");
                                     
                                     while($almacen= mysqli_fetch_array($rt)) {?>
-
-                                    <option value="<?php echo $almacen['name'];?>"
-                                        <?php echo in_array($almacen['name'],$user_city_array) ? 'selected':''?>>
-                                        <!--seleccionar el que se ha escogido en el select multiple con la propiedad selected-->
-                                        <?php echo $almacen['name'];?>
-                                    </option>
-                                    <?php }?>
-                                </select>
-
+                                        <option value="<?php echo $almacen['name'];?>">
+                                            <?php echo $almacen['name'];?>
+                                        </option>
+                                        <?php }?>
+                            </select>
                             </td>
-
-                        </tr>
-
-
-                        <tr>
-                            <br>
-                            <td height="42"><label class="control-label"><b>Direccion</b></label></td>
-                            <td><textarea name="address" cols="64" rows="4"><?php echo $rw['address'];?></textarea></td>
                         </tr>
                         <tr>
                             <td>&nbsp;</td>
                             <td height="42">
+                                <br>
                                 <button type="submit" name="update" class="btn btn-primary">Guardar Cambios</button>
                             </td>
                         </tr>

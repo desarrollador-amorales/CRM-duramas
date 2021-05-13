@@ -31,8 +31,8 @@ if($num>0)
     
     //empieza la distribucion de los leads pendientes a los asesores y su actualizacion
     $name_warehouse_user=mysqli_query($con,"SELECT name_warehouse FROM user_warehouse where id_user = '".$num['id']."' order by name_warehouse");
-    echo 'contador de ciudades'.$name_warehouse_user->num_rows;
-    echo "<br>";
+    //echo 'contador de ciudades'.$name_warehouse_user->num_rows;
+    //echo "<br>";
 
      
       while($city_user=mysqli_fetch_array($name_warehouse_user)){
