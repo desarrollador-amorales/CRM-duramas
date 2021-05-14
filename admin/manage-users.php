@@ -242,7 +242,7 @@ if(isset($_POST['submit']))
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php $ret=mysqli_query($con,"select * from user");
+                                            <?php $ret=mysqli_query($con,"select * from user order by id");
 												$cnt=1;
 												while($row=mysqli_fetch_array($ret))
 												{
@@ -273,6 +273,13 @@ if(isset($_POST['submit']))
                                                                 class="fa fa-trash-o text-white mr-0"></i>
                                                         </button>
 
+                                                        <button type="button" class="btn btn-warning btn-xs"
+                                                            data-toggle="tooltip" data-placement="top"
+                                                            title="Enviar Credenciales"
+                                                            onclick="location.href='send-user-credentials.php?email=<?php echo $row['email'];?>'"><i
+                                                                class="fa fa-key text-white mr-0"></i>
+                                                        </button>
+
                                                     </form>
                                                 </td>
                                             </tr>
@@ -299,7 +306,6 @@ if(isset($_POST['submit']))
     <script src="../assets/plugins/boostrapv3/js/bootstrap.min.js" type="text/javascript"></script>
 
     <!--incio nuevo -->
-
 
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script>

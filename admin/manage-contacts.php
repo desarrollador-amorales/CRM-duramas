@@ -272,8 +272,6 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
     <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.print.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap.min.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
-
 
     <!--funcion que servira para mostrar el registro en el modal cuando el usuario la seleccione-->
     <?php if($mostrarCloseModal) {?>

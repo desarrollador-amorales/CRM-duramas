@@ -12,7 +12,8 @@ $email = $row2['email'];
 $subject = " CRM about your password";
 $password=$row2['password'];
 $message = "Your password is ".$password;
-mail($email, $subject, $message, "From: $email");
+$desarrollador="desarrollador@duramas.com.ec";
+mail($email, $subject, $message);
 $_SESSION['msg']= "Your Password has been sent to your email id Successfully.";
 }
 else

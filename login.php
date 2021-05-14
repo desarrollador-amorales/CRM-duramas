@@ -37,7 +37,7 @@ if($num>0)
      
       while($city_user=mysqli_fetch_array($name_warehouse_user)){
         //echo"<br>";  
-        //echo '<h3>'.$city_user['name_warehouse'].'</h3>';
+       // echo '<h3>'.$city_user['name_warehouse'].'</h3>';
         //echo"<br>";
 
           $list_lead=mysqli_query($con,"SELECT * FROM lead where status = 'P' and city_warehouse= '".$city_user['name_warehouse']."'");          
@@ -62,7 +62,7 @@ if($num>0)
 
                 if($contUserLoop == $contUser){
                     //asignar y actualizar a la tabla de leads
-                    //echo 'El cliente '.$lead['name_lead'].' fue asignado a el usuario '.$user['name'];                   
+                    echo 'El cliente '.$lead['name_lead'].' fue asignado a el usuario '.$user['name'];                   
                     //mysqli_query($con,"update lead set status='A' where id_lead_gen='".$lead['id_lead_gen']."'");
                     //echo "<br>";
                     break;

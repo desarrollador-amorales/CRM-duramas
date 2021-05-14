@@ -358,12 +358,7 @@ check_login();
                                 series: [{
                                         name: 'Visitantes',
                                         data: visitorsCount
-                                    },
-                                    {
-                                        name: 'Visitantes 2',
-                                        data: visitorsCount2
-                                    }
-                                ]
+                                    }]
                             });
                         });
                         </script>

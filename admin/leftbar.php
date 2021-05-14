@@ -6,16 +6,20 @@
              <div class="profile-wrapper" style="border:solid #fff 1px;"> <img src="../assets/img/admin.png" alt=""
                      data-src="../assets/img/admin.png" data-src-retina="../assets/img/admin.png" width="69"
                      height="69" /> </div>
-             <div class="user-info">
-                 <div class="greeting">Bienvenido</div>
-                 <div class="username">Admin</div>
 
+             <div class="user-info">
+                 <div class="greeting" style="font-size:14px;">Bienvenido/a</div>
+                 <div class="username" style="font-size:12px;"><?php echo $_SESSION['name_admin'];?></div>
+                 <div class="status" style="font-size:10px;"><a href="#">
+                         <div class="status-icon green"></div>
+                         Conectado
+                     </a></div>
              </div>
          </div>
          <!-- END MINI-PROFILE -->
          <!-- BEGIN SIDEBAR MENU -->
-         <p class="menu-title">BROWSE <span class="pull-right"><a href="javascript:;"><i
-                         class="fa fa-refresh"></i></a></span></p>
+         <p class="menu-title"><span class="pull-right"><a href="javascript:;"><i
+                         class=""></i></a></span></p>
 
          <ul>
              <li class="start"> <a href="home.php"> <i class="icon-custom-home"></i> <span

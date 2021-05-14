@@ -4,13 +4,14 @@ error_reporting(0);
 include("dbconnection.php");
 if(isset($_POST['login']))
 {
-$ret=mysqli_query($con,"SELECT * FROM admin WHERE name='".$_POST['email']."' and password='".$_POST['password']."'");
+$ret=mysqli_query($con,"SELECT * FROM admin WHERE user='".$_POST['email']."' and password='".$_POST['password']."'");
 $num=mysqli_fetch_array($ret);
 if($num>0)
 {
 $extra="home.php";
 $_SESSION['alogin']=$_POST['email'];
 $_SESSION['id']=$num['id'];
+$_SESSION['name_admin']=$num['name'];
 echo "<script>window.location.href='".$extra."'</script>";
 exit();
 }

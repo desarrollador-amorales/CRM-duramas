@@ -151,7 +151,7 @@ $userid=$_GET['id'];
 
                 <form name="muser" method="post" action="" enctype="multipart/form-data">
 
-                    <table width="100%" border="0">
+                    <table width="75%" border="0">
                         <tr>
                             <td height="42"><label class="control-label"><b>Nombres</b></label></td>
                             <td><input type="text" name="name" id="name" value="<?php echo $rw['name'];?>"

@@ -5,39 +5,49 @@ include("dbconnection.php");
 include("checklogin.php");
 check_login();
 
-if(isset($_POST['submit']))
-{
-	$name=$_POST['name'];
-	$email=$_POST['email'];
-	$password=$_POST['password'];
-	$mobile=$_POST['phone'];
-	$gender=$_POST['gender'];
+if (isset($_POST['submit'])) {
+    $name=$_POST['name'];
+    $email=$_POST['email'];
+    $password=$_POST['password'];
+    $mobile=$_POST['phone'];
+    $gender=$_POST['gender'];
     $city=$_POST['city'];
 
-    $values_city = implode(', ',$_POST['city']);
+    $values_city = implode(', ', $_POST['city']);
     $rol=$_POST['rol'];
-	$query=mysqli_query($con,"select email from user where email='$email'");
-	$num=mysqli_fetch_array($query);
-	if($num>1)
-	{
-    echo "<script>alert('Email-id ya esta registrado. Porfavor intenta con un email id diferente.');</script>";
-    echo "<script>window.location.href='registration-admin.php'</script>";
-	}
-	else
-	{
 
-    mysqli_query($con,"insert into user(name,email,password,mobile,gender,city_warehouse,rol) values('$name','$email','$password','$mobile','$gender','$values_city','$rol')");
-    $id_user= mysqli_insert_id($con);
+    if ($rol == 'admin') {
+        $query=mysqli_query($con, "select user from admin where user='$email'");
+        $num=mysqli_fetch_array($query);
+        if ($num>1) {
+            echo "<script>alert('El Email ingresado ya esta registrado en uno de nuestros administradores. Porfavor intenta con un email diferente.');</script>";
+            echo "<script>window.location.href='registration-admin.php'</script>";
+        }else{
+            mysqli_query($con, "insert into admin(name,user,password) values('$name','$email','$password')");
+            echo "<script>alert('Administrador Creado !!.');</script>";
+            echo "<script>window.location.href='manage-users.php'</script>";
+        }
 
-    for ($i=0;$i<count($city);$i++)    
-            {     
-            mysqli_query($con,"insert into user_warehouse(id_user,name_warehouse) values('$id_user','$city[$i]')");
+
+    } else {
+        $query=mysqli_query($con, "select email from user where email='$email'");
+        $num=mysqli_fetch_array($query);
+        if ($num>1) {
+            echo "<script>alert('Email-id ya esta registrado. Porfavor intenta con un email diferente.');</script>";
+            echo "<script>window.location.href='registration-admin.php'</script>";
+        } else {
+            mysqli_query($con, "insert into user(name,email,password,mobile,gender,city_warehouse,rol) values('$name','$email','$password','$mobile','$gender','$values_city','$rol')");
+            $id_user= mysqli_insert_id($con);
+
+            for ($i=0;$i<count($city);$i++) {
+                mysqli_query($con, "insert into user_warehouse(id_user,name_warehouse) values('$id_user','$city[$i]')");
             }
-    
-    echo "<script>alert('Registro exitoso !!.');</script>";  
-    echo "<script>window.location.href='manage-users.php'</script>";
+        
+            echo "<script>alert('Registro exitoso !!.');</script>";
+            echo "<script>window.location.href='manage-users.php'</script>";
+        }
+    }
 }
-	}
 ?>
 <!DOCTYPE html>
 <html>
@@ -107,7 +117,9 @@ if(isset($_POST['submit']))
 
                     <div class="row">
                         <div class="col-md-6">
-                            <label class="form-label"><h6>Nombres</h6></label>
+                            <label class="form-label">
+                                <h6>Nombres</h6>
+                            </label>
                             <div class="controls">
                                 <div class="input-with-icon  right">
                                     <input type="text" name="name" id="name" class="form-control" required="true">
@@ -116,7 +128,9 @@ if(isset($_POST['submit']))
                             </div>
                         </div>
                         <div class="col-md-6 col-md-offset -1">
-                            <label class="form-label"><h6>Email</h6></label>
+                            <label class="form-label">
+                                <h6>Email</h6>
+                            </label>
                             <div class="controls">
                                 <div class="input-with-icon  right">
                                     <input type="email" name="email" id="email" class="form-control" required="true">
@@ -127,7 +141,9 @@ if(isset($_POST['submit']))
 
                     <div class="row">
                         <div class="col-md-6 ">
-                            <label class="form-label"><h6>Contraseña</h6></label>
+                            <label class="form-label">
+                                <h6>Contraseña</h6>
+                            </label>
                             <div class="controls">
                                 <div class="input-with-icon  right">
                                     <input type="password" name="password" id="password" class="form-control"
@@ -137,7 +153,9 @@ if(isset($_POST['submit']))
                         </div>
 
                         <div class="col-md-6 col-md-offset -1">
-                            <label class="form-label"><h6>Confirmar Contraseña</h6></label>
+                            <label class="form-label">
+                                <h6>Confirmar Contraseña</h6>
+                            </label>
                             <div class="controls">
                                 <div class="input-with-icon  right">
                                     <input type="password" name="cpassword" id="cpassword" class="form-control"
@@ -149,7 +167,9 @@ if(isset($_POST['submit']))
 
                     <div class="row">
                         <div class="col-md-6">
-                            <label class="form-label"><h6>No. Celular</h6></label>
+                            <label class="form-label">
+                                <h6>No. Celular</h6>
+                            </label>
                             <span class="help"></span>
                             <div class="controls">
                                 <div class="input-with-icon  right">
@@ -161,7 +181,9 @@ if(isset($_POST['submit']))
                         </div>
 
                         <div class="col-md-6 col-md-offset -1">
-                            <label class="form-label"><h6>Ciudad</h6></label>
+                            <label class="form-label">
+                                <h6>Ciudad</h6>
+                            </label>
                             <select class="citySelect form-control" multiple id="selectCity" name="city[]" required>
                                 <?php 
                                     $rt=mysqli_query($con,"select * from warehouse where active = 1");
@@ -181,7 +203,9 @@ if(isset($_POST['submit']))
 
                     <div class="row">
                         <div class="col-md-6">
-                            <label class="form-label"><h6>Rol</h6></label>
+                            <label class="form-label">
+                                <h6>Rol</h6>
+                            </label>
                             <span class="help"></span>
                             <div class="controls">
                                 <div class="input-with-icon  right">
@@ -197,7 +221,9 @@ if(isset($_POST['submit']))
                         </div>
 
                         <div class="col-md-6 col-md-offset -1">
-                            <label class="form-label"><h6>Genero</h6></label>
+                            <label class="form-label">
+                                <h6>Genero</h6>
+                            </label>
                             <span class="help"></span>
                             <div class="controls">
                                 <div class="input-with-icon  right">
@@ -218,7 +244,7 @@ if(isset($_POST['submit']))
 
                         <div class="col-md-6 col-md-offset -1">
                             <br>
-                            <input class="btn btn-primary btn-cons pull-right" name="submit" value="Registrarse"
+                            <input class="btn btn-primary btn-cons pull-right" name="submit" value="Registrar"
                                 type="submit" />
                         </div>
                     </div>
