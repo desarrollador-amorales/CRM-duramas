@@ -22,62 +22,8 @@ $userid=$_GET['id'];
     }
 	if($ret)
   {
-    ?>
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <title>Admin | Administracion de Usuarios</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta content="" name="description" />
-    <meta content="" name="author" />
-
-    <link href="../assets/plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css" media="screen" />
-    <link href="../assets/plugins/boostrapv3/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="../assets/plugins/boostrapv3/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
-    <link href="../assets/plugins/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css" />
-    <link href="../assets/css/animate.min.css" rel="stylesheet" type="text/css" />
-    <link href="../assets/plugins/jquery-scrollbar/jquery.scrollbar.css" rel="stylesheet" type="text/css" />
-    <link href="../assets/css/style.css" rel="stylesheet" type="text/css" />
-    <link href="../assets/css/responsive.css" rel="stylesheet" type="text/css" />
-    <link href="../assets/css/custom-icon-set.css" rel="stylesheet" type="text/css" />
-</head>
-
-<body>
-    <?php include("header.php");?>
-    <div class="page-container row">
-
-        <?php include("leftbar.php");?>
-
-        <div class="clearfix"></div>
-        <!-- END SIDEBAR MENU -->
-    </div>
-    </div>
-
-    <div class="page-content">
-        <h2>Alert Methods</h2>
-
-        <div class="alert alert-info" id="myAlert">
-            <a href="manage-users.php" class="close"></a>
-            <strong>Usuario Actualizado Correctamente..!</strong>.
-        </div>
-    </div>
-
-    <script>
-    $(document).ready(function() {
-        $(".close").click(function() {
-            $("#myAlert").alert("close");
-        });
-    });
-    </script>
-
-</body>
-
-</html>
-
-<?php
-}
+    $mostrarUpdateModal= true;
+    }
 }
 ?>
 
@@ -105,6 +51,13 @@ $userid=$_GET['id'];
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+
+    <!-- nuevo alerta-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <!--nuevo fin-->
 
     <script type="text/javascript">
     $(document).ready(function() {
@@ -257,22 +210,42 @@ $userid=$_GET['id'];
                     <?php } ?>
                 </form>
             </div>
+
+            <div id="myModalUpdate" class="modal fade">
+            <div class="modal-dialog modal-confirm">
+                    <div class="modal-content">
+                        <div class="modal-header justify-content-center">
+                            <div class="icon-box">
+                                <i class="material-icons">update</i>
+                            </div>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        </div>
+                        <div class="modal-body text-center">
+                            <h4>Listo!</h4>
+                            <p>El usuario se actualizo correctamente.</p>
+                            <button class="btn btn-success" data-dismiss="modal"
+                            onclick="location.href='manage-users.php'"
+                            ><span>Aceptar</span> <i
+                                    class="material-icons">&#xE5C8;</i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
     </div>
     </div>
-    <!--<script src="../assets/plugins/jquery-1.8.3.min.js" type="text/javascript"></script>
-    <script src="../assets/plugins/jquery-ui/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script> -->
-    <script src="../assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-    <script src="../assets/plugins/breakpoints.js" type="text/javascript"></script>
-    <script src="../assets/plugins/jquery-unveil/jquery.unveil.min.js" type="text/javascript"></script>
-    <script src="../assets/plugins/jquery-block-ui/jqueryblockui.js" type="text/javascript"></script>
-    <script src="../assets/plugins/jquery-scrollbar/jquery.scrollbar.min.js" type="text/javascript"></script>
-    <script src="../assets/plugins/pace/pace.min.js" type="text/javascript"></script>
-    <script src="../assets/plugins/jquery-numberAnimate/jquery.animateNumbers.js" type="text/javascript"></script>
-    <script src="../assets/js/core.js" type="text/javascript"></script>
-    <script src="../assets/js/chat.js" type="text/javascript"></script>
-    <script src="../assets/js/demo.js" type="text/javascript"></script>
+    
+    
+    <script src="../assets/plugins/jquery-ui/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
+    <script src="../assets/plugins/boostrapv3/js/bootstrap.min.js" type="text/javascript"></script>
+
+    <?php if($mostrarUpdateModal) {?>
+    <script>
+    $('#myModalUpdate').modal('show');
+    </script>
+    <?php }?>
 
 </body>
 

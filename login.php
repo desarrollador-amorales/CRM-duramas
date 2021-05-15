@@ -62,7 +62,7 @@ if($num>0)
 
                 if($contUserLoop == $contUser){
                     //asignar y actualizar a la tabla de leads
-                    echo 'El cliente '.$lead['name_lead'].' fue asignado a el usuario '.$user['name'];                   
+                    //echo 'El cliente '.$lead['name_lead'].' fue asignado a el usuario '.$user['name'];                   
                     //mysqli_query($con,"update lead set status='A' where id_lead_gen='".$lead['id_lead_gen']."'");
                     //echo "<br>";
                     break;
