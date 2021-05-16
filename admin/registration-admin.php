@@ -24,8 +24,9 @@ if (isset($_POST['submit'])) {
             echo "<script>window.location.href='registration-admin.php'</script>";
         }else{
             mysqli_query($con, "insert into admin(name,user,password) values('$name','$email','$password')");
-            echo "<script>alert('Administrador Creado !!.');</script>";
-            echo "<script>window.location.href='manage-users.php'</script>";
+            $mostrarRegistroModal=true;
+            //echo "<script>alert('Administrador Creado !!.');</script>";
+            //echo "<script>window.location.href='manage-users.php'</script>";
         }
 
 
@@ -42,9 +43,9 @@ if (isset($_POST['submit'])) {
             for ($i=0;$i<count($city);$i++) {
                 mysqli_query($con, "insert into user_warehouse(id_user,name_warehouse) values('$id_user','$city[$i]')");
             }
-        
-            echo "<script>alert('Registro exitoso !!.');</script>";
-            echo "<script>window.location.href='manage-users.php'</script>";
+            $mostrarRegistroModal=true;
+           // echo "<script>alert('Registro exitoso !!.');</script>";
+            //echo "<script>window.location.href='manage-users.php'</script>";
         }
     }
 }
@@ -76,6 +77,15 @@ if (isset($_POST['submit'])) {
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 
+    <!-- nuevo alerta-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <!--Estilos -->
+    <link href="../assets/css/style-registration-admin.css" rel="stylesheet" type="text/css" />
+    <!--nuevo fin-->
 
 
 
@@ -250,8 +260,36 @@ if (isset($_POST['submit'])) {
                     </div>
                 </form>
             </div>
+            <div id="myModalRegister" class="modal fade">
+                <div class="modal-dialog modal-confirm">
+                    <div class="modal-content">
+                        <div class="modal-header justify-content-center">
+                            <div class="icon-box">
+                                <i class="material-icons">&#xE876;</i>
+                            </div>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        </div>
+                        <div class="modal-body text-center">
+                            <h4>Listo!</h4>
+                            <p>El usuario se registro correctamente.</p>
+                            <button class="btn btn-success" data-dismiss="modal"
+                                onclick="location.href='manage-users.php'"><span>Regresar</span> <i
+                                    class="material-icons">&#xE5C8;</i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
         </div>
     </div>
+
+    <?php if($mostrarRegistroModal) {?>
+    <script>
+    $('#myModalRegister').modal('show');
+    </script>
+    <?php }?>
+
 
 </body>
 

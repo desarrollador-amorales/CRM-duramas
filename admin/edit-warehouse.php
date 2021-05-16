@@ -15,7 +15,7 @@ $warehouse_id=$_GET['id_warehouse_gen'];
 	{
         $mostrarUpdateModal= true;
 	}
-	}
+}
 ?>
 
 <!DOCTYPE html>
@@ -132,7 +132,7 @@ $warehouse_id=$_GET['id_warehouse_gen'];
 
 
             <div id="myModalUpdate" class="modal fade">
-            <div class="modal-dialog modal-confirm">
+                <div class="modal-dialog modal-confirm">
                     <div class="modal-content">
                         <div class="modal-header justify-content-center">
                             <div class="icon-box">
@@ -142,10 +142,10 @@ $warehouse_id=$_GET['id_warehouse_gen'];
                         </div>
                         <div class="modal-body text-center">
                             <h4>Listo!</h4>
+                            <br>
                             <p>El local se actualizo correctamente.</p>
                             <button class="btn btn-success" data-dismiss="modal"
-                            onclick="location.href='manage-warehouse.php'"
-                            ><span>Aceptar</span> <i
+                                onclick="location.href='manage-warehouse.php'"><span>Aceptar</span> <i
                                     class="material-icons">&#xE5C8;</i></button>
                         </div>
                     </div>

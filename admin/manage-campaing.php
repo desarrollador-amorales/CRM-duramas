@@ -19,18 +19,13 @@ $mostrarCloseModal=false;
 
 switch($accion){ // evalua las acciones que envia el formulario al presionar los botones del mismo..
     case 'btnAgregar':
-
-
         mysqli_query($con,"insert into campaing (name,description) values('$txt_name','$txt_descripcion')");
-
         //header('#');
         $mostrarCloseModal=true;
 
         //echo "Presionaste btnAgregar";
     break;
 }
-
-
 
 ?>
 
@@ -54,6 +49,19 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
     <link href="../assets/css/style.css" rel="stylesheet" type="text/css" />
     <link href="../assets/css/responsive.css" rel="stylesheet" type="text/css" />
     <link href="../assets/css/custom-icon-set.css" rel="stylesheet" type="text/css" />
+
+     <!--formato tabla-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.datatables.net/buttons/1.6.5/css/buttons.dataTables.min.css">
+    <!-- fin formato tabla-->
+
+    <!-- nuevo alerta-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <!--nuevo fin-->
 
 </head>
 
@@ -105,20 +113,20 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
-                                <h2 class="modal-title" id="exampleModalLabel">Campaña</h2>
+                                <h4 class="modal-title" id="exampleModalLabel"><b>Campaña</b></h4>
                             </div>
                             <div class="modal-body">
                                 <div class="form-row">
 
                                     <div class="form-group col-md-12">
-                                        <label for="">Nombre:</label>
+                                        <label for="" class="control-label"><b>Nombre:</b></label>
                                         <input class="form-control" required type="text" name="txt_name" value=""
                                             placeholder="" id="txt_name">
                                         <br>
                                     </div>
 
                                     <div class="form-group col-md-12">
-                                        <label for="">Descripcion:</label>
+                                        <label for="" class="control-label"><b>Descripcion:</b></label>
                                         <input class="form-control" required="true" type="text" name="txt_descripcion"
                                             value="" placeholder="" id="txt_descripcion">
                                         <br>
@@ -139,19 +147,20 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
 
             <!--Modal aviso-->
             <div class="modal" id="closeModal" tabindex="-1" ole="dialog">
-                <div class="modal-dialog" role="document">
+                <div class="modal-dialog modal-confirm">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                            <h2 class="modal-title">CRM Duramas</h2>
+                        <div class="modal-header justify-content-center">
+                            <div class="icon-box">
+                                <i class="material-icons">&#xE876;</i>
+                            </div>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
-                        <div class="modal-body">
-                            <p>La Campaña fue registrada con exito..!</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <div class="modal-body text-center">
+                            <h4>Listo!</h4>
+                            <br>
+                            <p>La campaña se ha registrado correctamente.</p>
+                            <button class="btn btn-success" data-dismiss="modal"><span>Aceptar</span> <i
+                                    class="material-icons">&#xE5C8;</i></button>
                         </div>
                     </div>
                 </div>
@@ -174,7 +183,7 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
                                 <div class="grid-body no-border">
 
                                     <!--<table class="table table-hover table-condensed">-->
-                                    <table class="table table-hover table-condensed">
+                                    <table id = "manage-campaing" class="table table-hover table-condensed">
 
                                         <thead>
                                             <tr>
@@ -238,36 +247,21 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
     </div>
 
     </div>
-    <!-- END CONTAINER -->
-    <!-- BEGIN CORE JS FRAMEWORK-->
 
-    <script src="../assets/plugins/jquery-1.8.3.min.js" type="text/javascript"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="../assets/plugins/jquery-ui/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
     <script src="../assets/plugins/boostrapv3/js/bootstrap.min.js" type="text/javascript"></script>
-    <script src="../assets/plugins/breakpoints.js" type="text/javascript"></script>
-    <script src="../assets/plugins/jquery-unveil/jquery.unveil.min.js" type="text/javascript"></script>
-    <!-- END CORE JS FRAMEWORK -->
-    <!-- BEGIN PAGE LEVEL JS -->
 
-    <script src="../assets/plugins/pace/pace.min.js" type="text/javascript"></script>
-    <script src="../assets/plugins/jquery-scrollbar/jquery.scrollbar.min.js" type="text/javascript"></script>
-    <script src="../assets/plugins/jquery-block-ui/jqueryblockui.js" type="text/javascript"></script>
-    <script src="../assets/plugins/jquery-sparkline/jquery-sparkline.js"></script>
-    <script src="../assets/plugins/jquery-numberAnimate/jquery.animateNumbers.js" type="text/javascript"></script>
-    <script src="../assets/plugins/jquery-datatable/js/jquery.dataTables.min.js" type="text/javascript"></script>
-    <script src="../assets/plugins/jquery-datatable/extra/js/dataTables.tableTools.min.js" type="text/javascript">
-    </script>
-    <script type="text/javascript" src="../assets/plugins/datatables-responsive/js/datatables.responsive.js"></script>
-    <script type="text/javascript" src="../assets/plugins/datatables-responsive/js/lodash.min.js"></script>
-    <script src="../assets/js/datatables.js" type="text/javascript"></script>
-    <!-- END PAGE LEVEL PLUGINS -->
 
-    <!-- BEGIN CORE TEMPLATE JS -->
-
-    <script src="../assets/js/core.js" type="text/javascript"></script>
-    <script src="../assets/js/chat.js" type="text/javascript"></script>
-    <script src="../assets/js/demo.js" type="text/javascript"></script>
-    <!-- END CORE TEMPLATE JS -->
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap.min.js"></script>
+   
 
     <!--funcion que servira para mostrar el registro en el modal cuando el usuario la seleccione-->
     <?php if($mostrarCloseModal) {?>
@@ -275,6 +269,22 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
     $('#closeModal').modal('show');
     </script>
     <?php }?>
+
+    <script>
+    $(document).ready(function() {
+        $('#manage-campaing').DataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+            },
+            /**
+            Sirve para exportar a csv excel pdf o imprimir
+            dom: 'Blfrtip',
+            buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]**/
+        });
+    });
+    </script>
 </body>
 
 </html>

@@ -198,6 +198,7 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
                         </div>
                         <div class="modal-body text-center">
                             <h4>Listo!</h4>
+                            <br>
                             <p>El estado se ha registrado correctamente.</p>
                             <button class="btn btn-success" data-dismiss="modal"><span>Aceptar</span> <i
                                     class="material-icons">&#xE5C8;</i></button>

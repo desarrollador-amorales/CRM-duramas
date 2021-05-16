@@ -35,74 +35,59 @@ exit();
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta content="" name="description" />
     <meta content="" name="author" />
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="../assets/css/style-login-admin.css" rel="stylesheet" type="text/css" />
+    <!------ Include the above in your HEAD tag ---------->
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css'
+        integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
 
-    <link href="../assets/plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css" media="screen" />
-    <link href="../assets/plugins/boostrapv3/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="../assets/plugins/boostrapv3/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
-    <link href="../assets/plugins/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css" />
-    <link href="../assets/css/animate.min.css" rel="stylesheet" type="text/css" />
-    <link href="../assets/css/style.css" rel="stylesheet" type="text/css" />
-    <link href="../assets/css/responsive.css" rel="stylesheet" type="text/css" />
-    <link href="../assets/css/custom-icon-set.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
 
 </head>
 
 <body class="error-body no-top">
-<div class="container">
-        <div class="row login-container column-seperation">
-            <div class="col-md-5 col-md-offset-1">
-                <h1>CRM Admin Duramas</h1>
 
-                <br>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-2"></div>
+            <div class="col-lg-6 col-md-8 login-box">
+                <div class="col-lg-12 login-key">
+                    <i class="fa fa-key" aria-hidden="true"></i>
+                </div>
+                <div class="col-lg-12 login-title">
+                    ADMIN CRM DURAMAS
+                </div>
 
+                <div class="col-lg-12 login-form ">
+                    <div class="col-lg-12 login-form">
+                        <form id="login-form" class="login-form" action="" method="post">
+                            <div class="form-group animate__animated animate__fadeInUp">
+                                <label class="form-control-label"><b>USUARIO</b></label>
+                                <input type="text" name="email" id="txtusername" class="form-control">
+                            </div>
+                            <div class="form-group animate__animated animate__fadeInDown">
+                                <label class="form-control-label"><b>CONTRASEÑA</b></label>
+                                <input type="password" name="password" id="txtpassword" class="form-control">
+                            </div>
 
-            </div>
-            <div class="col-md-6 "> <br>
-                <form id="login-form" class="login-form" action="" method="post">
-                    <p style="color: #F00"><?php echo $_SESSION['action1'];?><?php echo $_SESSION['action1']="";?></p>
-                    <div class="row">
-                        <div class="form-group col-md-10">
-                            <label class="form-label">Usuario</label>
-                            <div class="controls">
-                                <div class="input-with-icon  right">
-                                    <i class=""></i>
-                                    <input type="text" name="email" id="txtusername" class="form-control">
+                            <div class="col-lg-12 loginbttm">
+                                <div class="col-lg-6 login-btm login-text">
+                                    <!-- Error Message -->
+                                </div>
+                                <div class="col-lg-6 login-btm login-button">
+                                    <button type="submit" name="login" class="btn btn-outline-primary">LOGIN</button>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
-                    <div class="row">
-                        <div class="form-group col-md-10">
-                            <label class="form-label">Contraseña</label>
-                            <span class="help"></span>
-                            <div class="controls">
-                                <div class="input-with-icon  right">
-                                    <i class=""></i>
-                                    <input type="password" name="password" id="txtpassword" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-10">
-                            <button class="btn btn-primary btn-cons pull-right" name="login"
-                                type="submit">Login</button>
-                        </div>
-                    </div>
-                </form>
+                </div>
+                <div class="col-lg-3 col-md-2"></div>
             </div>
-
-
         </div>
     </div>
-    <script src="assets/plugins/jquery-1.8.3.min.js" type="text/javascript"></script>
-    <script src="assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-    <script src="assets/plugins/pace/pace.min.js" type="text/javascript"></script>
-    <script src="assets/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
-    <script src="assets/js/login.js" type="text/javascript"></script>
-    <script type="text/javascript" src="js/highcharts.js"></script>
-    <script type="text/javascript" src="js/exporting.js"></script>
 </body>
 
 </html>

@@ -124,31 +124,33 @@ exit();
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta content="" name="description" />
     <meta content="" name="author" />
-    <link href="assets/plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css" media="screen" />
-    <link href="assets/plugins/boostrapv3/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="assets/plugins/boostrapv3/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
-    <link href="assets/plugins/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css" />
-    <link href="assets/css/animate.min.css" rel="stylesheet" type="text/css" />
-    <link href="assets/css/style.css" rel="stylesheet" type="text/css" />
-    <link href="assets/css/responsive.css" rel="stylesheet" type="text/css" />
-    <link href="assets/css/custom-icon-set.css" rel="stylesheet" type="text/css" />
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="assets/css/style-login-user.css" rel="stylesheet" type="text/css" />
+    <!------ Include the above in your HEAD tag ---------->
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css'
+        integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
 </head>
-
+<!--
 <body class="error-body no-top">
     <div class="container">
         <div class="row login-container column-seperation">
             <div class="col-md-5 col-md-offset-1">
                 <h2>Acceder a CRM Duramas</h2>
-                <!--<p>
+                <p>
                     <a href="registration.php">Registrate Ahora!</a> ...
-                </p>-->
+                </p>
                 <br>
 
 
             </div>
             <div class="col-md-5 "> <br>
-                <p style="color:#F00"><?php echo $_SESSION['action1'];?><?php echo $_SESSION['action1']="";?></p>
+                <p style="color:#F00">/p>
                 <form id="login-form" class="login-form" action="" method="post">
                     <div class="row">
                         <div class="form-group col-md-10">
@@ -179,7 +181,7 @@ exit();
                         <div class="control-group  col-md-10">
                             <!--<div class="checkbox checkbox check-success"> <a href="forgot-password.php">Olvido su
                                     Contraseña</a>&nbsp;&nbsp;
-                            </div>-->
+                            </div>
                         </div>
                     </div>
                     <div class="row">
@@ -199,6 +201,35 @@ exit();
     <script src="assets/plugins/pace/pace.min.js" type="text/javascript"></script>
     <script src="assets/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
     <script src="assets/js/login.js" type="text/javascript"></script>
+</body>-->
+
+<body class="main-bg">
+    <div class="login-container text-c animate__animated animate__flipInX">
+        <div>
+            <h1 class="logo-badge text-whitesmoke"><span class="fa fa-user-circle"></span></h1>
+        </div>
+        <h3 class="text-whitesmoke">CRM DURAMAS</h3>
+        <p class="text-whitesmoke">Iniciar Sesion</p>
+        <div class="container-content">
+            <form id="login-form" class="margin-t" action="" method="post">
+                <div class="form-group">
+                    <input type="email" name="email" id="txtusername" placeholder="Usuario" class="form-control"
+                        required="true">
+                </div>
+                <div class="form-group">
+                    <input type="password" name="password" id="txtpassword" placeholder="*****" class="form-control"
+                        required="true">
+                </div>
+                <button type="submit" name="login" class="form-button button-l margin-b">Acceder</button>
+                <!--<a class="text-darkyellow" href="#"><small>Forgot your password?</small></a>
+                <p class="text-whitesmoke text-center"><small>Do not have an account?</small></p>
+                <a class="text-darkyellow" href="#"><small>Sign Up</small></a>-->
+            </form>
+            <p class="margin-t text-whitesmoke"><small> Sistemas Duramas &copy; 2021</small> </p>
+        </div>
+    </div>
+
 </body>
+
 
 </html>

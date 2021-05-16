@@ -222,6 +222,7 @@ $userid=$_GET['id'];
                         </div>
                         <div class="modal-body text-center">
                             <h4>Listo!</h4>
+                            <br>
                             <p>El usuario se actualizo correctamente.</p>
                             <button class="btn btn-success" data-dismiss="modal"
                             onclick="location.href='manage-users.php'"

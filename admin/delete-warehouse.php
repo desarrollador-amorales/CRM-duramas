@@ -1,6 +1,7 @@
 <?php
 session_start();
-
+include("checklogin.php");
+check_login();
 include("dbconnection.php");
 
 if (isset($_GET['id_warehouse_gen'])) {
@@ -72,6 +73,7 @@ if (isset($_GET['id_warehouse_gen'])) {
                         </div>
                         <div class="modal-body text-center">
                             <h4>Listo!</h4>
+                            <br>
                             <p>El local fue eliminado correctamente.</p>
                             <button class="btn btn-success" data-dismiss="modal"
                             onclick="location.href='manage-warehouse.php'"

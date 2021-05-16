@@ -16,17 +16,12 @@ $error=array();
 
 $accionAgregar =""; // manera para habilitar los botones
 //$accionModificar=$accionEliminar=$accionCancelar="disabled"; //manera para desahilitar los botones
-$mostrarCloseModal=false;
 
 switch($accion){ // evalua las acciones que envia el formulario al presionar los botones del mismo..
     case 'btnAgregar':
-
-
         mysqli_query($con,"insert into contact(name,email,mobile,name_warehouse) values('$name','$email','$mobile','$city')");
-
         //header('#');
         $mostrarCloseModal=true;
-
         //echo "Presionaste btnAgregar";
     break;
 }
@@ -59,6 +54,13 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap.min.css">
     <link rel="stylesheet" type="text/css"
         href="https://cdn.datatables.net/buttons/1.6.5/css/buttons.dataTables.min.css">
+
+    <!-- nuevo alerta-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <!--nuevo fin-->
 
 </head>
 
@@ -117,15 +119,15 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
                                     <input type="text" class="form-control" id="name" name="name" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="email" class="control-label">Correo Electronico:</label>
+                                    <label for="email" class="control-label"><b>Correo Electronico:</b></label>
                                     <input type="email" class="form-control" id="email" name="email" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="mobile" class="control-label">Telefono:</label>
+                                    <label for="mobile" class="control-label"><b>Telefono:</b></label>
                                     <input type="text" class="form-control" id="mobile" name="mobile" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="name_warehouse" class="control-label">Local:</label>
+                                    <label for="name_warehouse" class="control-label"><b>Local:</b></label>
                                     <select class="form-control" id="selectCity" name="city" required>
                                         <option value="">Seleccione</option>
                                         <?php 
@@ -153,20 +155,23 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
 
 
             <!--Modal aviso-->
-            <div class="modal" id="closeModal" tabindex="-1" ole="dialog">
-                <div class="modal-dialog" role="document">
+
+            <div id="registerData" class="modal fade">
+                <div class="modal-dialog modal-confirm">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                            <h2 class="modal-title">CRM Duramas</h2>
+                        <div class="modal-header justify-content-center">
+                            <div class="icon-box">
+                                <i class="material-icons">&#xE876;</i>
+                            </div>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
-                        <div class="modal-body">
-                            <p>El Contacto fue registrado con exito!.</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <div class="modal-body text-center">
+                            <h4>Listo!</h4>
+                            <br>
+                            <p>El contacto se registro correctamente.</p>
+                            <button class="btn btn-success" data-dismiss="modal"
+                                onclick="location.href='#'"><span>Aceptar</span> <i
+                                    class="material-icons">&#xE5C8;</i></button>
                         </div>
                     </div>
                 </div>
@@ -256,12 +261,11 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
     </div>
 
     </div>
-    <script src="../assets/plugins/jquery-1.8.3.min.js" type="text/javascript"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="../assets/plugins/jquery-ui/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
     <script src="../assets/plugins/boostrapv3/js/bootstrap.min.js" type="text/javascript"></script>
 
-    <!--incio nuevo-->
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <!--incio nuevo -->
 
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script>
@@ -272,11 +276,10 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
     <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.print.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap.min.js"></script>
 
-
     <!--funcion que servira para mostrar el registro en el modal cuando el usuario la seleccione-->
     <?php if($mostrarCloseModal) {?>
     <script>
-    $('#closeModal').modal('show');
+    $('#registerData').modal('show');
     </script>
     <?php }?>
 
@@ -285,7 +288,7 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
         $('#manage-contacts').DataTable({
             "language": {
                 "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
-            }, 
+            },
             /**
             Sirve para exportar a csv excel pdf o imprimir
             dom: 'Blfrtip',
