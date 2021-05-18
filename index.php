@@ -29,6 +29,8 @@ if($num>0)
     $mac=substr($mycom,($pmac+36),17);
     $ret=mysqli_query($con,"insert into usercheck(logindate,logintime,user_id,username,email,ip,mac,city,country)values('".$val3."','".$tim."','".$_SESSION['id']."','".$_SESSION['name']."','".$_SESSION['login']."','$ip_address','$mac','$city','$country')");
     
+    $row_status=mysqli_query($con,"select name from status where order_status = 1");
+    $status_initial_res=mysqli_fetch_array($row_status);
     //empieza la distribucion de los leads pendientes a los asesores y su actualizacion
     $name_warehouse_user=mysqli_query($con,"SELECT name_warehouse FROM user_warehouse where id_user = '".$num['id']."' order by name_warehouse");
     //echo 'contador de ciudades'.$name_warehouse_user->num_rows;
@@ -61,9 +63,14 @@ if($num>0)
             while($user= mysqli_fetch_array($list_users)){
 
                 if($contUserLoop == $contUser){
-                    //asignar y actualizar a la tabla de leads
+                    //asignar y actualizar a la tabla de leads, tambien llenar la tabla contactos
                     //echo 'El cliente '.$lead['name_lead'].' fue asignado a el usuario '.$user['name'];                   
-                    //mysqli_query($con,"update lead set status='A' where id_lead_gen='".$lead['id_lead_gen']."'");
+                    mysqli_query($con,"insert into tracking_lead(name_lead,mobile_number,city_warehouse,email_lead,user_name,email_user_name,date_create,platform,form_id,status_name)
+                    values('".$lead['name_lead']."','".$lead['mobile_number']."','".$lead['city_warehouse']."','".$lead['email']."','".$user['name']."','".$user['email']."','".$lead['date_create']."','".$lead['platform']."','".$lead['form_id']."','".$status_initial_res['name']."')");
+                    
+                    mysqli_query($con,"insert into contact (name,email,mobile,name_warehouse)values('".$lead['name_lead']."','".$lead['email']."','".$lead['mobile_number']."','".$lead['city_warehouse']."')");
+                   
+                    mysqli_query($con,"update lead set status='A' where id_lead_gen='".$lead['id_lead_gen']."'");
                     //echo "<br>";
                     break;
                }

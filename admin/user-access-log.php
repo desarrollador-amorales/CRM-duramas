@@ -107,14 +107,14 @@ check_login();
                                         <br>
                                         <th>#</th>
                                         <th>#Uid</th>
-                                        <th>User Name</th>
+                                        <th>Usuario</th>
                                         <th>Fecha Login</th>
                                         <th>Hora Login</th>
                                         <th>Email </th>
                                         <th>IP</th>
                                         <th>Mac id</th>
-                                        <th>City </th>
-                                        <th>Country </th>
+                                        <th>Ciudad</th>
+                                        <th>Pais</th>
                                     </tr>
                                 </thead>
                             </table>

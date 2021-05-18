@@ -4,6 +4,7 @@ include("checklogin.php");
 check_login();
 include("dbconnection.php");
 
+$mostrarUpdateModal=false;
 if(isset($_POST['update']))
 {
 $name=$_POST['name'];

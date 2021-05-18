@@ -6,13 +6,15 @@
           <div class="iconset top-menu-toggle-white"></div>
           </a> </li>
       </ul>
-      <a href="dashboard.php" style="color:#FFF; font-size:24px; margin-top:20%;">CRM | Duramas</a>
+      <br>
+      <a href="dashboard.php" style="color:#FFF; font-size:24px;  padding: 10px 30px;">CRM | Duramas</a>
+      <!-- icono para escritorio
       <ul class="nav pull-right notifcation-center">
         <li class="dropdown" id="header_task_bar"> <a href="dashboard.php" class="dropdown-toggle active" data-toggle="">
           <div class="iconset top-home"></div>
           </a> </li>
       
-      </ul>
+      </ul>-->
     </div>
     <div class="header-quick-nav" >
       <div class="pull-left">

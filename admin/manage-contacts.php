@@ -8,7 +8,7 @@ $name=(isset($_POST['name']))?$_POST['name']:"";
 $email=(isset($_POST['email']))?$_POST['email']:"";
 $mobile=(isset($_POST['mobile']))?$_POST['mobile']:"";
 $city=(isset($_POST['city']))?$_POST['city']:"";
-//$txt_parent_category=(isset($_POST['txt_parent_category']))?$_POST['txt_parent_category']:null;
+$mostrarCloseModal=false;
 
 $accion=(isset($_POST['accion']))?$_POST['accion']:""; // validar si accion tiene valor.
 

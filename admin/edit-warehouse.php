@@ -1,10 +1,10 @@
 <?php
 session_start();
-//include("checklogin.php");
-//check_login();
+include("checklogin.php");
+check_login();
 include("dbconnection.php");
 
-//$mostrarUpdateModal=false;
+$mostrarUpdateModal=false;
 if(isset($_POST['update']))
 {
 $name=$_POST['name'];
