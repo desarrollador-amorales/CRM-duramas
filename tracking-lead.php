@@ -152,7 +152,7 @@ if(isset($_GET['status_name'])){
 												?>
                                     <tr>
                                         <td>
-                                            <form action="" method="post" enctype="multipart/form-data">
+                                            <form action="" method="post">
 
                                                 <input type="hidden" id="tracking_lead_id" name="tracking_lead_id"
                                                     class="form-control"
@@ -228,7 +228,7 @@ if(isset($_GET['status_name'])){
                                                         role="tab" data-toggle="tab"><b>Notas</b></a>
 
                                                 </li>
-                                                <li role="presentation"><a href="#browseTab" aria-controls="browseTab"
+                                                <li role="presentation"><a href="#estadoTab" aria-controls="estadoTab"
                                                         role="tab" data-toggle="tab"><b>Estados</b></a>
 
                                                 </li>
@@ -332,12 +332,13 @@ if(isset($_GET['status_name'])){
                                                             </div>
                                                             <div class="col-12 text-center mb-4">
                                                                 <button type="submit" class="btn btn-sm btn-info"
-                                                                    name="save_note" id="save_note">Guardar</button>
+                                                                    name="save_note" id="save_note"><i
+                                                                        class="fa fa-save"></i> Guardar</button>
                                                             </div>
                                                             <!--</form>-->
                                                             <hr>
                                                             <div class="col-12 pl-0 pr-0">
-                                                                <h4 class="p-2 mb-0 text-center text-black">
+                                                                <h4 class=" bg-info p-2 mb-0 text-center text-black">
                                                                     <b>HISTORIAL</b>
                                                                 </h4>
                                                                 <div class="table-responsive">
@@ -349,8 +350,6 @@ if(isset($_GET['status_name'])){
                                                                                 <th><b>Nota</b></th>
                                                                             </tr>
                                                                         </thead>
-                                                                        <!-- <tbody id="notasHistorial">
-                                                                        </tbody>-->
                                                                     </table>
                                                                 </div>
                                                             </div>
@@ -358,12 +357,68 @@ if(isset($_GET['status_name'])){
                                                     </div>
 
                                                 </div>
+
+                                                <div role="tabpanel" class="tab-pane" id="estadoTab">
+                                                    <div class="row">
+                                                        <div class="col-12 text-center">
+                                                            <input type="hidden" name="tracking_lead_id_gen"
+                                                                id="tracking_lead_id_gen"
+                                                                value="<?php echo $id_tracking_lead;?>" readonly="">
+
+                                                            <input type="hidden" name="user_name" id="user_name"
+                                                                value="<?php echo $_SESSION['name'];?>" readonly="">
+
+                                                            <div class="form-group">
+                                                                <label for="estado"
+                                                                    class="control-label"><b>Estado</b></label>
+                                                                <select class="form-control width-250px ml-auto mr-auto"
+                                                                    name="estado" id="estado" require>
+                                                                    <option value=""></option>
+                                                                    <?php 
+                                                                    $rt=mysqli_query($con,"select * from status where status = 1");
+                                                                    
+                                                                    while($status_campaing= mysqli_fetch_array($rt)) {?>
+                                                                    <option
+                                                                        value="<?php echo $status_campaing['name'];?>">
+                                                                        <?php echo $status_campaing['name'];?>
+                                                                    </option>
+                                                                    <?php }?>
+
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-12 text-center mb-4">
+                                                                <button type="submit" class="btn btn-sm btn-info"
+                                                                    name="save_status" id="save_status"><i
+                                                                        class="fa fa-save"></i> Guardar</button>
+                                                            </div>
+                                                        </div>
+                                                        <hr>
+                                                        <div class="col-12">
+                                                            <h4 class="bg-info p-25 mb-0 text-center text-black">
+                                                                <b>HISTORIAL</b>
+                                                            </h4>
+                                                            <div class="table-responsive">
+                                                                <table class="table" id="table-lead-status">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Fecha</th>
+                                                                            <th>Usuario</th>
+                                                                            <th>Estado</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-sm btn-light" data-dismiss="modal"><i
-                                                class="fa fa-reply"></i> Cerrar</button>
+                                        <button type="button" class="btn btn-sm btn-light" class="close"
+                                            data-dismiss="modal"><i class="fa fa-reply"></i> Cerrar</button>
+
                                     </div>
                                 </div>
                             </div>
@@ -374,8 +429,6 @@ if(isset($_GET['status_name'])){
             </div>
 
         </div>
-
-        <div class="addNewRow"></div>
     </div>
     <!-- BEGIN CHAT -->
 
@@ -389,12 +442,6 @@ if(isset($_GET['status_name'])){
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     <script src="https://cdn.datatables.net/datetime/1.0.3/js/dataTables.dateTime.min.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.print.min.js"></script>
 
 
 
@@ -444,9 +491,11 @@ if(isset($_GET['status_name'])){
     });
     </script>
 
+
+
     <script>
-    
-    function save_and_load_data(note_description,user_name, tracking_lead_id_gen) {
+    /**Incia Funcion para notas */
+    function save_and_load_data(note_description, user_name, tracking_lead_id_gen) {
         var ajax_url = "jquery-ajax-history-notes.php";
 
         $('#table-lead-notes').DataTable({
@@ -454,19 +503,16 @@ if(isset($_GET['status_name'])){
                 [0, "desc"]
             ],
             dom: 'Blfrtip',
-            buttons: [
-                'copy', 'csv', 'excel', 'pdf', 'print'
-            ],
+            "aoColumnDefs": [{
+                "bSortable": false,
+                "aTargets": [0, 1, 2]
+            }],
             "processing": false,
             "serverSide": true,
             "stateSave": false,
-            "cache":false,
             "bFilter": false,
             "paging": false,
-            "lengthMenu": [
-                [5, 10, 25, 50, 100, -1],
-                [5, 10, 25, 50, 100, "Todo"]
-            ],
+            "autoWidth": false,
             "ajax": {
                 "url": ajax_url,
                 "dataType": "json",
@@ -498,11 +544,14 @@ if(isset($_GET['status_name'])){
 
     var user_name = $("#user_name").val();
     var tracking_lead_id_gen = $("#tracking_lead_id_gen").val();
+
     $('#table-lead-notes').DataTable().destroy(); // reinicializa la tabla
-    save_and_load_data("",user_name, tracking_lead_id_gen); // first load
+    save_and_load_data("", user_name, tracking_lead_id_gen); // first load
+
 
 
     $("#save_note").click(function() {
+
         //var user_name = $("#user_name").val();
         var tracking_lead_id_gen = $("#tracking_lead_id_gen").val();
         //var note_description = $("#note_description").val();
@@ -513,17 +562,112 @@ if(isset($_GET['status_name'])){
             alert("Debe ingresar su nota");
             $("#note_description").focus();
             $('#table-lead-notes').DataTable().destroy(); // reinicializa la tabla
-            save_and_load_data("",user_name, tracking_lead_id_gen);
+            save_and_load_data("", user_name, tracking_lead_id_gen);
         } else {
             $('#table-lead-notes').DataTable().destroy(); // reinicializa la tabla
             save_and_load_data(note_description, user_name, tracking_lead_id_gen);
             document.getElementById("note_description").value = "";
             $("#note_description").focus();
-
-            $('#table-lead-notes').DataTable().destroy(); // reinicializa la tabla
-            save_and_load_data("",user_name, tracking_lead_id_gen);
         }
-        
+
+    });
+    //Termina Funcion para notas
+    </script>
+
+
+
+
+    <script>
+    /**Inicia Funcion para estados */
+    function save_and_load_data_status(estado, user_name, tracking_lead_id_gen) {
+        var ajax_url = "jquery-ajax-history-status.php";
+
+        $('#table-lead-status').DataTable({
+            "order": [
+                [0, "desc"]
+            ],
+            dom: 'Blfrtip',
+            "aoColumnDefs": [{
+                "bSortable": false,
+                "aTargets": [0, 1, 2]
+            }],
+            "processing": false,
+            "serverSide": true,
+            "stateSave": false,
+            "bFilter": false,
+            "paging": false,
+            "autoWidth": false,
+            "ajax": {
+                "url": ajax_url,
+                "dataType": "json",
+                "type": "POST",
+                "data": {
+                    "action": "fetch_status_lead",
+                    "estado": estado,
+                    "user_name": user_name,
+                    "tracking_lead_id_gen": tracking_lead_id_gen
+                },
+
+                "dataSrc": "records"
+            },
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+            },
+            "columns": [{
+                    "data": "date_create"
+                },
+                {
+                    "data": "user_name"
+                },
+                {
+                    "data": "estado"
+                }
+            ]
+        });
+    }
+
+    var user_name = $("#user_name").val();
+    var tracking_lead_id_gen = $("#tracking_lead_id_gen").val();
+
+    $('#table-lead-status').DataTable().destroy(); // reinicializa la tabla
+    save_and_load_data_status("", user_name, tracking_lead_id_gen); // first load
+
+    $("#save_status").click(function() {
+        var estado = $("#estado").val();
+        var tracking_lead_id_gen = $("#tracking_lead_id_gen").val();
+        var user_name = $("input[name='user_name']").val();
+
+
+        if (estado == "") {
+            alert("Debe seleccionar un estado de la lista");
+            $("#note_description").focus();
+            $('#table-lead-status').DataTable().destroy(); // reinicializa la tabla
+            save_and_load_data_status("", user_name, tracking_lead_id_gen);
+        } else {
+            $('#table-lead-status').DataTable().destroy(); // reinicializa la tabla
+            save_and_load_data_status(estado, user_name, tracking_lead_id_gen);
+            document.getElementById("estado").value = "";
+            //$("#estado").focus();
+        }
+
+    });
+    /**Termina Funcion para estados */
+    </script>
+
+    <script>
+    /**Inicia funcion para facturas */
+    
+    
+    /**Termina funcion para facturas */
+
+    </script>
+
+
+    <script>
+    $('#myModal').on('hidden.bs.modal', function() {
+        //Para recargar la página descartando los datos POST (realizar una solicitud GET)
+        window.location.href = window.location.href;
+        //Para recargar la página manteniendo los datos POST use window.location.reload();
     });
     </script>
 
@@ -533,7 +677,8 @@ if(isset($_GET['status_name'])){
     </script>
     <?php }?>
 
-    <!--fin de lo nuevo-->
+
+
 
 </body>
 

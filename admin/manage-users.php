@@ -266,7 +266,7 @@ if(isset($_POST['submit']))
                                                         </button>
 
 
-                                                        <button type="button" class="btn btn-danger btn-sm px-3"
+                                                        <button type="button" class="btn btn-danger btn-xs"
                                                             data-toggle="tooltip" data-placement="top"
                                                             title="Eliminar Registro"
                                                             onclick="location.href='delete-user.php?id=<?php echo $row['id'];?>'"><i
@@ -321,6 +321,7 @@ if(isset($_POST['submit']))
     <script>
     $(document).ready(function() {
         $('#manage-users').DataTable({
+            "scrollX": true,
             "language": {
                 "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
             },
