@@ -188,7 +188,12 @@ if(isset($_GET['status_name'])){
                                         <td><strong><?php echo $row['name_lead'];?></strong></td>
                                         <td><strong><?php echo $row['mobile_number'];?></strong></td>
                                         <td><strong><?php echo $row['city_warehouse'];?></strong></td>
-                                        <td><strong><?php echo $row['platform'];?></strong></td>
+                                        <?php if ($row['platform'] == 'fb'){ ?>
+                                            <td><strong><i class="fa fa-facebook-square" style="font-size:30px;"></i></strong></td>
+                                        <?php }?>
+                                        <?php if ($row['platform'] == 'ig'){ ?>
+                                            <td><strong><i class="fa fa-instagram" style="font-size:30px;"></i></strong></td>
+                                        <?php }?>
                                         <td><strong><?php echo $name_campaing['description'];?></strong></td>
                                         <td><strong><?php echo $row['proforma'];?></strong></td>
                                         <td><strong><?php echo $row['proforma_total'];?></strong></td>
@@ -232,12 +237,14 @@ if(isset($_GET['status_name'])){
                                                         role="tab" data-toggle="tab"><b>Estados</b></a>
 
                                                 </li>
-                                                <li role="presentation"><a href="#browseTab" aria-controls="browseTab"
-                                                        role="tab" data-toggle="tab"><b>Proformas</b></a>
+                                                <li role="presentation"><a href="#proformasTab"
+                                                        aria-controls="proformasTab" role="tab"
+                                                        data-toggle="tab"><b>Proformas</b></a>
 
                                                 </li>
-                                                <li role="presentation"><a href="#browseTab" aria-controls="browseTab"
-                                                        role="tab" data-toggle="tab"><b>Facturas</b></a>
+                                                <li role="presentation"><a href="#facturasTab"
+                                                        aria-controls="facturasTab" role="tab"
+                                                        data-toggle="tab"><b>Facturas</b></a>
 
                                                 </li>
                                                 <li role="presentation"><a href="#browseTab" aria-controls="browseTab"
@@ -317,7 +324,6 @@ if(isset($_GET['status_name'])){
                                                 <div role="tabpanel" class="tab-pane" id="notasTab">
                                                     <div class="row">
                                                         <div class="col-12">
-                                                            <!--<form id="frmNota" name="frmNota">-->
                                                             <div class="form-group">
                                                                 <label for="men_not" class="control-label"><b>
                                                                         Agregar nota</b></label>
@@ -335,14 +341,14 @@ if(isset($_GET['status_name'])){
                                                                     name="save_note" id="save_note"><i
                                                                         class="fa fa-save"></i> Guardar</button>
                                                             </div>
-                                                            <!--</form>-->
                                                             <hr>
                                                             <div class="col-12 pl-0 pr-0">
                                                                 <h4 class=" bg-info p-2 mb-0 text-center text-black">
                                                                     <b>HISTORIAL</b>
                                                                 </h4>
                                                                 <div class="table-responsive">
-                                                                    <table class="table" id="table-lead-notes">
+                                                                    <table class="table table-hover table-condensed"
+                                                                        id="table-lead-notes">
                                                                         <thead>
                                                                             <tr>
                                                                                 <th><b>Fecha</b></th>
@@ -398,7 +404,9 @@ if(isset($_GET['status_name'])){
                                                                 <b>HISTORIAL</b>
                                                             </h4>
                                                             <div class="table-responsive">
-                                                                <table class="table" id="table-lead-status">
+                                                                <table class="table table-hover table-condensed"
+                                                                    id="table-lead-status">
+                                                                    <!--Tipo de tabla diferemte table table-striped -->
                                                                     <thead>
                                                                         <tr>
                                                                             <th>Fecha</th>
@@ -411,7 +419,69 @@ if(isset($_GET['status_name'])){
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div role="tabpanel" class="tab-pane" id="proformasTab">
+                                                    <div class="row">
+                                                        <div class="col-12 text-center">
+                                                            <div class="row">
+                                                                <div class="col-12 col-sm-6 text-center">
 
+                                                                    <input type="hidden" name="tracking_lead_id_gen"
+                                                                        id="tracking_lead_id_gen"
+                                                                        value="<?php echo $id_tracking_lead;?>"
+                                                                        readonly="">
+
+                                                                    <input type="hidden" name="user_name" id="user_name"
+                                                                        value="<?php echo $_SESSION['name'];?>"
+                                                                        readonly="">
+
+
+                                                                    <div class="form-group">
+                                                                        <label for="pro_num"
+                                                                            class="control-label"><b>Número</b></label>
+                                                                        <input type="text" name="pro_num" id="pro_num"
+                                                                            class="form-control text-center">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-12 col-sm-6 text-center">
+                                                                    <div class="form-group">
+                                                                        <label for="pro_val"
+                                                                            class="control-label"><b>Valor</b></label>
+                                                                        <input type="number" step="0.01" name="pro_val"
+                                                                            id="pro_val"
+                                                                            class="form-control text-center">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-12 text-center mb-4">
+                                                                    <button type="submit" class="btn btn-sm btn-info"
+                                                                        name="save_proforma" id="save_proforma"><i
+                                                                            class="fa fa-save"></i> Guardar</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <hr>
+                                                        <div class="col-12">
+                                                            <h4 class="bg-info p-25 mb-0 text-center text-black">
+                                                                <b>HISTORIAL</b>
+                                                            </h4>
+                                                            <div class="table-responsive">
+
+                                                                &nbsp; <table class="table table-hover table-condensed"
+                                                                    id="table-lead-proforma">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Fecha</th>
+                                                                            <th>Usuario</th>
+                                                                            <th>Número</th>
+                                                                            <th>Valor</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <!--row-->
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -640,14 +710,12 @@ if(isset($_GET['status_name'])){
 
         if (estado == "") {
             alert("Debe seleccionar un estado de la lista");
-            $("#note_description").focus();
             $('#table-lead-status').DataTable().destroy(); // reinicializa la tabla
             save_and_load_data_status("", user_name, tracking_lead_id_gen);
         } else {
             $('#table-lead-status').DataTable().destroy(); // reinicializa la tabla
             save_and_load_data_status(estado, user_name, tracking_lead_id_gen);
             document.getElementById("estado").value = "";
-            //$("#estado").focus();
         }
 
     });
@@ -655,11 +723,97 @@ if(isset($_GET['status_name'])){
     </script>
 
     <script>
-    /**Inicia funcion para facturas */
-    
-    
-    /**Termina funcion para facturas */
+    /**Inicia funcion para proformas */
 
+    function save_and_load_data_proforma(number_proforma, value_proforma, user_name, tracking_lead_id_gen) {
+        var ajax_url = "jquery-ajax-history-proforma.php";
+
+        $('#table-lead-proforma').DataTable({
+            "order": [
+                [0, "desc"]
+            ],
+            dom: 'Blfrtip',
+            "aoColumnDefs": [{
+                "bSortable": false,
+                "aTargets": [0, 1, 2, 3]
+            }],
+            "processing": false,
+            "serverSide": true,
+            "stateSave": false,
+            "bFilter": false,
+            "paging": false,
+            "autoWidth": false,
+            "ajax": {
+                "url": ajax_url,
+                "dataType": "json",
+                "type": "POST",
+                "data": {
+                    "action": "fetch_proforma_lead",
+                    "number_proforma": number_proforma,
+                    "value_proforma": value_proforma,
+                    "user_name": user_name,
+                    "tracking_lead_id_gen": tracking_lead_id_gen
+                },
+
+                "dataSrc": "records"
+            },
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+            },
+            "columns": [{
+                    "data": "date_create"
+                },
+                {
+                    "data": "user_name"
+                },
+                {
+                    "data": "number_proforma"
+                },
+                {
+                    "data": "value_proforma"
+                }
+            ]
+        });
+    }
+
+    var user_name = $("#user_name").val();
+    var tracking_lead_id_gen = $("#tracking_lead_id_gen").val();
+
+
+    $('#table-lead-proforma').DataTable().destroy(); // reinicializa la tabla
+    save_and_load_data_proforma("", "", user_name, tracking_lead_id_gen); // first load
+
+    $("#save_proforma").click(function() {
+        var number_proforma = $("#pro_num").val();
+        var value_proforma = $("#pro_val").val();
+        var tracking_lead_id_gen = $("#tracking_lead_id_gen").val();
+        var user_name = $("input[name='user_name']").val();
+
+
+        if (number_proforma == "") {
+            alert("Debe ingresar un numero de proforma");
+            $("#pro_num").focus();
+            $('#table-lead-proforma').DataTable().destroy(); // reinicializa la tabla
+            save_and_load_data_proforma("", "", user_name, tracking_lead_id_gen);
+        } else {
+            if (value_proforma == "") {
+                alert("Debe ingresar un valor para la proforma");
+            $("#pro_val").focus();
+            $('#table-lead-proforma').DataTable().destroy(); // reinicializa la tabla
+            save_and_load_data_proforma("", "", user_name, tracking_lead_id_gen);
+            } else {
+                $('#table-lead-proforma').DataTable().destroy(); // reinicializa la tabla
+                save_and_load_data_proforma(number_proforma,value_proforma, user_name, tracking_lead_id_gen);
+                document.getElementById("pro_num").value = "";
+                document.getElementById("pro_val").value = "";
+            }
+        }
+
+
+
+
+    });
+    /**Termina funcion para proformas */
     </script>
 
 

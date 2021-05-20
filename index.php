@@ -158,7 +158,7 @@ exit();
                         required="true">
                 </div>
                 <div class="form-group">
-                    <input type="password" name="password" id="txtpassword" placeholder="*****" class="form-control"
+                    <input type="password" name="password" id="txtpassword" placeholder="********" class="form-control"
                         required="true">
                 </div>
                 <button type="submit" name="login" class="form-button button-l margin-b">Acceder</button>

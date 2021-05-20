@@ -244,11 +244,11 @@ check_login();
 									}
                                     }
 
-								//print_r($month_array);
-								$results = mysqli_query($con,"SELECT logindate FROM usercheck");
-					                //$f2=mysql_num_rows($a2);
-									
-                                    //$month_array2= $month_array;
+                                $initial_date = date("Y-m-01"); //fecha inicio de mes actual
+                                $final_date = date("Y-m-t"); // fecha fin de mes actual
+								$results = mysqli_query($con,"SELECT logindate FROM usercheck where logindate between '".$initial_date."' and '".$final_date."'");
+
+									//$month_array2= $month_array;
 									if(mysqli_num_rows($results) >0)
 									{
                                                                                
