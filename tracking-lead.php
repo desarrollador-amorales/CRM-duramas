@@ -29,8 +29,6 @@ if(isset($_GET['status_name'])){
     
 }
 
-
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -64,6 +62,25 @@ if(isset($_GET['status_name'])){
     <link rel="stylesheet" type="text/css"
         href="https://cdn.datatables.net/datetime/1.0.3/css/dataTables.dateTime.min.css">
     <link href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'>
+
+    <!-- Smartsupp Live Chat script -->
+    <script type="text/javascript">
+        var _smartsupp = _smartsupp || {};
+        _smartsupp.key = '3967f769c67279a8c09dd8370b3bb38d41bef63d';
+        window.smartsupp || (function(d) {
+            var s, c, o = smartsupp = function() {
+                o._.push(arguments)
+            };
+            o._ = [];
+            s = d.getElementsByTagName('script')[0];
+            c = d.createElement('script');
+            c.type = 'text/javascript';
+            c.charset = 'utf-8';
+            c.async = true;
+            c.src = 'https://www.smartsuppchat.com/loader.js?';
+            s.parentNode.insertBefore(c, s);
+        })(document);
+    </script>
 
 </head>
 
@@ -189,10 +206,12 @@ if(isset($_GET['status_name'])){
                                         <td><strong><?php echo $row['mobile_number'];?></strong></td>
                                         <td><strong><?php echo $row['city_warehouse'];?></strong></td>
                                         <?php if ($row['platform'] == 'fb'){ ?>
-                                            <td><strong><i class="fa fa-facebook-square" style="font-size:30px;"></i></strong></td>
+                                        <td><strong><i class="fa fa-facebook-square"
+                                                    style="font-size:30px;"></i></strong></td>
                                         <?php }?>
                                         <?php if ($row['platform'] == 'ig'){ ?>
-                                            <td><strong><i class="fa fa-instagram" style="font-size:30px;"></i></strong></td>
+                                        <td><strong><i class="fa fa-instagram" style="font-size:30px;"></i></strong>
+                                        </td>
                                         <?php }?>
                                         <td><strong><?php echo $name_campaing['description'];?></strong></td>
                                         <td><strong><?php echo $row['proforma'];?></strong></td>
@@ -245,10 +264,6 @@ if(isset($_GET['status_name'])){
                                                 <li role="presentation"><a href="#facturasTab"
                                                         aria-controls="facturasTab" role="tab"
                                                         data-toggle="tab"><b>Facturas</b></a>
-
-                                                </li>
-                                                <li role="presentation"><a href="#browseTab" aria-controls="browseTab"
-                                                        role="tab" data-toggle="tab"><?php echo $_SESSION['name'];?></a>
 
                                                 </li>
                                             </ul>
@@ -478,9 +493,69 @@ if(isset($_GET['status_name'])){
                                                                 </table>
                                                             </div>
                                                         </div>
-
                                                     </div>
-                                                    <!--row-->
+                                                </div>
+
+                                                <div role="tabpanel" class="tab-pane" id="facturasTab">
+                                                    <div class="row">
+                                                        <div class="col-12 text-center">
+                                                            <div class="row">
+                                                                <div class="col-12 col-sm-6 text-center">
+
+                                                                    <input type="hidden" name="tracking_lead_id_gen"
+                                                                        id="tracking_lead_id_gen"
+                                                                        value="<?php echo $id_tracking_lead;?>"
+                                                                        readonly="">
+
+                                                                    <input type="hidden" name="user_name" id="user_name"
+                                                                        value="<?php echo $_SESSION['name'];?>"
+                                                                        readonly="">
+
+
+                                                                    <div class="form-group">
+                                                                        <label for="fac_num"
+                                                                            class="control-label"><b>Número</b></label>
+                                                                        <input type="text" name="fac_num" id="fac_num"
+                                                                            class="form-control text-center">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-12 col-sm-6 text-center">
+                                                                    <div class="form-group">
+                                                                        <label for="fac_val"
+                                                                            class="control-label"><b>Valor</b></label>
+                                                                        <input type="number" step="0.01" name="fac_val"
+                                                                            id="fac_val"
+                                                                            class="form-control text-center">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-12 text-center mb-4">
+                                                                    <button type="submit" class="btn btn-sm btn-info"
+                                                                        name="save_factura" id="save_factura"><i
+                                                                            class="fa fa-save"></i> Guardar</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <hr>
+                                                        <div class="col-12">
+                                                            <h4 class="bg-info p-25 mb-0 text-center text-black">
+                                                                <b>HISTORIAL</b>
+                                                            </h4>
+                                                            <div class="table-responsive">
+
+                                                                &nbsp; <table class="table table-hover table-condensed"
+                                                                    id="table-lead-factura">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Fecha</th>
+                                                                            <th>Usuario</th>
+                                                                            <th>Número</th>
+                                                                            <th>Valor</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -560,8 +635,6 @@ if(isset($_GET['status_name'])){
         });
     });
     </script>
-
-
 
     <script>
     /**Incia Funcion para notas */
@@ -798,12 +871,12 @@ if(isset($_GET['status_name'])){
         } else {
             if (value_proforma == "") {
                 alert("Debe ingresar un valor para la proforma");
-            $("#pro_val").focus();
-            $('#table-lead-proforma').DataTable().destroy(); // reinicializa la tabla
-            save_and_load_data_proforma("", "", user_name, tracking_lead_id_gen);
+                $("#pro_val").focus();
+                $('#table-lead-proforma').DataTable().destroy(); // reinicializa la tabla
+                save_and_load_data_proforma("", "", user_name, tracking_lead_id_gen);
             } else {
                 $('#table-lead-proforma').DataTable().destroy(); // reinicializa la tabla
-                save_and_load_data_proforma(number_proforma,value_proforma, user_name, tracking_lead_id_gen);
+                save_and_load_data_proforma(number_proforma, value_proforma, user_name, tracking_lead_id_gen);
                 document.getElementById("pro_num").value = "";
                 document.getElementById("pro_val").value = "";
             }
@@ -814,6 +887,101 @@ if(isset($_GET['status_name'])){
 
     });
     /**Termina funcion para proformas */
+    </script>
+
+
+    <script>
+    /**Inicia funcion para facturas */
+
+    function save_and_load_data_factura(number_factura, value_factura, user_name, tracking_lead_id_gen) {
+        var ajax_url = "jquery-ajax-history-factura.php";
+
+        $('#table-lead-factura').DataTable({
+            "order": [
+                [0, "desc"]
+            ],
+            dom: 'Blfrtip',
+            "aoColumnDefs": [{
+                "bSortable": false,
+                "aTargets": [0, 1, 2, 3]
+            }],
+            "processing": false,
+            "serverSide": true,
+            "stateSave": false,
+            "bFilter": false,
+            "paging": false,
+            "autoWidth": false,
+            "ajax": {
+                "url": ajax_url,
+                "dataType": "json",
+                "type": "POST",
+                "data": {
+                    "action": "fetch_factura_lead",
+                    "number_factura": number_factura,
+                    "value_factura": value_factura,
+                    "user_name": user_name,
+                    "tracking_lead_id_gen": tracking_lead_id_gen
+                },
+
+                "dataSrc": "records"
+            },
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+            },
+            "columns": [{
+                    "data": "date_create"
+                },
+                {
+                    "data": "user_name"
+                },
+                {
+                    "data": "number_factura"
+                },
+                {
+                    "data": "value_factura"
+                }
+            ]
+        });
+    }
+
+    var user_name = $("#user_name").val();
+    var tracking_lead_id_gen = $("#tracking_lead_id_gen").val();
+
+
+    $('#table-lead-factura').DataTable().destroy(); // reinicializa la tabla
+    save_and_load_data_factura("", "", user_name, tracking_lead_id_gen); // first load
+
+    $("#save_factura").click(function() {
+        var number_factura = $("#fac_num").val();
+        var value_factura = $("#fac_val").val();
+        var tracking_lead_id_gen = $("#tracking_lead_id_gen").val();
+        var user_name = $("input[name='user_name']").val();
+
+
+        if (number_factura == "") {
+            alert("Debe ingresar un numero de factura");
+            $("#fac_num").focus();
+            $('#table-lead-factura').DataTable().destroy(); // reinicializa la tabla
+            save_and_load_data_factura("", "", user_name, tracking_lead_id_gen);
+        } else {
+            if (value_factura == "") {
+                alert("Debe ingresar un valor para la factura");
+                $("#fac_val").focus();
+                $('#table-lead-factura').DataTable().destroy(); // reinicializa la tabla
+                save_and_load_data_factura("", "", user_name, tracking_lead_id_gen);
+            } else {
+                $('#table-lead-factura').DataTable().destroy(); // reinicializa la tabla
+                save_and_load_data_factura(number_factura, value_factura, user_name, tracking_lead_id_gen);
+                document.getElementById("fac_num").value = "";
+                document.getElementById("fac_val").value = "";
+            }
+        }
+
+
+
+
+    });
+    /**Termina funcion para facturas */
     </script>
 
 
@@ -830,10 +998,6 @@ if(isset($_GET['status_name'])){
     $('#myModal').modal('show');
     </script>
     <?php }?>
-
-
-
-
 </body>
 
 </html>

@@ -79,6 +79,7 @@ $email_user_name=$_SESSION['login'];
             <div class="page-title">
                 <h3><b>Escritorio</b></h3>
                 <div class="row 2col">
+                <!--Solicitud-->
                     <div class="col-md-3 col-sm-6 spacing-bottom-sm spacing-bottom">
                         <div class="tiles blue added-margin">
                             <div class="tiles-body">
@@ -100,6 +101,7 @@ $email_user_name=$_SESSION['login'];
                         </div>
                     </div>
 
+                    <!--Seguimiento-->
                     <div class="col-md-3 col-sm-6 spacing-bottom-sm spacing-bottom">
                         <div class="tiles black added-margin">
                             <div class="tiles-body">
@@ -121,58 +123,50 @@ $email_user_name=$_SESSION['login'];
                         </div>
                     </div>
 
+                    <!--Concretado-->
                     <div class="col-md-3 col-sm-6 spacing-bottom-sm spacing-bottom">
                         <div class="tiles green added-margin">
                             <div class="tiles-body">
                                 <div class="controller"> <a href="javascript:;" class="reload"></a> <a
                                         href="javascript:;" class="remove"></a> </div>
+                                <?php $ret=mysqli_query($con,"select * from tracking_lead where email_user_name ='".$_SESSION['login']."' and status_name = 'Concretado' and date_create between '".$initial_date."' and '".$final_date."' ");
+                                    $num=mysqli_num_rows($ret);
+                                    ?>
+                                <div class="heading"> <span class="animate-number" data-value="<?php echo $num;?>"
+                                        data-animation-duration="1200">0</span>| <a href="tracking-lead.php?status_name=Concretado&email_user_name=<?php echo $email_user_name?>"
+                                        style="color:#FFF"> Concretado </a></div>
 
-                                <div class="heading"> <span class="fa fa-ticket"></span>
-                                    <a href="get-quote.php" style="color:#FFF">Seguimiento</a>
-                                </div>
                                 <div class="progress transparent progress-small no-radius">
                                     <div class="progress-bar progress-bar-white animate-progress-bar"
-                                        data-percentage="69%"></div>
+                                        data-percentage="<?php echo $num;?>%"></div>
                                 </div>
 
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 col-sm-6 spacing-bottom">
+
+                    <!--Cancelado-->
+                    <div class="col-md-3 col-sm-6 spacing-bottom-sm spacing-bottom">
                         <div class="tiles red added-margin">
                             <div class="tiles-body">
                                 <div class="controller"> <a href="javascript:;" class="reload"></a> <a
                                         href="javascript:;" class="remove"></a> </div>
+                                <?php $ret=mysqli_query($con,"select * from tracking_lead where email_user_name ='".$_SESSION['login']."' and status_name = 'Cancelado' and date_create between '".$initial_date."' and '".$final_date."' ");
+                                    $num=mysqli_num_rows($ret);
+                                    ?>
+                                <div class="heading"> <span class="animate-number" data-value="<?php echo $num;?>"
+                                        data-animation-duration="1200">0</span>| <a href="tracking-lead.php?status_name=Cancelado&email_user_name=<?php echo $email_user_name?>"
+                                        style="color:#FFF"> Cancelado </a></div>
 
-                                <div class="heading"> <span class="fa fa-user"></span>
-                                    <a href="profile.php" style="color:#FFF">Concretado</a>
-                                </div>
-                                <div class="progress transparent progress-white progress-small no-radius">
+                                <div class="progress transparent progress-small no-radius">
                                     <div class="progress-bar progress-bar-white animate-progress-bar"
-                                        data-percentage="45%"></div>
+                                        data-percentage="<?php echo $num;?>%"></div>
                                 </div>
 
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="tiles purple added-margin">
-                            <div class="tiles-body">
-                                <div class="controller"> <a href="javascript:;" class="reload"></a> <a
-                                        href="javascript:;" class="remove"></a> </div>
 
-                                <div class="row-fluid">
-                                    <div class="heading"> <span class="fa fa-ticket"></span>
-                                        <a href="create-ticket.php" style="color:#FFF">Cancelado </a>
-                                    </div>
-                                    <div class="progress transparent progress-white progress-small no-radius">
-                                        <div class="progress-bar progress-bar-white animate-progress-bar"
-                                            data-percentage="12%"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
             </div>
