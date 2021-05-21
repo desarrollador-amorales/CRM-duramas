@@ -108,7 +108,7 @@ $query=mysqli_query($con,"select * from user where email='".$_SESSION['login']."
                                 <div class="panel-body">
 
                                     <div class="form-group">
-                                        <label class="col-md-3 col-xs-12 control-label">Nombres</label>
+                                        <label class="col-md-3 col-xs-12 control-label"><b>Nombres</b></label>
                                         <div class="col-md-6 col-xs-12">
                                             <div class="input-group">
                                                 <span class="input-group-addon"><span
@@ -120,7 +120,7 @@ $query=mysqli_query($con,"select * from user where email='".$_SESSION['login']."
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-3 col-xs-12 control-label">Email Principal</label>
+                                        <label class="col-md-3 col-xs-12 control-label"><b>Email Principal</b></label>
                                         <div class="col-md-6 col-xs-12">
                                             <div class="input-group">
                                                 <span class="input-group-addon"><span
@@ -132,7 +132,7 @@ $query=mysqli_query($con,"select * from user where email='".$_SESSION['login']."
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-3 col-xs-12 control-label">Email Secundario</label>
+                                        <label class="col-md-3 col-xs-12 control-label"><b>Email Secundario</b></label>
                                         <div class="col-md-6 col-xs-12">
                                             <div class="input-group">
                                                 <span class="input-group-addon"><span
@@ -144,7 +144,7 @@ $query=mysqli_query($con,"select * from user where email='".$_SESSION['login']."
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-3 col-xs-12 control-label">No. Contacto</label>
+                                        <label class="col-md-3 col-xs-12 control-label"><b>No. Contacto</b></label>
                                         <div class="col-md-6 col-xs-12">
                                             <div class="input-group">
                                                 <span class="input-group-addon"><span
@@ -159,7 +159,7 @@ $query=mysqli_query($con,"select * from user where email='".$_SESSION['login']."
 
 
                                     <div class="form-group">
-                                        <label class="col-md-3 col-xs-12 control-label">Género</label>
+                                        <label class="col-md-3 col-xs-12 control-label"><b>Género</b></label>
                                         <div class="col-md-6 col-xs-12">
                                             <div class="input-group">
                                                 <span class="input-group-addon"><span
@@ -194,23 +194,14 @@ $query=mysqli_query($con,"select * from user where email='".$_SESSION['login']."
                                         </div>
                                     </div>
 
-
-
-
                                     <div class="form-group">
-                                        <label class="col-md-3 col-xs-12 control-label">Dirección</label>
+                                        <label class="col-md-3 col-xs-12 control-label"><b>Dirección</b></label>
                                         <div class="col-md-6 col-xs-12">
                                             <textarea class="form-control" name="address"
                                                 rows="5"><?php echo $row['address'];?></textarea>
 
                                         </div>
                                     </div>
-
-
-
-
-
-
 
                                 </div>
                                 <?php } ?>

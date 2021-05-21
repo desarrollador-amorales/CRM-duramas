@@ -77,7 +77,7 @@ $email_user_name=$_SESSION['login'];
         <div class="clearfix"></div>
         <div class="content">
             <div class="page-title">
-                <h3><b>Escritorio</b></h3>
+                <h3><b>Leads</b></h3>
                 <div class="row 2col">
                 <!--Solicitud-->
                     <div class="col-md-3 col-sm-6 spacing-bottom-sm spacing-bottom">

@@ -3,6 +3,14 @@ session_start();
 include("dbconnection.php");
 include("checklogin.php");
 check_login();
+$Solicitud='Solicitud';
+$Seguimiento='Seguimiento';
+$Concretado='Concretado';
+$Cancelado='Cancelado';
+
+$initial_date = date("Y-m-01"); //fecha inicio de mes actual
+$final_date = date("Y-m-t"); // fecha fin de mes actual
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -147,7 +155,7 @@ check_login();
                             <div class="widget-stats">
                                 <div class="wrapper transparent">
                                     <?php
-                      $qr=mysqli_query($con,"select * from lead where status = 'P'");
+                      $qr=mysqli_query($con,"select * from tracking_lead where status_name = '".$Solicitud."' and date_create between '".$initial_date."' and '".$final_date."'");
 					  $oq=mysqli_num_rows($qr);
 					  ?>
                                     <span class="item-title">Solicitud</span> <span
@@ -158,7 +166,7 @@ check_login();
                             <div class="widget-stats">
                                 <div class="wrapper transparent">
                                     <?php
-                      $qr1=mysqli_query($con,"select * from prequest where status='0'");
+                      $qr1=mysqli_query($con,"select * from tracking_lead where status_name = '".$Seguimiento."' and date_create between '".$initial_date."' and '".$final_date."'");
 					  $oq1=mysqli_num_rows($qr1);
 					  ?>
                                     <span class="item-title">Seguimiento</span> <span
@@ -169,7 +177,7 @@ check_login();
                             <div class="widget-stats ">
                                 <div class="wrapper last">
                                     <?php
-                      $qr2=mysqli_query($con,"select * from prequest where status='1'");
+                      $qr2=mysqli_query($con,"select * from tracking_lead where status_name = '".$Concretado."' and date_create between '".$initial_date."' and '".$final_date."'");
 					  $oq2=mysqli_num_rows($qr2);
 					  ?>
                                     <span class="item-title">Concretado</span> <span
@@ -181,7 +189,7 @@ check_login();
                             <div class="widget-stats">
                                 <div class="wrapper transparent">
                                     <?php
-                      $qr=mysqli_query($con,"select * from lead");
+                      $qr=mysqli_query($con,"select * from tracking_lead where status_name = '".$Cancelado."' and date_create between '".$initial_date."' and '".$final_date."'");
 					  $oq=mysqli_num_rows($qr);
 					  ?>
                                     <span class="item-title">Cancelado</span> <span
@@ -196,8 +204,6 @@ check_login();
             </div>
             <!-- END DASHBOARD TILES -->
             <!-- START DASHBOARD CHART -->
-
-
 
             <div class="col-lg-12" style="min-height:280px;">
                 <div class="panel panel-red">
@@ -244,8 +250,6 @@ check_login();
 									}
                                     }
 
-                                $initial_date = date("Y-m-01"); //fecha inicio de mes actual
-                                $final_date = date("Y-m-t"); // fecha fin de mes actual
 								$results = mysqli_query($con,"SELECT logindate FROM usercheck where logindate between '".$initial_date."' and '".$final_date."'");
 
 									//$month_array2= $month_array;
@@ -296,11 +300,11 @@ check_login();
 									foreach($month_array as $key=>$value)
 									{
                                     ?>
-                                        <script type="text/javascript">
-                                        visitorsCount.push(<?php echo $value;?>);
-                                        //visitorsCount2.push(<?php echo ($value)+6;?>); // se puede recorrer el mismo bucle asignando otros valores a la otra leyenda
-                                        </script>
-                                    <?php									
+                        <script type="text/javascript">
+                        visitorsCount.push(<?php echo $value;?>);
+                        //visitorsCount2.push(<?php echo ($value)+6;?>); // se puede recorrer el mismo bucle asignando otros valores a la otra leyenda
+                        </script>
+                        <?php									
 									}
                                     ?>
 
@@ -356,9 +360,9 @@ check_login();
                                     borderWidth: 0
                                 },
                                 series: [{
-                                        name: 'Visitantes',
-                                        data: visitorsCount
-                                    }]
+                                    name: 'Visitantes',
+                                    data: visitorsCount
+                                }]
                             });
                         });
                         </script>
@@ -373,11 +377,279 @@ check_login();
                     </div>
                 </div>
             </div>
+            <!-- END DASHBOARD CHART -->
+
+            <!-- START DASHBOARD LEADS CHART -->
+            <div class="col-lg-12" style="min-height:280px;">
+                <div class="panel panel-red">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><i class="fa fa-long-arrow-right"></i> Leads
+                        </h3>
+
+                        <script type="text/javascript">
+                        var leadsSolicitud = [];
+                        var leadsSeguimiento = [];
+                        var leadsConcretado = [];
+                        var leadsCancelado = [];
+                        var myCat2 = [];
+                        </script>
+                        <?php
+								$totaldays = cal_days_in_month(CAL_GREGORIAN, date("m"), date("Y")); 
+								
+								$month_array=array();
+                                $month_array_seg=array();
+                                $month_array_con=array();
+                                $month_array_can=array();
+								for($i=1; $i<=$totaldays; $i++)
+								{
+									if(!array_key_exists($i,$month_array) )
+									{
+										$key = '';
+										if($i<10)
+										{
+											$key = '0'.$i;
+											$month_array[$key] = 0;
+
+										}
+										else
+										{
+											$month_array[$i] = 0;
+                                            
+										}
+
+
+										?>
+                        <script type="text/javascript">
+                        var myKeyw = "Dia " + '<?php echo $i; ?>';
+
+                        myCat2.push(myKeyw);
+                        </script>
+                        <?php
+										
+									}
+                                    }
+
+                                $initial_date = date("Y-m-01"); //fecha inicio de mes actual
+                                $final_date = date("Y-m-t"); // fecha fin de mes actual
+								$results = mysqli_query($con,"SELECT date_create, status_name FROM tracking_lead where date_create between '".$initial_date."' and '".$final_date."'");
+                                    $month_array_seg=$month_array;
+                                    $month_array_con=$month_array;
+                                    $month_array_can=$month_array;
+
+									//$month_array2= $month_array;
+									if(mysqli_num_rows($results) >0)
+									{
+                                                                               
+										while($row = mysqli_fetch_row($results))
+										{
+                                            //Solicitud
+                                            if ($row[1] == $Solicitud ){
+                                                $user_date = $row[0];            
+                                                $dateArraySol = explode('-',$user_date);
+                                                $year = $dateArraySol[0];
+                                                $monthName = date("M", mktime(0, 0, 0, $dateArraySol[1], 10));
+                                                $currentMonth = date('m',mktime(0, 0, 0, $dateArraySol[1], 10));
+                                                
+                                                if($year == date("Y") && $currentMonth == date("m"))
+                                                {
+                                                    
+                                                    if(array_key_exists($dateArraySol[2],$month_array))
+                                                    {
+                                                        $month_array[$dateArraySol[2]] = $month_array[$dateArraySol[2]] + 1; //por cada vez que encuentra una fecha se va sumando 1
+                                                    }
+                                                }
+                                            }
+
+                                            //Seguiiento
+                                            if ($row[1] == $Seguimiento ){
+                                                $user_date = $row[0];            
+                                                $dateArraySeg = explode('-',$user_date);
+                                                $year = $dateArraySeg[0];
+                                                $monthName = date("M", mktime(0, 0, 0, $dateArraySeg[1], 10));
+                                                $currentMonth = date('m',mktime(0, 0, 0, $dateArraySeg[1], 10));
+                                                
+                                                if($year == date("Y") && $currentMonth == date("m"))
+                                                {
+                                                    
+                                                    if(array_key_exists($dateArraySeg[2],$month_array_seg))
+                                                    {
+                                                        $month_array_seg[$dateArraySeg[2]] = $month_array_seg[$dateArraySeg[2]] + 1; //por cada vez que encuentra una fecha se va sumando 1
+                                                    }
+                                                }
+                                            }
+
+                                            
+                                            //Concretado
+                                            if ($row[1] == $Concretado ){
+                                                $user_date = $row[0];            
+                                                $dateArrayCon = explode('-',$user_date);
+                                                $year = $dateArrayCon[0];
+                                                $monthName = date("M", mktime(0, 0, 0, $dateArrayCon[1], 10));
+                                                $currentMonth = date('m',mktime(0, 0, 0, $dateArrayCon[1], 10));
+                                                
+                                                if($year == date("Y") && $currentMonth == date("m"))
+                                                {
+                                                    
+                                                    if(array_key_exists($dateArrayCon[2],$month_array_con))
+                                                    {
+                                                        $month_array_con[$dateArrayCon[2]] = $month_array_con[$dateArrayCon[2]] + 1; //por cada vez que encuentra una fecha se va sumando 1
+                                                    }
+                                                }
+                                            }
+
+                                            //Cancelado
+                                            if ($row[1] == $Cancelado ){
+                                                $user_date = $row[0];            
+                                                $dateArrayCan = explode('-',$user_date);
+                                                $year = $dateArrayCan[0];
+                                                $monthName = date("M", mktime(0, 0, 0, $dateArrayCan[1], 10));
+                                                $currentMonth = date('m',mktime(0, 0, 0, $dateArrayCan[1], 10));
+                                                
+                                                if($year == date("Y") && $currentMonth == date("m"))
+                                                {
+                                                    
+                                                    if(array_key_exists($dateArrayCan[2],$month_array_can))
+                                                    {
+                                                        $month_array_can[$dateArrayCan[2]] = $month_array_can[$dateArrayCan[2]] + 1; //por cada vez que encuentra una fecha se va sumando 1
+                                                    }
+                                                }
+                                            }
+		
+
+										}
+                                        
+									}
+							                                    
+									foreach($month_array as $key=>$value)
+									{
+                                    ?>
+                                        <script type="text/javascript">
+                                        leadsSolicitud.push(<?php echo $value;?>);
+                                        </script>
+                                        <?php									
+									}
+                                    ?>
+                                    <?php
+                                    foreach($month_array_seg as $key=>$value)
+									{
+                                    ?>
+                                        <script type="text/javascript">
+                                        leadsSeguimiento.push(<?php echo $value;?>);
+                                        </script>
+                                        <?php									
+									}
+                                    ?>
+                                    <?php
+                                    foreach($month_array_con as $key=>$value)
+									{
+                                    ?>
+                                        <script type="text/javascript">
+                                        leadsConcretado.push(<?php echo $value;?>);
+                                        </script>
+                                        <?php									
+									}
+                                    ?>
+                                    <?php
+                                    foreach($month_array_can as $key=>$value)
+									{
+                                    ?>
+                                        <script type="text/javascript">
+                                        leadsCancelado.push(<?php echo $value;?>);
+                                        </script>
+                                        <?php									
+									}
+                                    ?>
+
+
+
+                        <script type="text/javascript">
+                        var d = new Date();
+                        var month = new Array();
+                        month[0] = "Enero";
+                        month[1] = "Febrero";
+                        month[2] = "Marzo";
+                        month[3] = "Abril";
+                        month[4] = "Mayo";
+                        month[5] = "Junio";
+                        month[6] = "Julio";
+                        month[7] = "Agosto";
+                        month[8] = "Septiembre";
+                        month[9] = "Octubre";
+                        month[10] = "Noviembre";
+                        month[11] = "Diciembre";
+                        var n = month[d.getMonth()];
+                        $(function() {
+                            $('#container2').highcharts({
+                                title: {
+                                    text: 'Informe Leads - Mes:' + n,
+                                    x: -20 //center
+                                },
+                                subtitle: {
+                                    text: '',
+                                    x: -20
+                                },
+                                xAxis: {
+                                    categories: myCat2
+                                },
+                                yAxis: {
+                                    min: 0,
+                                    title: {
+                                        text: 'Cantidad de Leads'
+                                    },
+                                    plotLines: [{
+                                        value: 0,
+                                        width: 1,
+                                        color: '#808080'
+                                    }]
+                                },
+                                tooltip: {
+                                    valueSuffix: ' Leads'
+                                },
+                                legend: {
+                                    layout: 'vertical',
+                                    align: 'right',
+                                    verticalAlign: 'middle',
+                                    borderWidth: 0
+                                },
+                                series: [{
+                                    name: 'Solicitud',
+                                    data: leadsSolicitud
+                                },
+                                {
+                                    name: 'Seguimiento',
+                                    data: leadsSeguimiento
+                                },
+                                {
+                                    name: 'Concretado',
+                                    data: leadsConcretado
+                                },
+                                {
+                                    name: 'Cancelado',
+                                    data: leadsCancelado
+                                }
+                            ]
+                            });
+                        });
+                        </script>
+                        <div id="container2" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+                    </div>
+                    <div class="panel-body">
+                        <div id="morris-line-chart"></div>
+                        <div class="text-right">
+                            <a href=manage-contacts.php>Ver Contactos <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- END DASHBOARD LEADS CHART -->
 
         </div>
 
+    </div>
 
-        <!-- END DASHBOARD CHART -->
+
 
 
 
