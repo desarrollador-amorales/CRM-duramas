@@ -6,6 +6,21 @@ if(isset($_POST['login']))
 {
 $ret=mysqli_query($con,"SELECT * FROM user WHERE email='".$_POST['email']."' and password='".$_POST['password']."'and status = 1");
 $num=mysqli_fetch_array($ret);
+
+$ret_admin=mysqli_query($con,"SELECT * FROM admin WHERE user='".$_POST['email']."' and password='".$_POST['password']."'");
+$num_admin=mysqli_fetch_array($ret_admin);
+
+if($num_admin>0)
+{
+    $extra="admin/home.php";
+    $_SESSION['alogin']=$_POST['email'];
+    $_SESSION['id']=$num_admin['id'];
+    $_SESSION['name_admin']=$num_admin['name'];
+    echo "<script>window.location.href='".$extra."'</script>";
+    exit();
+}
+
+
 if($num>0)
 {
     $_SESSION['login']=$_POST['email'];

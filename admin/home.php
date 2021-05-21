@@ -460,7 +460,7 @@ $final_date = date("Y-m-t"); // fecha fin de mes actual
                                                 }
                                             }
 
-                                            //Seguiiento
+                                            //Seguimiento
                                             if ($row[1] == $Seguimiento ){
                                                 $user_date = $row[0];            
                                                 $dateArraySeg = explode('-',$user_date);
@@ -648,10 +648,6 @@ $final_date = date("Y-m-t"); // fecha fin de mes actual
         </div>
 
     </div>
-
-
-
-
 
     </div>
     </div>
