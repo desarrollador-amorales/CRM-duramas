@@ -171,7 +171,7 @@ check_login();
             "stateSave": true,
             "lengthMenu": [
                 [5, 10, 25, 50, 100, -1],
-                [5, 10, 25, 50, 100, "All"]
+                [5, 10, 25, 50, 100, "Todo"]
             ],
             "ajax": {
                 "url": ajax_url,

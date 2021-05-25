@@ -129,11 +129,11 @@ if($num>0)
 }
 else
 {
-$_SESSION['action1']="Invalid username or password";
-$extra="index.php";
+    $_SESSION['action1']="Invalid username or password";
+    $extra="index.php";
 
-echo "<script>window.location.href='".$extra."'</script>";
-exit();
+    echo "<script>window.location.href='".$extra."'</script>";
+    exit();
 }
 }
 ?>
