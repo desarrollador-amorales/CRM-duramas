@@ -175,7 +175,7 @@ $final_date = date("Y-m-t"); // fecha fin de mes actual
                                 </div>
                             </div>
                             <div class="widget-stats ">
-                                <div class="wrapper last">
+                                <div class="wrapper transparent">
                                     <?php
                       $qr2=mysqli_query($con,"select * from tracking_lead where status_name = '".$Concretado."' and date_create between '".$initial_date."' and '".$final_date."'");
 					  $oq2=mysqli_num_rows($qr2);
@@ -186,8 +186,9 @@ $final_date = date("Y-m-t"); // fecha fin de mes actual
                                 </div>
                             </div>
 
+
                             <div class="widget-stats">
-                                <div class="wrapper transparent">
+                                <div class="wrapper last">
                                     <?php
                       $qr=mysqli_query($con,"select * from tracking_lead where status_name = '".$Cancelado."' and date_create between '".$initial_date."' and '".$final_date."'");
 					  $oq=mysqli_num_rows($qr);

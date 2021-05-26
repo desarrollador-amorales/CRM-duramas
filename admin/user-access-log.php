@@ -236,10 +236,10 @@ check_login();
             var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
             if (initial_date == '' || final_date == '') {
-                $("#error_log").html("Warning: Debe seleccionar la fecha inicial y final.</span>");
+                $("#error_log").html("Advertencia: Debe seleccionar la fecha inicial y final.</span>");
             } else {
                 if (date1 > date2) {
-                    $("#error_log").html("Warning: La fecha Hasta debe ser mayor quela fecha Desde .");
+                    $("#error_log").html("Advertencia: La fecha Hasta debe ser mayor quela fecha Desde .");
                 } else {
                     $("#error_log").html("");
                     $('#table-user-access').DataTable().destroy();

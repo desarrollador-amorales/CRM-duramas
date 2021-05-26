@@ -39,7 +39,7 @@ if($_REQUEST['action'] == 'fetch_users'){
 
     $result = mysqli_query($con, $sql);
     $totalData = mysqli_num_rows($result);
-    $totalFiltered = $totalData;
+    $totalFiltered = $totalData; 
 
     //Si es que el buscador esta lleno ingresa a la condicion
     if( !empty($requestData['search']['value']) ) {
@@ -58,6 +58,7 @@ if($_REQUEST['action'] == 'fetch_users'){
 
     $sql .= " ORDER BY ". $columns_order[$requestData['order'][0]['column']]."   ".$requestData['order'][0]['dir'];
 
+   
     if($requestData['length'] != "-1"){
         //importante escoger de acuerdo al numero de entradas que escoja el usuario
         $sql .= " LIMIT ".$requestData['start']." ,".$requestData['length'];

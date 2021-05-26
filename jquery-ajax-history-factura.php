@@ -35,12 +35,13 @@ if($_REQUEST['action'] == 'fetch_factura_lead'){
 
     $sql = "SELECT ".$columns." FROM ".$table." ".$where;
 
+    /**
     $result = mysqli_query($con, $sql);
     $totalData = mysqli_num_rows($result);
     $totalFiltered = $totalData;
 
     //Si es que el buscador esta lleno ingresa a la condicion
-    /**if( !empty($requestData['search']['value']) ) {
+    if( !empty($requestData['search']['value']) ) {
         $sql.=" AND ( user_name LIKE '%".$requestData['search']['value']."%' ";
         $sql.=" OR date_create LIKE '%".$requestData['search']['value']."%'";
         $sql.=" OR note LIKE '%".$requestData['search']['value']."%' )";

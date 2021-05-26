@@ -22,11 +22,11 @@
                          class=""></i></a></span></p>
 
          <ul>
-             <li class="start"> <a href="home.php"> <i class="icon-custom-home"></i> <span
-                         class="title">Escritorio</span></a></li>
+             <li class="start"> <a href="home.php"> <i class="icon-custom-home"></i> <span class="title">Escritorio</span></a></li>
+             <li><a href="#"><span class="fa fa-bullseye"></span> Leads</a></li>
              <li><a href="change-password.php"><span class="fa fa-file-text"></span> Cambiar contraseña</a></li>
              <li><a href="manage-users.php"><span class="fa fa-user fa-fw"></span> Usuarios</a></li>
-             <li><a href="manage-tickets.php"><span class="fa fa-ticket"></span> Reportes</a></li>
+             <li><a href="reports.php"><span class="fa fa-book fa-fw"></span> Reportes</a></li>
              <!--<li><a href="manage-quotes.php"> <span class="fa fa-tasks"></span> Manage Quotes</a></li>-->
              <li><a href="manage-warehouse.php"> <span class="fa fa-flag"></span> Locales</a></li>
              <li><a href="manage-status.php"> <span class="fa fa-check-circle"></span> Estados</a></li>
@@ -34,6 +34,5 @@
              <li><a href="manage-campaing.php"> <span class="fa fa-tasks"></span> Campañas</a></li>
              <li><a href="user-access-log.php"><span class="fa fa-shield"></span>&nbsp;&nbsp;Log Acceso de Usuarios</a>
              </li>
-
 
          </ul>
