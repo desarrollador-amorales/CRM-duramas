@@ -151,7 +151,7 @@ $final_date = date("Y-m-t"); // fecha fin de mes actual
                         <div class="tiles-body">
                             <div class="controller"> <a href="javascript:;" class="reload"></a> <a href="javascript:;"
                                     class="remove"></a> </div>
-                            <div class="tiles-title text-black">Leads </div>
+                            <div class="tiles-title text-black">Leads</div>
                             <div class="widget-stats">
                                 <div class="wrapper transparent">
                                     <?php

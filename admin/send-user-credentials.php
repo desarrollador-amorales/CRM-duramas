@@ -26,7 +26,7 @@ if ($row2>0) {
 
     // Compose a simple HTML email message
 
-    $url= "http://duramas.com.ec/crm-duramas/"; 
+    $url= "http://crm.duramas.com.ec/"; 
     $message_user = "Para acceder a CRM Duramas hacer click en el siguiente enlace ".$url;
 
     $message = '<html><body>';

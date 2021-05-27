@@ -23,7 +23,7 @@
 
          <ul>
              <li class="start"> <a href="home.php"> <i class="icon-custom-home"></i> <span class="title">Escritorio</span></a></li>
-             <li><a href="#"><span class="fa fa-bullseye"></span> Leads</a></li>
+             <li><a href="dashboard-admin.php"><span class="fa fa-bullseye"></span> Leads</a></li>
              <li><a href="change-password.php"><span class="fa fa-file-text"></span> Cambiar contraseña</a></li>
              <li><a href="manage-users.php"><span class="fa fa-user fa-fw"></span> Usuarios</a></li>
              <li><a href="reports.php"><span class="fa fa-book fa-fw"></span> Reportes</a></li>
