@@ -10,12 +10,26 @@ $num=mysqli_fetch_array($ret);
 $ret_admin=mysqli_query($con,"SELECT * FROM admin WHERE user='".$_POST['email']."' and password='".$_POST['password']."'");
 $num_admin=mysqli_fetch_array($ret_admin);
 
+$ret_supervisor=mysqli_query($con,"SELECT * FROM supervisor WHERE email='".$_POST['email']."' and password='".$_POST['password']."'");
+$num_supervisor=mysqli_fetch_array($ret_supervisor);
+
 if($num_admin>0)
 {
     $extra="admin/home.php";
     $_SESSION['alogin']=$_POST['email'];
     $_SESSION['id']=$num_admin['id'];
     $_SESSION['name_admin']=$num_admin['name'];
+    echo "<script>window.location.href='".$extra."'</script>";
+    exit();
+}
+
+if($num_supervisor>0)
+{
+    $extra="supervisor/dashboard-supervisor.php";
+    $_SESSION['login']=$_POST['email'];
+    $_SESSION['id_supervisor']=$num_supervisor['supervisor_id_gen'];
+    $_SESSION['name_supervisor']=$num_supervisor['name'];
+    $_SESSION['rol_supervisor']=$num_supervisor['rol'];
     echo "<script>window.location.href='".$extra."'</script>";
     exit();
 }
