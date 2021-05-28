@@ -30,7 +30,28 @@ if (isset($_POST['submit'])) {
         }
 
 
-    } else {
+    } if ($rol == 'supervisor') {
+        $query=mysqli_query($con, "select email from supervisor where email='$email'");
+        $num=mysqli_fetch_array($query);
+        if ($num>1) {
+            echo "<script>alert('El Email ingresado ya esta registrado en uno de nuestros supervisores. Porfavor intenta con un email diferente.');</script>";
+            echo "<script>window.location.href='registration-admin.php'</script>";
+        }else{
+            mysqli_query($con, "insert into supervisor(name,email,password,city_warehouse) values('$name','$email','$password','$values_city')");
+            $id_user_supervisor= mysqli_insert_id($con);
+
+            for ($i=0;$i<count($city);$i++) {
+                mysqli_query($con, "insert into user_supervisor_warehouse(id_user_supervisor,name_warehouse) values('$id_user_supervisor','$city[$i]')");
+            }
+            $mostrarRegistroModal=true;
+            //echo "<script>alert('Administrador Creado !!.');</script>";
+            //echo "<script>window.location.href='manage-users.php'</script>";
+        }
+
+
+    }
+           
+    if ($rol == 'user') {
         $query=mysqli_query($con, "select email from user where email='$email'");
         $num=mysqli_fetch_array($query);
         if ($num>1) {
@@ -117,7 +138,7 @@ if (isset($_POST['submit'])) {
                 <div class="py-5 text-center">
                     <img class="d-block mx-auto mb-4" src="../assets/img/user.png" alt="" width="72" height="72">
                     <h2>Registrate a CRM Duramas</h2>
-                    <p> <a href="../login.php">Accede Ahora!</a> Si ya eres usuario de CRM Duramas..</p>
+                    <p> <a href="logout.php">Accede Ahora!</a> Si ya eres usuario de CRM Duramas..</p>
                     <br>
                 </div>
             </div>
@@ -221,8 +242,8 @@ if (isset($_POST['submit'])) {
                                 <div class="input-with-icon  right">
                                     <select name="rol" class="form-control" required>
                                         <option value="">Seleccione</option>
-                                        <option value="">___________</option>
                                         <option value="admin">Administrador</option>
+                                        <option value="supervisor">Supervisor</option>
                                         <option value="user">Asesor</option>
                                     </select>
                                 </div>

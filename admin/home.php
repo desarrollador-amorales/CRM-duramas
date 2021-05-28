@@ -11,6 +11,9 @@ $Cancelado='Cancelado';
 $initial_date = date("Y-m-01"); //fecha inicio de mes actual
 $final_date = date("Y-m-t"); // fecha fin de mes actual
 
+//$initial_date = date("2021-05-01"); //fecha inicio de mes actual
+//$final_date = date("2021-05-31"); // fecha fin de mes actual
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -430,8 +433,7 @@ $final_date = date("Y-m-t"); // fecha fin de mes actual
 									}
                                     }
 
-                                $initial_date = date("Y-m-01"); //fecha inicio de mes actual
-                                $final_date = date("Y-m-t"); // fecha fin de mes actual
+                               
 								$results = mysqli_query($con,"SELECT date_create, status_name FROM tracking_lead where date_create between '".$initial_date."' and '".$final_date."'");
                                     $month_array_seg=$month_array;
                                     $month_array_con=$month_array;

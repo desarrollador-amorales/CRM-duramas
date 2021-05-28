@@ -4,11 +4,25 @@ error_reporting();
 include("dbconnection.php");
 
 if(isset($_GET['email']))
+$rol=(isset($_GET['rol']))?$_GET['rol']:"";
 {
+    $email_user=$_GET['email'];
+ if ($rol == 'Admin'){
+    $row1=mysqli_query($con,"select user,password from admin where user='".$_GET['email']."'");
+    $row2=mysqli_fetch_array($row1);
+    echo ' contraseña de admin--->'.$row2['password'];
+ }
+ elseif ($rol == 'Supervisor'){
+    $row1=mysqli_query($con,"select email,password from supervisor where email='".$_GET['email']."'");
+    $row2=mysqli_fetch_array($row1);
+    echo ' contraseña de supervisor--->'.$row2['password'];
+ } else{
+    $row1=mysqli_query($con,"select email,password from user where email='".$_GET['email']."'");
+    $row2=mysqli_fetch_array($row1);
+    echo 'contraseña de usuario-->'.$row2['password'];
+ }
 
-$email_user=$_GET['email'];
-$row1=mysqli_query($con,"select email,password from user where email='".$_GET['email']."'");
-$row2=mysqli_fetch_array($row1);
+
 $from="desarrollador@duramas.com.ec";
 
 // To send HTML mail, the Content-type header must be set
@@ -106,9 +120,22 @@ if ($row2>0) {
                             <h4>Listo!</h4>
                             <br>
                             <p>Las credenciales fueron enviadas correctamente.</p>
+                            <?php if ($rol == 'Admin'){ ?>
+                                <button class="btn btn-success" data-dismiss="modal"
+                                onclick="location.href='manage-users-admin.php'"><span>Aceptar</span> <i
+                                    class="material-icons">&#xE5C8;</i></button>
+                            <?php }
+                             elseif ($rol == 'Supervisor'){ ?>
+                                <button class="btn btn-success" data-dismiss="modal"
+                                onclick="location.href='manage-users-supervisor.php'"><span>Aceptar</span> <i
+                                    class="material-icons">&#xE5C8;</i></button>
+                            <?php }
+                            else {?>
                             <button class="btn btn-success" data-dismiss="modal"
                                 onclick="location.href='manage-users.php'"><span>Aceptar</span> <i
                                     class="material-icons">&#xE5C8;</i></button>
+                            <?php }?>
+                            
                         </div>
                     </div>
                 </div>
