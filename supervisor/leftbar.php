@@ -3,8 +3,8 @@
      <!-- BEGIN MINI-PROFILE -->
      <div class="page-sidebar-wrapper scrollbar-dynamic" id="main-menu-wrapper">
          <div class="user-info-wrapper">
-             <div class="profile-wrapper"> <img src="../assets/img/user.png" alt="" data-src="../assets/img/user.png"
-                     data-src-retina="../assets/img/user.png" width="69" height="69" /> </div>
+             <div class="profile-wrapper"> <img src="../assets/img/supervisor.png" alt="" data-src="../assets/img/supervisor.png"
+                     data-src-retina="../assets/img/supervisor.png" width="69" height="69" /> </div>
              <div class="user-info">
                  <div class="greeting" style="font-size:14px;">Bienvenido/a</div>              
                      <div class="username" style="font-size:12px;"><?php echo $_SESSION['name_supervisor'];?></div>
