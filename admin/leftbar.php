@@ -86,8 +86,8 @@
              <li><a href="manage-status.php"> <span class="fa fa-check-circle"></span> Estados</a></li>
              <li><a href="manage-contacts.php"> <span class="fa fa-users"></span> Contactos</a></li>
              <li><a href="manage-campaing.php"> <span class="fa fa-tasks"></span> Campañas</a></li>
-             <li><a href="user-access-log.php"><span class="fa fa-shield"></span>&nbsp;&nbsp;Log Acceso de Usuarios</a>
-             </li>
+             <li><a href="user-access-log.php"><span class="fa fa-shield"></span>&nbsp;&nbsp;Log Acceso de Usuarios</a></li>
+             <li><a href="logout.php"> <span class="fa fa-power-off"></span> Cerrar Sesion</a></li>
              <!--<li><hr></li>
              <li><a href="manage-contacts.php"> <span class="fa fa-users"></span> Administradores</a></li>
              <li><a href="manage-contacts.php"> <span class="fa fa-users"></span> Supervisores</a></li>-->

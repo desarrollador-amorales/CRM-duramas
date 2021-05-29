@@ -26,6 +26,7 @@
 
              <li><a href="change-password.php"><span class="fa fa-file-text-o"></span> Cambiar Contraseña</a></li>
              <li><a href="profile.php"><span class="fa fa-user"></span> Perfil</a></li>
+             <li><a href="logout.php"> <span class="fa fa-power-off"></span> Cerrar Sesion</a></li>
             
             <!--
              <li><a href="get-quote.php"> <span class="fa fa-tasks"></span> Request a Quote</a></li>
