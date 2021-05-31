@@ -235,7 +235,7 @@ if(isset($_POST['submit']))
                                                 <th><label class="control-label"><b>Nombres</b></label></th>
                                                 <th><label class="control-label"><b>Email ID</b></label></th>
                                                 <th><label class="control-label"><b># Celular</b></label></th>
-                                                <th style="width:30%"><label class="control-label"><b>Ciudad</b></label>
+                                                <th style="width:20%"><label class="control-label"><b>Ciudad</b></label>
                                                 </th>
                                                 <th><label class="control-label"><b>Fecha de Registro</b></label></th>
                                                 <th><label class=" control-label"><b>Accion</b></label></th>

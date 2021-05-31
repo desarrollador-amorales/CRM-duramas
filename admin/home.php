@@ -149,7 +149,7 @@ $final_date = date("Y-m-t"); // fecha fin de mes actual
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 col-vlg-3 col-sm-6">
+                <div class="col-md-5 col-vlg-3 col-sm-6">
                     <div class="tiles red m-b-10">
                         <div class="tiles-body">
                             <div class="controller"> <a href="javascript:;" class="reload"></a> <a href="javascript:;"

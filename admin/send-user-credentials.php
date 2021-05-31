@@ -104,9 +104,6 @@ if ($row2>0) {
     <div class="page-content">
         <div class="clearfix"></div>
         <div class="content">
-
-
-
             <div id="credentialModal" class="modal fade">
                 <div class="modal-dialog modal-confirm">
                     <div class="modal-content">
