@@ -147,6 +147,28 @@ $email_admin=$_SESSION['alogin'];
                         </div>
                     </div>
 
+                <!--Total-->
+                <div class="col-md-3 col-sm-6 spacing-bottom-sm spacing-bottom">
+                        <div class="tiles purple added-margin">
+                            <div class="tiles-body">
+                                <div class="controller"> <a href="javascript:;" class="reload"></a> <a
+                                        href="javascript:;" class="remove"></a> </div>
+                                <?php $ret=mysqli_query($con,"select * from tracking_lead where  date_create between '".$initial_date."' and '".$final_date."' ");
+                                    $num=mysqli_num_rows($ret);
+                                    ?>
+                                <div class="heading"> <span class="animate-number" data-value="<?php echo $num;?>"
+                                        data-animation-duration="1200">0</span>| <a href="#"
+                                        style="color:#FFF"> Total </a></div>
+
+                                <div class="progress transparent progress-small no-radius">
+                                    <div class="progress-bar progress-bar-white animate-progress-bar"
+                                        data-percentage="<?php echo $num;?>%"></div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
             </div>

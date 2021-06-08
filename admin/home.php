@@ -47,6 +47,7 @@ $final_date = date("Y-m-t"); // fecha fin de mes actual
     <link href="../assets/css/magic_space.css" rel="stylesheet" type="text/css" />
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/plugins/morris.css" rel="stylesheet">
+    <link rel="icon" href="../assets/img/favicon.png" type="image/x-icon">
 
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 </head>
@@ -149,7 +150,7 @@ $final_date = date("Y-m-t"); // fecha fin de mes actual
                         </div>
                     </div>
                 </div>
-                <div class="col-md-5 col-vlg-3 col-sm-6">
+                <div class="col-md-5 col-vlg-4 col-sm-6">
                     <div class="tiles red m-b-10">
                         <div class="tiles-body">
                             <div class="controller"> <a href="javascript:;" class="reload"></a> <a href="javascript:;"
@@ -191,7 +192,7 @@ $final_date = date("Y-m-t"); // fecha fin de mes actual
 
 
                             <div class="widget-stats">
-                                <div class="wrapper last">
+                                <div class="wrapper transparent">
                                     <?php
                       $qr=mysqli_query($con,"select * from tracking_lead where status_name = '".$Cancelado."' and date_create between '".$initial_date."' and '".$final_date."'");
 					  $oq=mysqli_num_rows($qr);
@@ -199,6 +200,18 @@ $final_date = date("Y-m-t"); // fecha fin de mes actual
                                     <span class="item-title">Cancelado</span> <span
                                         class="item-count animate-number semi-bold" data-value="<?php echo $oq?>"
                                         data-animation-duration="800">0</span>
+                                </div>
+                            </div>
+
+                            <div class="widget-stats ">
+                                <div class="wrapper last">
+                                    <?php
+                      $qr3=mysqli_query($con,"select * from tracking_lead where date_create between '".$initial_date."' and '".$final_date."'");
+					  $oq3=mysqli_num_rows($qr3);
+					  ?>
+                                    <span class="item-title">Total</span> <span
+                                        class="item-count animate-number semi-bold" data-value="<?php echo $oq3;?>"
+                                        data-animation-duration="700">0</span>
                                 </div>
                             </div>
 
@@ -222,7 +235,7 @@ $final_date = date("Y-m-t"); // fecha fin de mes actual
                         </script>
                         <?php
 								$totaldays = cal_days_in_month(CAL_GREGORIAN, date("m"), date("Y")); 
-								
+                                								
 								$month_array=array();
                                 $month_array2=array();
 								for($i=1; $i<=$totaldays; $i++)
@@ -267,7 +280,7 @@ $final_date = date("Y-m-t"); // fecha fin de mes actual
 											$year = $dateArray[0];
 											$monthName = date("M", mktime(0, 0, 0, $dateArray[1], 10));
 											$currentMonth = date('m',mktime(0, 0, 0, $dateArray[1], 10));
-											// echo $monthName; 
+                                            // echo $monthName; 
 											//$month = date("M", strtotime($user_date));
 											//echo $month;
 											
@@ -399,7 +412,7 @@ $final_date = date("Y-m-t"); // fecha fin de mes actual
                         </script>
                         <?php
 								$totaldays = cal_days_in_month(CAL_GREGORIAN, date("m"), date("Y")); 
-								
+                                								
 								$month_array=array();
                                 $month_array_seg=array();
                                 $month_array_con=array();

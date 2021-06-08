@@ -87,11 +87,16 @@ if($num>0)
             //if ($contLead == 0) {
                 $list_users=mysqli_query($con, "SELECT u.email, u.name, u.id FROM user_warehouse uw, user u where u.id=uw.id_user and uw.name_warehouse='".$city_user['name_warehouse']."' and u.status = 1 and uw.last_assignment != 1 order by uw.last_assignment asc");
                 $row_cnt_users = $list_users->num_rows;
+
+                if ($row_cnt_users == 0){
+                    $list_users=mysqli_query($con, "SELECT u.email, u.name, u.id FROM user_warehouse uw, user u where u.id=uw.id_user and uw.name_warehouse='".$city_user['name_warehouse']."' and u.status = 1 order by uw.last_assignment asc");
+                    $row_cnt_users = $list_users->num_rows;
+                }
                 //mysqli_query($con,"update user_warehouse set last_assignment = '0' where name_warehouse='".$city_user['name_warehouse']."'");
             //}
             
             while($user= mysqli_fetch_array($list_users)){
-
+                //verificar a que posicion del asesor voy asignar el lead nuevo
                 if($contUserLoop == $contUser){
                     //asignar y actualizar a la tabla de leads, tambien llenar la tabla contactos
                     //echo 'El cliente '.$lead['name_lead'].' fue asignado a el usuario '.$user['name'];                   
@@ -113,6 +118,7 @@ if($num>0)
             $contUser+=1;
             $contLead+=1;
 
+            //cuando termina la 1 iteracion de todos los asesores por ciudad se desbloquea el ultimo asignado y se reinicia la asignacion desde le primer asesor
             if($contUser == $row_cnt_users){
                 //echo "<br>";
                 //echo 'pasa por aqui---- ultimo y actualiza';
@@ -171,6 +177,7 @@ else
         integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="icon" href="assets/img/favicon.png" type="image/x-icon">
 
 </head>
 <body class="main-bg">
