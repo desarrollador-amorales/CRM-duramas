@@ -130,6 +130,9 @@ if(isset($_GET['status_name'])){
                                         <th><label class="control-label"><b>Teléfono</b></label></th>
                                         <th><label class="control-label"><b>Ciudad</b></label></th>
                                         <th><label class="control-label"><b>Asesor</b></label></th>
+                                        <?php if ($title == 'General') {?>
+                                            <th><label class="control-label"><b>Estado</b></label></th>
+                                        <?php }?>
                                         <!--<th style="width:30%"><label class="control-label"><b>Usuario</b></label></th>-->
                                         <th><label class="control-label"><b>Canal</b></label></th>
                                         <th><label class=" control-label"><b>Campaña</b></label></th>
@@ -142,7 +145,13 @@ if(isset($_GET['status_name'])){
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php $ret=mysqli_query($con,"select * from tracking_lead where status_name='".$title."'");
+                                    <?php 
+                                     if ($title == 'General'){
+                                        $ret=mysqli_query($con,"select * from tracking_lead ");
+                                     }else{
+                                        $ret=mysqli_query($con,"select * from tracking_lead where status_name='".$title."' ");
+                                     }
+                                    
 												$cnt=1;
 												while($row=mysqli_fetch_array($ret))
 												{
@@ -187,6 +196,9 @@ if(isset($_GET['status_name'])){
                                         <td><strong><?php echo $row['mobile_number'];?></strong></td>
                                         <td><strong><?php echo $row['city_warehouse'];?></strong></td>
                                         <td><strong><?php echo $row['user_name'];?></strong></td>
+                                        <?php if ($title == 'General') {?>
+                                            <td><strong><?php echo $row['status_name'];?></strong></td>
+                                        <?php }?>
                                         <?php if ($row['platform'] == 'fb'){ ?>
                                         <td><strong><i class="fa fa-facebook-square"
                                                     style="font-size:30px;"></i></strong></td>
@@ -580,7 +592,11 @@ if(isset($_GET['status_name'])){
         function(settings, data, dataIndex) {
             var min = minDate.val();
             var max = maxDate.val();
-            var date = new Date(data[11]);
+            <?php if ($title == 'General'){?>
+            var date = new Date(data[12]);
+            <?php } else {?>
+                var date = new Date(data[11]);
+            <?php }?>    
 
             if (
                 (min === null && max === null) ||

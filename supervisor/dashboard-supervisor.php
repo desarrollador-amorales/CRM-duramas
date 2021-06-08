@@ -180,7 +180,7 @@ $id_supervisor=$_SESSION['id_supervisor'];
                                     ?>
                                 <div class="heading"> <span class="animate-number" data-value="<?php echo $num;?>"
                                         data-animation-duration="1200">0</span>| <a
-                                        href="#" style="color:#FFF">
+                                        href="tracking-lead-supervisor.php?status_name=General" style="color:#FFF">
                                         Total </a></div>
 
                                 <div class="progress transparent progress-small no-radius">

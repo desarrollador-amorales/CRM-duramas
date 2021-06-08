@@ -10,16 +10,16 @@ $rol=(isset($_GET['rol']))?$_GET['rol']:"";
  if ($rol == 'Admin'){
     $row1=mysqli_query($con,"select user,password from admin where user='".$_GET['email']."'");
     $row2=mysqli_fetch_array($row1);
-    echo ' contraseña de admin--->'.$row2['password'];
+    //echo ' contraseña de admin--->'.$row2['password'];
  }
  elseif ($rol == 'Supervisor'){
     $row1=mysqli_query($con,"select email,password from supervisor where email='".$_GET['email']."'");
     $row2=mysqli_fetch_array($row1);
-    echo ' contraseña de supervisor--->'.$row2['password'];
+   // echo ' contraseña de supervisor--->'.$row2['password'];
  } else{
     $row1=mysqli_query($con,"select email,password from user where email='".$_GET['email']."'");
     $row2=mysqli_fetch_array($row1);
-    echo 'contraseña de usuario-->'.$row2['password'];
+    //echo 'contraseña de usuario-->'.$row2['password'];
  }
 
 

@@ -157,7 +157,7 @@ $email_admin=$_SESSION['alogin'];
                                     $num=mysqli_num_rows($ret);
                                     ?>
                                 <div class="heading"> <span class="animate-number" data-value="<?php echo $num;?>"
-                                        data-animation-duration="1200">0</span>| <a href="#"
+                                        data-animation-duration="1200">0</span>| <a href="tracking-lead-admin.php?status_name=General"
                                         style="color:#FFF"> Total </a></div>
 
                                 <div class="progress transparent progress-small no-radius">
