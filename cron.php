@@ -28,11 +28,11 @@
             $contUserLoop=0;
 
             //if ($contLead == 0) {
-                $list_users=mysqli_query($con, "SELECT u.email, u.name, u.id FROM user_warehouse uw, user u where u.id=uw.id_user and uw.name_warehouse='".$city_user['name']."' and u.status = 1 and uw.last_assignment != 1 order by uw.last_assignment asc");
+                $list_users=mysqli_query($con, "SELECT u.email, u.name, u.id , u.mobile FROM user_warehouse uw, user u where u.id=uw.id_user and uw.name_warehouse='".$city_user['name']."' and u.status = 1 and uw.last_assignment != 1 order by uw.last_assignment asc");
                 $row_cnt_users = $list_users->num_rows;
 
                 if ($row_cnt_users == 0){
-                    $list_users=mysqli_query($con, "SELECT u.email, u.name, u.id FROM user_warehouse uw, user u where u.id=uw.id_user and uw.name_warehouse='".$city_user['name']."' and u.status = 1 order by uw.last_assignment asc");
+                    $list_users=mysqli_query($con, "SELECT u.email, u.name, u.id ,u.mobile FROM user_warehouse uw, user u where u.id=uw.id_user and uw.name_warehouse='".$city_user['name']."' and u.status = 1 order by uw.last_assignment asc");
                     $row_cnt_users = $list_users->num_rows;
                 }
                 //mysqli_query($con,"update user_warehouse set last_assignment = '0' where name_warehouse='".$city_user['name_warehouse']."'");
@@ -50,6 +50,26 @@
                    
                     mysqli_query($con,"update lead set status='A' where id_lead_gen='".$lead['id_lead_gen']."'");
                     //echo "<br>";
+                    /** */
+                    $data = [
+                        'phone' => '593'.$user['mobile'], // Receivers phone
+                        'body' => 'Hola *'.$user['name'].'* tienes asigando el siguiente lead: '.PHP_EOL.'*NOMBRE:* '.$lead['name_lead'] .PHP_EOL.'*NUM CELULAR:* '.$lead['mobile_number'].PHP_EOL.'*ALMACEN:* '.$lead['city_warehouse'].PHP_EOL.'*Para ponerte en contacto con el cliente haz click en el siguiente enlace* https://wa.me/'.$lead['mobile_number'].'', // Message
+                    ];
+                    $json = json_encode($data); // Encode data to JSON
+                    // URL for request POST /message
+                    $token = 'hthyc2zuyhghmlqy';
+                    $instanceId = '287891';
+                    $url = 'https://api.chat-api.com/instance'.$instanceId.'/message?token='.$token;
+                    // Make a POST request
+                    $options = stream_context_create(['http' => [
+                            'method'  => 'POST',
+                            'header'  => 'Content-type: application/json',
+                            'content' => $json
+                        ]
+                    ]);
+                    // Send a request
+                    $result = file_get_contents($url, false, $options);  
+
                     break;
                }
             
