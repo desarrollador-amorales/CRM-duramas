@@ -53,12 +53,12 @@
                     /** */
                     $data = [
                         'phone' => '593'.$user['mobile'], // Receivers phone
-                        'body' => 'Hola *'.$user['name'].'* tienes asigando el siguiente lead: '.PHP_EOL.'*NOMBRE:* '.$lead['name_lead'] .PHP_EOL.'*NUM CELULAR:* '.$lead['mobile_number'].PHP_EOL.'*ALMACEN:* '.$lead['city_warehouse'].PHP_EOL.'*Para ponerte en contacto con el cliente haz click en el siguiente enlace* https://wa.me/'.$lead['mobile_number'].'', // Message
+                        'body' => 'Hola *'.$user['name'].'* tienes asignado el siguiente lead: '.PHP_EOL.'*NOMBRE:* '.$lead['name_lead'] .PHP_EOL.'*NUM CELULAR:* '.$lead['mobile_number'].PHP_EOL.'*ALMACEN:* '.$lead['city_warehouse'].PHP_EOL.'*Para ponerte en contacto con el cliente haz click en el siguiente enlace* https://wa.me/'.$lead['mobile_number'].'', // Message
                     ];
                     $json = json_encode($data); // Encode data to JSON
                     // URL for request POST /message
-                    $token = 'hthyc2zuyhghmlqy';
-                    $instanceId = '287891';
+                    $token = '3qdwr2vtyf4utj4g';
+                    $instanceId = '295553';
                     $url = 'https://api.chat-api.com/instance'.$instanceId.'/message?token='.$token;
                     // Make a POST request
                     $options = stream_context_create(['http' => [

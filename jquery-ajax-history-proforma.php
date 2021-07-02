@@ -10,11 +10,12 @@ if($_REQUEST['action'] == 'fetch_proforma_lead'){
     
     $number_proforma = $_REQUEST['number_proforma'];
     $value_proforma = $_REQUEST['value_proforma'];
+    $description = $_REQUEST['description'];
     $user_name = $_REQUEST['user_name'];
     $tracking_lead_id_gen = $_REQUEST['tracking_lead_id_gen'];
 
-    if((!empty($number_proforma) || $number_proforma!= "") && (!empty($value_proforma) || $value_proforma!= "") ){
-        mysqli_query($con,"insert into history_lead_proforma (tracking_lead_id,user_name,number_proforma, value_proforma) values('$tracking_lead_id_gen','$user_name','$number_proforma','$value_proforma')");
+    if((!empty($number_proforma) || $number_proforma!= "") && (!empty($value_proforma) || $value_proforma!= "") && (!empty($description) || $description!= "") ){
+        mysqli_query($con,"insert into history_lead_proforma (tracking_lead_id,user_name,number_proforma, value_proforma, description) values('$tracking_lead_id_gen','$user_name','$number_proforma','$value_proforma','$description')");
 
         $request=mysqli_query($con,"select tracking_lead_id,count(*)as num_proforma , sum(value_proforma) as total_proforma from history_lead_proforma where tracking_lead_id='".$tracking_lead_id_gen."'group by tracking_lead_id");
         $result=mysqli_fetch_array($request);
@@ -22,7 +23,7 @@ if($_REQUEST['action'] == 'fetch_proforma_lead'){
         mysqli_query($con,"update tracking_lead set proforma='".$result['num_proforma']."', proforma_total='".$result['total_proforma']."' where tracking_lead_id_gen='".$tracking_lead_id_gen."'");
     }
 
-    $columns = ' date_create, user_name, number_proforma, value_proforma';
+    $columns = ' date_create, user_name, number_proforma, value_proforma, description';
     $table = ' history_lead_proforma ';
     $where = " WHERE user_name!='' and tracking_lead_id = '".$tracking_lead_id_gen."'";
 
@@ -30,7 +31,8 @@ if($_REQUEST['action'] == 'fetch_proforma_lead'){
         0 => 'date_create',
         1 => 'user_name',
         2 => 'number_proforma',
-        3 => 'value_proforma'
+        3 => 'value_proforma',
+        4 => 'description'
     );
 
     $sql = "SELECT ".$columns." FROM ".$table." ".$where;
@@ -73,6 +75,7 @@ if($_REQUEST['action'] == 'fetch_proforma_lead'){
         $nestedData['user_name'] = $row["user_name"];
         $nestedData['number_proforma'] = $row["number_proforma"];
         $nestedData['value_proforma'] = $row["value_proforma"];
+        $nestedData['description'] = $row["description"];
         $data[] = $nestedData;
     }
 

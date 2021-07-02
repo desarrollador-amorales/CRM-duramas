@@ -478,6 +478,15 @@ if(isset($_GET['status_name'])){
                                                                             class="form-control text-center">
                                                                     </div>
                                                                 </div>
+                                                                <div class="col-12 col-sm-12 text-center">
+                                                                    <div class="form-group">
+                                                                    <label for="men_not" class="control-label"><b>
+                                                                        Descripción</b></label>
+                                                                        <textarea class="form-control"
+                                                                            name="note_description_pro"
+                                                                            id="note_description_pro" rows="3"></textarea>
+                                                                    </div>
+                                                                </div>
                                                                 <div class="col-12 text-center mb-4">
                                                                     <button type="submit" class="btn btn-sm btn-info"
                                                                         name="save_proforma" id="save_proforma"><i
@@ -500,6 +509,7 @@ if(isset($_GET['status_name'])){
                                                                             <th>Usuario</th>
                                                                             <th>Número</th>
                                                                             <th>Valor</th>
+                                                                            <th>Descripción</th>
                                                                         </tr>
                                                                     </thead>
                                                                 </table>
@@ -540,6 +550,15 @@ if(isset($_GET['status_name'])){
                                                                             class="form-control text-center">
                                                                     </div>
                                                                 </div>
+                                                                <div class="col-12 col-sm-12 text-center">
+                                                                    <div class="form-group">
+                                                                    <label for="men_not" class="control-label"><b>
+                                                                        Descripción</b></label>
+                                                                        <textarea class="form-control"
+                                                                            name="note_description_fac"
+                                                                            id="note_description_fac" rows="3"></textarea>
+                                                                    </div>
+                                                                </div>
                                                                 <div class="col-12 text-center mb-4">
                                                                     <button type="submit" class="btn btn-sm btn-info"
                                                                         name="save_factura" id="save_factura"><i
@@ -562,6 +581,7 @@ if(isset($_GET['status_name'])){
                                                                             <th>Usuario</th>
                                                                             <th>Número</th>
                                                                             <th>Valor</th>
+                                                                            <th>Descripción</th>
                                                                         </tr>
                                                                     </thead>
                                                                 </table>
@@ -811,10 +831,10 @@ if(isset($_GET['status_name'])){
     /**Termina Funcion para estados */
     </script>
 
-    <script>
+<script>
     /**Inicia funcion para proformas */
 
-    function save_and_load_data_proforma(number_proforma, value_proforma, user_name, tracking_lead_id_gen) {
+    function save_and_load_data_proforma(number_proforma, value_proforma, description, user_name, tracking_lead_id_gen) {
         var ajax_url = "../jquery-ajax-history-proforma.php";
 
         $('#table-lead-proforma').DataTable({
@@ -824,7 +844,7 @@ if(isset($_GET['status_name'])){
             dom: 'Blfrtip',
             "aoColumnDefs": [{
                 "bSortable": false,
-                "aTargets": [0, 1, 2, 3]
+                "aTargets": [0, 1, 2, 3,4]
             }],
             "processing": false,
             "serverSide": true,
@@ -840,6 +860,7 @@ if(isset($_GET['status_name'])){
                     "action": "fetch_proforma_lead",
                     "number_proforma": number_proforma,
                     "value_proforma": value_proforma,
+                    "description": description,
                     "user_name": user_name,
                     "tracking_lead_id_gen": tracking_lead_id_gen
                 },
@@ -860,6 +881,9 @@ if(isset($_GET['status_name'])){
                 },
                 {
                     "data": "value_proforma"
+                },
+                {
+                    "data": "description"
                 }
             ]
         });
@@ -870,11 +894,12 @@ if(isset($_GET['status_name'])){
 
 
     $('#table-lead-proforma').DataTable().destroy(); // reinicializa la tabla
-    save_and_load_data_proforma("", "", user_name, tracking_lead_id_gen); // first load
+    save_and_load_data_proforma("", "","", user_name, tracking_lead_id_gen); // first load
 
     $("#save_proforma").click(function() {
         var number_proforma = $("#pro_num").val();
         var value_proforma = $("#pro_val").val();
+        var description = $("#note_description_pro").val();
         var tracking_lead_id_gen = $("#tracking_lead_id_gen").val();
         var user_name = $("input[name='user_name']").val();
 
@@ -883,33 +908,38 @@ if(isset($_GET['status_name'])){
             alert("Debe ingresar un numero de proforma");
             $("#pro_num").focus();
             $('#table-lead-proforma').DataTable().destroy(); // reinicializa la tabla
-            save_and_load_data_proforma("", "", user_name, tracking_lead_id_gen);
+            save_and_load_data_proforma("", "","", user_name, tracking_lead_id_gen);
         } else {
             if (value_proforma == "") {
                 alert("Debe ingresar un valor para la proforma");
                 $("#pro_val").focus();
                 $('#table-lead-proforma').DataTable().destroy(); // reinicializa la tabla
-                save_and_load_data_proforma("", "", user_name, tracking_lead_id_gen);
-            } else {
+                save_and_load_data_proforma("", "","", user_name, tracking_lead_id_gen);
+            }
+            if (description == "") {
+                alert("Debe ingresar una breve descripcion para la proforma");
+                $("#note_description_pro").focus();
                 $('#table-lead-proforma').DataTable().destroy(); // reinicializa la tabla
-                save_and_load_data_proforma(number_proforma, value_proforma, user_name, tracking_lead_id_gen);
+                save_and_load_data_proforma("", "","", user_name, tracking_lead_id_gen);
+            }
+            else {
+                $('#table-lead-proforma').DataTable().destroy(); // reinicializa la tabla
+                save_and_load_data_proforma(number_proforma, value_proforma,description, user_name, tracking_lead_id_gen);
                 document.getElementById("pro_num").value = "";
                 document.getElementById("pro_val").value = "";
+                document.getElementById("note_description_pro").value = "";
             }
         }
-
-
-
 
     });
     /**Termina funcion para proformas */
     </script>
 
 
-    <script>
+<script>
     /**Inicia funcion para facturas */
 
-    function save_and_load_data_factura(number_factura, value_factura, user_name, tracking_lead_id_gen) {
+    function save_and_load_data_factura(number_factura, value_factura,description, user_name, tracking_lead_id_gen) {
         var ajax_url = "../jquery-ajax-history-factura.php";
 
         $('#table-lead-factura').DataTable({
@@ -919,7 +949,7 @@ if(isset($_GET['status_name'])){
             dom: 'Blfrtip',
             "aoColumnDefs": [{
                 "bSortable": false,
-                "aTargets": [0, 1, 2, 3]
+                "aTargets": [0, 1, 2, 3, 4]
             }],
             "processing": false,
             "serverSide": true,
@@ -935,6 +965,7 @@ if(isset($_GET['status_name'])){
                     "action": "fetch_factura_lead",
                     "number_factura": number_factura,
                     "value_factura": value_factura,
+                    "description": description,
                     "user_name": user_name,
                     "tracking_lead_id_gen": tracking_lead_id_gen
                 },
@@ -955,6 +986,9 @@ if(isset($_GET['status_name'])){
                 },
                 {
                     "data": "value_factura"
+                },
+                {
+                    "data": "description"
                 }
             ]
         });
@@ -965,11 +999,12 @@ if(isset($_GET['status_name'])){
 
 
     $('#table-lead-factura').DataTable().destroy(); // reinicializa la tabla
-    save_and_load_data_factura("", "", user_name, tracking_lead_id_gen); // first load
+    save_and_load_data_factura("", "","", user_name, tracking_lead_id_gen); // first load
 
     $("#save_factura").click(function() {
         var number_factura = $("#fac_num").val();
         var value_factura = $("#fac_val").val();
+        var description = $("#note_description_fac").val();
         var tracking_lead_id_gen = $("#tracking_lead_id_gen").val();
         var user_name = $("input[name='user_name']").val();
 
@@ -978,23 +1013,29 @@ if(isset($_GET['status_name'])){
             alert("Debe ingresar un numero de factura");
             $("#fac_num").focus();
             $('#table-lead-factura').DataTable().destroy(); // reinicializa la tabla
-            save_and_load_data_factura("", "", user_name, tracking_lead_id_gen);
+            save_and_load_data_factura("", "","", user_name, tracking_lead_id_gen);
         } else {
             if (value_factura == "") {
                 alert("Debe ingresar un valor para la factura");
                 $("#fac_val").focus();
                 $('#table-lead-factura').DataTable().destroy(); // reinicializa la tabla
-                save_and_load_data_factura("", "", user_name, tracking_lead_id_gen);
-            } else {
+                save_and_load_data_factura("", "","", user_name, tracking_lead_id_gen);
+            }
+            if (description == "") {
+                alert("Debe ingresar una breve descripcion para la factura");
+                $("#note_description_fac").focus();
                 $('#table-lead-factura').DataTable().destroy(); // reinicializa la tabla
-                save_and_load_data_factura(number_factura, value_factura, user_name, tracking_lead_id_gen);
+                save_and_load_data_factura("", "","", user_name, tracking_lead_id_gen);
+            }
+            
+            else {
+                $('#table-lead-factura').DataTable().destroy(); // reinicializa la tabla
+                save_and_load_data_factura(number_factura, value_factura,description, user_name, tracking_lead_id_gen);
                 document.getElementById("fac_num").value = "";
                 document.getElementById("fac_val").value = "";
+                document.getElementById("note_description_fac").value = "";
             }
         }
-
-
-
 
     });
     /**Termina funcion para facturas */
