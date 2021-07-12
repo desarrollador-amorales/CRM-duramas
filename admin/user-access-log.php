@@ -26,6 +26,7 @@ check_login();
     <link href="../assets/css/style.css" rel="stylesheet" type="text/css" />
     <link href="../assets/css/responsive.css" rel="stylesheet" type="text/css" />
     <link href="../assets/css/custom-icon-set.css" rel="stylesheet" type="text/css" />
+    
 
     <!--Estilo de tabla y fechas en los campos-->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap.min.css">

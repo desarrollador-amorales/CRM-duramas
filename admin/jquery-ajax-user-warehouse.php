@@ -20,14 +20,14 @@ if($_REQUEST['action'] == 'fetch_users_warehouse'){
     $sql.=" FROM ";
 	$sql.=" ( ";
         $sql.=" SELECT ";
-		$sql.=" tl.city_warehouse , tl.user_name, ( ";
+		$sql.=" uw.name_warehouse , u2.name, ( ";
             $sql.=" SELECT ";
 			$sql.=" COUNT(*) ";
             $sql.=" FROM ";
 			$sql.=" tracking_lead tl2 ";
             $sql.=" where ";
-			$sql.=" tl.user_name = tl2.user_name ";
-			$sql.=" AND tl.city_warehouse = tl2.city_warehouse ";
+			$sql.=" u2.name = tl2.user_name ";
+			$sql.=" AND uw.name_warehouse = tl2.city_warehouse ";
 			$sql.=" AND tl2.date_create BETWEEN '".$initial_date."' AND '".$final_date."' ";
 			$sql.=" AND tl2.status_name = 'Solicitud' ) as Solicitud , ( ";
                 $sql.=" SELECT ";
@@ -35,8 +35,8 @@ if($_REQUEST['action'] == 'fetch_users_warehouse'){
                 $sql.=" FROM ";
                 $sql.=" tracking_lead tl2 ";
                 $sql.=" where ";
-                $sql.=" tl.user_name = tl2.user_name ";
-                $sql.=" AND tl.city_warehouse = tl2.city_warehouse ";
+                $sql.=" u2.name = tl2.user_name ";
+                $sql.=" AND uw.name_warehouse = tl2.city_warehouse ";
                 $sql.=" AND tl2.date_create BETWEEN '".$initial_date."' AND '".$final_date."' ";
                 $sql.=" AND tl2.status_name = 'Seguimiento' ) as Seguimiento, ( ";
                     $sql.=" SELECT ";
@@ -44,8 +44,8 @@ if($_REQUEST['action'] == 'fetch_users_warehouse'){
                     $sql.=" FROM ";
                     $sql.=" tracking_lead tl2 ";
                     $sql.=" where ";
-                    $sql.=" tl.user_name = tl2.user_name ";
-                    $sql.=" AND tl.city_warehouse = tl2.city_warehouse ";
+                    $sql.=" u2.name = tl2.user_name ";
+                    $sql.=" AND uw.name_warehouse = tl2.city_warehouse ";
                     $sql.=" AND tl2.date_create BETWEEN '".$initial_date."' AND '".$final_date."' ";
                     $sql.=" AND tl2.status_name = 'Concretado' ) as Concretado, ( ";
                         $sql.=" SELECT ";
@@ -53,21 +53,21 @@ if($_REQUEST['action'] == 'fetch_users_warehouse'){
                         $sql.=" FROM ";
                         $sql.=" tracking_lead tl2 ";
                         $sql.=" where ";
-                        $sql.=" tl.user_name = tl2.user_name ";
-                        $sql.=" AND tl.city_warehouse = tl2.city_warehouse ";
+                        $sql.=" u2.name = tl2.user_name ";
+                        $sql.=" AND uw.name_warehouse = tl2.city_warehouse ";
                         $sql.=" AND tl2.date_create BETWEEN '".$initial_date."' AND '".$final_date."' ";
                         $sql.=" AND tl2.status_name = 'Cancelado' ) as Cancelado ";
                         $sql.=" FROM ";
-                        $sql.=" tracking_lead tl WHERE tl.user_name != '' ";
+                        $sql.=" user u2, user_warehouse uw WHERE u2.id = uw.id_user AND u2.status = 1  ";
                         //Si es que el buscador esta lleno ingresa a la condicion
                          if( !empty($requestData['search']['value']) ) {
-                            $sql.=" AND ( tl.city_warehouse LIKE '%".$requestData['search']['value']."%' ";
-                            $sql.=" OR tl.user_name LIKE '%".$requestData['search']['value']."%' )";
+                            $sql.=" AND ( uw.name_warehouse LIKE '%".$requestData['search']['value']."%' ";
+                            $sql.=" OR u2.name LIKE '%".$requestData['search']['value']."%' )";
                         } 
                         $sql.=" group by ";
-                        $sql.=" tl.user_name , tl.city_warehouse ";
+                        $sql.=" u2.name , uw.name_warehouse ";
                         $sql.=" order by ";
-                        $sql.=" tl.city_warehouse) as x ";
+                        $sql.=" uw.name_warehouse) as x ";
                         
 
 
@@ -90,8 +90,8 @@ if($_REQUEST['action'] == 'fetch_users_warehouse'){
         $nestedData = array();
 
         $nestedData['counter'] = $count;
-        $nestedData['city_warehouse'] = $row["city_warehouse"];
-        $nestedData['user_name'] = $row["user_name"];
+        $nestedData['city_warehouse'] = $row["name_warehouse"];
+        $nestedData['user_name'] = $row["name"];
         $nestedData['Solicitud'] = $row["Solicitud"];
         $nestedData['Seguimiento'] = $row["Seguimiento"];
         $nestedData['Concretado'] = $row["Concretado"];

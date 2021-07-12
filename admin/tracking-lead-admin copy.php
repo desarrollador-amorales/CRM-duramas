@@ -4,6 +4,23 @@ include("dbconnection.php");
 include("checklogin.php");
 check_login();
 
+$mostrarModalTrackLead=false;
+
+$id_tracking_lead=(isset($_POST['tracking_lead_id']))?$_POST['tracking_lead_id']:""; 
+$name_lead=(isset($_POST['name_lead']))?$_POST['name_lead']:""; 
+$mobile_number=(isset($_POST['mobile_number']))?$_POST['mobile_number']:""; 
+$email_lead=(isset($_POST['email_lead']))?$_POST['email_lead']:""; 
+$city_warehouse=(isset($_POST['city_warehouse']))?$_POST['city_warehouse']:""; 
+$date_create=(isset($_POST['date_create']))?$_POST['date_create']:""; 
+
+$accion=(isset($_POST['accion']))?$_POST['accion']:""; // validar si accion tiene valor.
+
+switch($accion){
+    case 'btnEditarRegistro':
+        $mostrarModalTrackLead=true;
+    break;
+}
+
 
 if(isset($_GET['status_name'])){
     $title=$_GET['status_name'];
@@ -24,7 +41,6 @@ if(isset($_GET['status_name'])){
 
     <!--Estilo de tabla y fechas en los campos-->
 
-
     <link href="../assets/plugins/jquery-datatable/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />
     <link href="../assets/plugins/bootstrap-select2/select2.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="../assets/plugins/boostrapv3/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -33,19 +49,16 @@ if(isset($_GET['status_name'])){
     <link href="../assets/css/animate.min.css" rel="stylesheet" type="text/css" />
     <link href="../assets/plugins/jquery-scrollbar/jquery.scrollbar.css" rel="stylesheet" type="text/css" />
     <link href="../assets/css/style.css" rel="stylesheet" type="text/css" />
+
     <link href="../assets/css/responsive.css" rel="stylesheet" type="text/css" />
     <link href="../assets/css/custom-icon-set.css" rel="stylesheet" type="text/css" />
 
     <!--librerias para dar estilos a la fecha-->
-    <!--Estilo de tabla y fechas en los campo -->
-
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
     <link rel="stylesheet" type="text/css"
         href="https://cdn.datatables.net/datetime/1.0.3/css/dataTables.dateTime.min.css">
     <link href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'>
 
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" />
 
 </head>
 
@@ -101,16 +114,6 @@ if(isset($_GET['status_name'])){
                                     <input class="form-control datepicker" type="text" name="max" id="max"
                                         value="<?php echo date("Y-m-t")?>" placeholder="yyyy-mm-dd"
                                         style="height: 20px;" />
-
-                                    <input type="hidden" id="status" name="status" class="form-control"
-                                        value="<?php echo $title?>">
-                                </div>
-
-                                <div class="col-sm-2">
-                                    <button class="btn btn-info btn-xs" type="submit" name="filter-tracking-lead"
-                                        id="filter-tracking-lead" style="margin-top: 25px" data-toggle="tooltip"
-                                        data-placement="top" title="Filtrar">
-                                        <i class="fa fa-filter"></i></button>
                                 </div>
 
                                 <div class="col-sm-12 text-danger" id="error_log"></div>
@@ -121,13 +124,13 @@ if(isset($_GET['status_name'])){
                                 <thead>
                                     <tr>
                                         <th><label class="control-label"><b></b></label></th>
-                                        <th><label class="control-label"><b>Codigo</b></label></th>
                                         <th><label class="control-label"><b>Nombre</b></label></th>
-                                        <th><label class="control-label"><b>Email</b></label></th>
                                         <th><label class="control-label"><b>Teléfono</b></label></th>
                                         <th><label class="control-label"><b>Ciudad</b></label></th>
                                         <th><label class="control-label"><b>Asesor</b></label></th>
+                                        <?php if ($title == 'General') {?>
                                         <th><label class="control-label"><b>Estado</b></label></th>
+                                        <?php }?>
                                         <!--<th style="width:30%"><label class="control-label"><b>Usuario</b></label></th>-->
                                         <th><label class="control-label"><b>Canal</b></label></th>
                                         <th><label class=" control-label"><b>Campaña</b></label></th>
@@ -138,8 +141,81 @@ if(isset($_GET['status_name'])){
                                         <th><label class=" control-label"><b>Fecha</b></label></th>
 
                                     </tr>
-
                                 </thead>
+                                <tbody>
+                                    <?php 
+
+                                     if ($title == 'General'){
+                                        $ret=mysqli_query($con,"select * from tracking_lead ");
+                                     }else{
+                                        $ret=mysqli_query($con,"select * from tracking_lead where status_name='".$title."' ");
+                                     }
+                                    
+												$cnt=1;
+												while($row=mysqli_fetch_array($ret))
+												{
+													$_SESSION['ids']=$row['tracking_lead_id_gen'];
+												?>
+                                    <tr>
+                                        <td>
+                                            <form action="" method="post">
+
+                                                <input type="hidden" id="tracking_lead_id" name="tracking_lead_id"
+                                                    class="form-control"
+                                                    value="<?php echo $row['tracking_lead_id_gen']?>">
+
+                                                <input type="hidden" id="name_lead" name="name_lead"
+                                                    class="form-control" value="<?php echo $row['name_lead']?>">
+
+                                                <input type="hidden" id="city_warehouse" name="city_warehouse"
+                                                    class="form-control" value="<?php echo $row['city_warehouse']?>">
+
+                                                <input type="hidden" id="email_lead" name="email_lead"
+                                                    class="form-control" value="<?php echo $row['email_lead']?>">
+
+                                                <input type="hidden" id="mobile_number" name="mobile_number"
+                                                    class="form-control" value="<?php echo $row['mobile_number']?>">
+
+                                                <input type="hidden" id="date_create" name="date_create"
+                                                    class="form-control" value="<?php echo $row['date_create']?>">
+
+                                                <button type="submit" class="btn btn-info btn-xs" data-placement="top"
+                                                    title="Detalles" value="btnEditarRegistro" name="accion"><i
+                                                        class="fa fa-search-plus text-white mr-0"></i>
+                                                </button>
+
+                                            </form>
+                                        </td>
+
+                                        <?php $req=mysqli_query($con, "select description from campaing where name='".$row['form_id']."'");
+                                          $name_campaing=mysqli_fetch_array($req);
+                                        ?>
+
+                                        <td><strong><?php echo $row['name_lead'];?></strong></td>
+                                        <td><strong><?php echo $row['mobile_number'];?></strong></td>
+                                        <td><strong><?php echo $row['city_warehouse'];?></strong></td>
+                                        <td><strong><?php echo $row['user_name'];?></strong></td>
+                                        <?php if ($title == 'General') {?>
+                                        <td><strong><?php echo $row['status_name'];?></strong></td>
+                                        <?php }?>
+                                        <?php if ($row['platform'] == 'fb'){ ?>
+                                        <td><strong><i class="fa fa-facebook-square"
+                                                    style="font-size:30px;"></i></strong></td>
+                                        <?php }?>
+                                        <?php if ($row['platform'] == 'ig'){ ?>
+                                        <td><strong><i class="fa fa-instagram" style="font-size:30px;"></i></strong>
+                                        </td>
+                                        <?php }?>
+                                        <td><strong><?php echo $name_campaing['description'];?></strong></td>
+                                        <td><strong><?php echo $row['proforma'];?></strong></td>
+                                        <td><strong><?php echo $row['proforma_total'];?></strong></td>
+                                        <td><strong><?php echo $row['factura'];?></strong></td>
+                                        <td><strong><?php echo $row['factura_total'];?></strong></td>
+                                        <td><strong><?php echo $row['date_create'];?></strong></td>
+
+                                    </tr>
+                                    <?php $cnt=$cnt+1; } ?>
+                                </tbody>
                             </table>
 
                         </div>
@@ -194,9 +270,9 @@ if(isset($_GET['status_name'])){
                                                                     <label
                                                                         class="col-lg-3 col-form-label mb-0 pr-0">Nombre:</label>
                                                                     <div class="col-lg-9">
-                                                                        <input type="text" id="name_lead"
-                                                                            name="name_lead"
-                                                                            class="form-control form-control-sm">
+                                                                        <input type="text"
+                                                                            class="form-control form-control-sm"
+                                                                            value="<?php echo $name_lead;?>">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -205,9 +281,9 @@ if(isset($_GET['status_name'])){
                                                                     <label
                                                                         class="col-lg-3 col-form-label mb-0 pr-0">Ciudad:</label>
                                                                     <div class="col-lg-9">
-                                                                        <input type="email" id="city_warehouse"
-                                                                            name="city_warehouse"
-                                                                            class="form-control form-control-sm">
+                                                                        <input type="email"
+                                                                            class="form-control form-control-sm"
+                                                                            value="<?php echo $city_warehouse;?>">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -218,9 +294,9 @@ if(isset($_GET['status_name'])){
                                                                     <label
                                                                         class="col-lg-3 col-form-label mb-0 pr-0">Email:</label>
                                                                     <div class="col-lg-9">
-                                                                        <input type="text" id="email_lead"
-                                                                            name="email_lead"
-                                                                            class="form-control form-control-sm">
+                                                                        <input type="text"
+                                                                            class="form-control form-control-sm"
+                                                                            value="<?php echo $email_lead;?>">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -229,9 +305,9 @@ if(isset($_GET['status_name'])){
                                                                     <label
                                                                         class="col-lg-3 col-form-label mb-0 pr-0">Teléfono:</label>
                                                                     <div class="col-lg-9">
-                                                                        <input type="text" id="mobile_number"
-                                                                            name="mobile_number"
-                                                                            class="form-control form-control-sm">
+                                                                        <input type="text"
+                                                                            class="form-control form-control-sm"
+                                                                            value="<?php echo $mobile_number;?>">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -242,9 +318,9 @@ if(isset($_GET['status_name'])){
                                                                     <label
                                                                         class="col-lg-3 col-form-label mb-0 pr-0">Fecha:</label>
                                                                     <div class="col-lg-9">
-                                                                        <input type="text" id="date_create"
-                                                                            name="date_create"
-                                                                            class="form-control form-control-sm">
+                                                                        <input type="text"
+                                                                            class="form-control form-control-sm"
+                                                                            value="<?php echo $date_create;?>">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -266,14 +342,14 @@ if(isset($_GET['status_name'])){
                                                                     readonly="">
 
                                                                 <input type="hidden" name="tracking_lead_id_gen"
-                                                                    id="tracking_lead_id_gen" readonly="">
+                                                                    id="tracking_lead_id_gen"
+                                                                    value="<?php echo $id_tracking_lead;?>" readonly="">
                                                             </div>
                                                             <div class="col-12 text-center mb-4">
                                                                 <button type="submit" class="btn btn-sm btn-info"
                                                                     name="save_note" id="save_note"><i
                                                                         class="fa fa-save"></i> Guardar</button>
                                                             </div>
-
                                                             <hr>
                                                             <div class="col-12 pl-0 pr-0">
                                                                 <h4 class=" bg-info p-2 mb-0 text-center text-black">
@@ -294,13 +370,15 @@ if(isset($_GET['status_name'])){
                                                             </div>
                                                         </div>
                                                     </div>
+
                                                 </div>
 
                                                 <div role="tabpanel" class="tab-pane" id="estadoTab">
                                                     <div class="row">
                                                         <div class="col-12 text-center">
                                                             <input type="hidden" name="tracking_lead_id_gen"
-                                                                id="tracking_lead_id_gen" readonly="">
+                                                                id="tracking_lead_id_gen"
+                                                                value="<?php echo $id_tracking_lead;?>" readonly="">
 
                                                             <input type="hidden" name="user_name" id="user_name"
                                                                 value="<?php echo $_SESSION['name_admin'];?>"
@@ -358,7 +436,9 @@ if(isset($_GET['status_name'])){
                                                                 <div class="col-12 col-sm-6 text-center">
 
                                                                     <input type="hidden" name="tracking_lead_id_gen"
-                                                                        id="tracking_lead_id_gen" readonly="">
+                                                                        id="tracking_lead_id_gen"
+                                                                        value="<?php echo $id_tracking_lead;?>"
+                                                                        readonly="">
 
                                                                     <input type="hidden" name="user_name" id="user_name"
                                                                         value="<?php echo $_SESSION['name_admin'];?>"
@@ -383,12 +463,11 @@ if(isset($_GET['status_name'])){
                                                                 </div>
                                                                 <div class="col-12 col-sm-12 text-center">
                                                                     <div class="form-group">
-                                                                        <label for="men_not" class="control-label"><b>
-                                                                                Descripción</b></label>
+                                                                    <label for="men_not" class="control-label"><b>
+                                                                        Descripción</b></label>
                                                                         <textarea class="form-control"
                                                                             name="note_description_pro"
-                                                                            id="note_description_pro"
-                                                                            rows="3"></textarea>
+                                                                            id="note_description_pro" rows="3"></textarea>
                                                                     </div>
                                                                 </div>
 
@@ -430,7 +509,9 @@ if(isset($_GET['status_name'])){
                                                                 <div class="col-12 col-sm-6 text-center">
 
                                                                     <input type="hidden" name="tracking_lead_id_gen"
-                                                                        id="tracking_lead_id_gen" readonly="">
+                                                                        id="tracking_lead_id_gen"
+                                                                        value="<?php echo $id_tracking_lead;?>"
+                                                                        readonly="">
 
                                                                     <input type="hidden" name="user_name" id="user_name"
                                                                         value="<?php echo $_SESSION['name_admin'];?>"
@@ -455,12 +536,11 @@ if(isset($_GET['status_name'])){
                                                                 </div>
                                                                 <div class="col-12 col-sm-12 text-center">
                                                                     <div class="form-group">
-                                                                        <label for="men_not" class="control-label"><b>
-                                                                                Descripción</b></label>
+                                                                    <label for="men_not" class="control-label"><b>
+                                                                        Descripción</b></label>
                                                                         <textarea class="form-control"
                                                                             name="note_description_fac"
-                                                                            id="note_description_fac"
-                                                                            rows="3"></textarea>
+                                                                            id="note_description_fac" rows="3"></textarea>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-12 text-center mb-4">
@@ -523,177 +603,56 @@ if(isset($_GET['status_name'])){
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     <script src="https://cdn.datatables.net/datetime/1.0.3/js/dataTables.dateTime.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
+
 
 
     <script type="text/javascript">
+    var minDate, maxDate;
 
-    var status = $("#status").val();
-    load_data_tracking_lead(status, "", ""); // first load
+    // funcion de filtrado de acuerdo a la columna en donde este la fecha
+    $.fn.dataTable.ext.search.push(
+        function(settings, data, dataIndex) {
+            var min = minDate.val();
+            var max = maxDate.val();
+            <?php if ($title == 'General'){?>
+            var date = new Date(data[12]);
+            <?php } else {?>
+            var date = new Date(data[11]);
+            <?php }?>
 
-    function load_data_tracking_lead(status, initial_date, final_date) {
-        var ajax_url = "jquery-ajax-tracking-lead.php";
+            if (
+                (min === null && max === null) ||
+                (min === null && date <= max) ||
+                (min <= date && max === null) ||
+                (min <= date && date <= max)
+            ) {
+                return true;
+            }
+            return false;
+        }
+    );
 
+    $(document).ready(function() {
+        // Create date inputs
+        minDate = new DateTime($('#min'), {
+            format: 'YYYY-MM-DD'
+        });
+        maxDate = new DateTime($('#max'), {
+            format: 'YYYY-MM-DD'
+        });
+
+        // DataTables initialisation
         var table = $('#example-date').DataTable({
             "scrollX": true,
-            "order": [
-                [0, "desc"]
-            ],
-            dom: 'Blfrtip',
-            buttons: [
-                'copy', 'csv', 'excel', 'pdf', 'print'
-            ],
-            "processing": true,
-            "serverSide": true,
-            "stateSave": true,
-            "autoWidth": false,
-            "lengthMenu": [
-                [5, 10, 25, 50, 100, -1],
-                [5, 10, 25, 50, 100, "Todo"]
-            ],
-            "ajax": {
-                "url": ajax_url,
-                "dataType": "json",
-                "type": "POST",
-                "data": {
-                    "action": "fetch_tracking_lead",
-                    "initial_date": initial_date,
-                    "final_date": final_date,
-                    "status": status
-                },
-                "dataSrc": "records"
-            },
             "language": {
                 "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
-            },
-            "columns": [{
-                    "defaultContent": "<button type='button' class='editar btn btn-info btn-xs' data-placement='top'title='Detalles'><i class='fa fa-search-plus text-white mr-0'></i></button>"
-                },
-                {
-                    "data": "tracking_lead_id_gen"
-                },
-                {
-                    "data": "name_lead"
-                },
-                {
-                    "data": "email_lead"
-                },
-                {
-                    "data": "mobile_number"
-                },
-                {
-                    "data": "city_warehouse"
-                },
-                {
-                    "data": "user_name"
-                },
-                {
-                    "data": "status_name"
-                },
-                {
-                    "data": "platform"
-                },
-                {
-                    "data": "campaing"
-                },
-                {
-                    "data": "proforma"
-                },
-                {
-                    "data": "proforma_total"
-                },
-                {
-                    "data": "factura"
-                },
-                {
-                    "data": "factura_total"
-                },
-                {
-                    "data": "date_create"
-                }
-            ]
-
-        });
-
-        $('#example-date tbody').on('click', '.editar', function() {
-            var row = $(this).closest('tr');
-            var tracking_lead_gen = row.find('td:eq(1)').text();
-            var lead_name = row.find('td:eq(2)').text();
-            var city_warehouse = row.find('td:eq(5)').text();
-            var email_lead = row.find('td:eq(3)').text();
-            var mobile_number = row.find('td:eq(4)').text();
-            var date_create = row.find('td:eq(14)').text();
-
-            //set values basic info
-            $("#name_lead").val(lead_name);
-            $("#city_warehouse").val(city_warehouse);
-            $("#email_lead").val(email_lead);
-            $("#mobile_number").val(mobile_number);
-            $("#date_create").val(date_create);
-            $("#tracking_lead_id_gen").val(tracking_lead_gen);
-
-            mostrarModalDetalles();
-        });
-
-    }
-
-
-    function mostrarModalDetalles() {
-        var user_name = $("#user_name").val();
-        var tracking_lead_id_gen = $("#tracking_lead_id_gen").val();
-
-        $('#table-lead-notes').DataTable().destroy(); // reinicializa la tabla notes
-        save_and_load_data("", user_name, tracking_lead_id_gen); // first load notes
-
-        $('#table-lead-status').DataTable().destroy(); // reinicializa la tabla status
-        save_and_load_data_status("", user_name, tracking_lead_id_gen); // first load status
-
-        $('#table-lead-proforma').DataTable().destroy(); // reinicializa la tabla proforma
-        save_and_load_data_proforma("", "", "", user_name, tracking_lead_id_gen); // first load proforma
-
-        $('#table-lead-factura').DataTable().destroy(); // reinicializa la tabla factura
-        save_and_load_data_factura("", "", "", user_name, tracking_lead_id_gen); // first load factura
-
-        $('#myModal').modal('show');
-
-    }
-
-
-    $("#filter-tracking-lead").click(function() {
-        var initial_date = $("#min").val();
-        var final_date = $("#max").val();
-        var status = $("#status").val();
-        //var gender = $("#gender").val();
-
-        if (initial_date == '' && final_date == '') {
-            $('#example-date').DataTable().destroy();
-            load_data_tracking_lead("", "", ""); // filter immortalize only
-        } else {
-            var date1 = new Date(initial_date);
-            var date2 = new Date(final_date);
-            var diffTime = Math.abs(date2 - date1);
-            var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-            if (initial_date == '' || final_date == '') {
-                $("#error_log_user_warehouse").html(
-                    "Advertencia: Debe seleccionar la fecha inicial y final.</span>");
-            } else {
-                if (date1 > date2) {
-                    $("#error_log_user_warehouse").html(
-                        "Advertencia: La fecha Hasta debe ser mayor quela fecha Desde .");
-                } else {
-                    $("#error_log_user_warehouse").html("");
-                    $('#example-date').DataTable().destroy();
-                    load_data_tracking_lead(status, initial_date, final_date);
-                }
             }
-        }
-    });
+        });
 
-    $('.input-daterange').datepicker({
-        todayBtn: 'linked',
-        format: "yyyy-mm-dd",
-        autoclose: true
+        // Refilter the table
+        $('#min, #max').on('change', function() {
+            table.draw();
+        });
     });
     </script>
 
@@ -745,6 +704,13 @@ if(isset($_GET['status_name'])){
             ]
         });
     }
+
+    var user_name = $("#user_name").val();
+    var tracking_lead_id_gen = $("#tracking_lead_id_gen").val();
+
+    $('#table-lead-notes').DataTable().destroy(); // reinicializa la tabla
+    save_and_load_data("", user_name, tracking_lead_id_gen); // first load
+
 
 
     $("#save_note").click(function() {
@@ -823,6 +789,11 @@ if(isset($_GET['status_name'])){
         });
     }
 
+    var user_name = $("#user_name").val();
+    var tracking_lead_id_gen = $("#tracking_lead_id_gen").val();
+
+    $('#table-lead-status').DataTable().destroy(); // reinicializa la tabla
+    save_and_load_data_status("", user_name, tracking_lead_id_gen); // first load
 
     $("#save_status").click(function() {
         var estado = $("#estado").val();
@@ -847,8 +818,7 @@ if(isset($_GET['status_name'])){
     <script>
     /**Inicia funcion para proformas */
 
-    function save_and_load_data_proforma(number_proforma, value_proforma, description, user_name,
-        tracking_lead_id_gen) {
+    function save_and_load_data_proforma(number_proforma, value_proforma, description, user_name, tracking_lead_id_gen) {
         var ajax_url = "../jquery-ajax-history-proforma.php";
 
         $('#table-lead-proforma').DataTable({
@@ -858,7 +828,7 @@ if(isset($_GET['status_name'])){
             dom: 'Blfrtip',
             "aoColumnDefs": [{
                 "bSortable": false,
-                "aTargets": [0, 1, 2, 3, 4]
+                "aTargets": [0, 1, 2, 3,4]
             }],
             "processing": false,
             "serverSide": true,
@@ -903,6 +873,13 @@ if(isset($_GET['status_name'])){
         });
     }
 
+    var user_name = $("#user_name").val();
+    var tracking_lead_id_gen = $("#tracking_lead_id_gen").val();
+
+
+    $('#table-lead-proforma').DataTable().destroy(); // reinicializa la tabla
+    save_and_load_data_proforma("", "","", user_name, tracking_lead_id_gen); // first load
+
     $("#save_proforma").click(function() {
         var number_proforma = $("#pro_num").val();
         var value_proforma = $("#pro_val").val();
@@ -915,23 +892,23 @@ if(isset($_GET['status_name'])){
             alert("Debe ingresar un numero de proforma");
             $("#pro_num").focus();
             $('#table-lead-proforma').DataTable().destroy(); // reinicializa la tabla
-            save_and_load_data_proforma("", "", "", user_name, tracking_lead_id_gen);
+            save_and_load_data_proforma("", "","", user_name, tracking_lead_id_gen);
         } else {
             if (value_proforma == "") {
                 alert("Debe ingresar un valor para la proforma");
                 $("#pro_val").focus();
                 $('#table-lead-proforma').DataTable().destroy(); // reinicializa la tabla
-                save_and_load_data_proforma("", "", "", user_name, tracking_lead_id_gen);
+                save_and_load_data_proforma("", "","", user_name, tracking_lead_id_gen);
             }
             if (description == "") {
                 alert("Debe ingresar una breve descripcion para la proforma");
                 $("#note_description_pro").focus();
                 $('#table-lead-proforma').DataTable().destroy(); // reinicializa la tabla
-                save_and_load_data_proforma("", "", "", user_name, tracking_lead_id_gen);
-            } else {
+                save_and_load_data_proforma("", "","", user_name, tracking_lead_id_gen);
+            }
+            else {
                 $('#table-lead-proforma').DataTable().destroy(); // reinicializa la tabla
-                save_and_load_data_proforma(number_proforma, value_proforma, description, user_name,
-                    tracking_lead_id_gen);
+                save_and_load_data_proforma(number_proforma, value_proforma,description, user_name, tracking_lead_id_gen);
                 document.getElementById("pro_num").value = "";
                 document.getElementById("pro_val").value = "";
                 document.getElementById("note_description_pro").value = "";
@@ -949,7 +926,7 @@ if(isset($_GET['status_name'])){
     <script>
     /**Inicia funcion para facturas */
 
-    function save_and_load_data_factura(number_factura, value_factura, description, user_name, tracking_lead_id_gen) {
+    function save_and_load_data_factura(number_factura, value_factura,description, user_name, tracking_lead_id_gen) {
         var ajax_url = "../jquery-ajax-history-factura.php";
 
         $('#table-lead-factura').DataTable({
@@ -1004,6 +981,13 @@ if(isset($_GET['status_name'])){
         });
     }
 
+    var user_name = $("#user_name").val();
+    var tracking_lead_id_gen = $("#tracking_lead_id_gen").val();
+
+
+    $('#table-lead-factura').DataTable().destroy(); // reinicializa la tabla
+    save_and_load_data_factura("", "","", user_name, tracking_lead_id_gen); // first load
+
     $("#save_factura").click(function() {
         var number_factura = $("#fac_num").val();
         var value_factura = $("#fac_val").val();
@@ -1016,23 +1000,24 @@ if(isset($_GET['status_name'])){
             alert("Debe ingresar un numero de factura");
             $("#fac_num").focus();
             $('#table-lead-factura').DataTable().destroy(); // reinicializa la tabla
-            save_and_load_data_factura("", "", "", user_name, tracking_lead_id_gen);
+            save_and_load_data_factura("", "","", user_name, tracking_lead_id_gen);
         } else {
             if (value_factura == "") {
                 alert("Debe ingresar un valor para la factura");
                 $("#fac_val").focus();
                 $('#table-lead-factura').DataTable().destroy(); // reinicializa la tabla
-                save_and_load_data_factura("", "", "", user_name, tracking_lead_id_gen);
+                save_and_load_data_factura("", "","", user_name, tracking_lead_id_gen);
             }
             if (description == "") {
                 alert("Debe ingresar una breve descripcion para la factura");
                 $("#note_description_fac").focus();
                 $('#table-lead-factura').DataTable().destroy(); // reinicializa la tabla
-                save_and_load_data_factura("", "", "", user_name, tracking_lead_id_gen);
-            } else {
+                save_and_load_data_factura("", "","", user_name, tracking_lead_id_gen);
+            }
+            
+            else {
                 $('#table-lead-factura').DataTable().destroy(); // reinicializa la tabla
-                save_and_load_data_factura(number_factura, value_factura, description, user_name,
-                    tracking_lead_id_gen);
+                save_and_load_data_factura(number_factura, value_factura,description, user_name, tracking_lead_id_gen);
                 document.getElementById("fac_num").value = "";
                 document.getElementById("fac_val").value = "";
                 document.getElementById("note_description_fac").value = "";
@@ -1043,13 +1028,20 @@ if(isset($_GET['status_name'])){
     /**Termina funcion para facturas */
     </script>
 
+
     <script>
     $('#myModal').on('hidden.bs.modal', function() {
-        var table = $('#example-date').DataTable();
-        table.ajax.reload();
+        //Para recargar la página descartando los datos POST (realizar una solicitud GET)
+        window.location.href = window.location.href;
+        //Para recargar la página manteniendo los datos POST use window.location.reload();
     });
     </script>
 
+    <?php if($mostrarModalTrackLead) {?>
+    <script>
+    $('#myModal').modal('show');
+    </script>
+    <?php }?>
 </body>
 
 </html>
