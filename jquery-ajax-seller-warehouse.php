@@ -30,7 +30,7 @@ if($_REQUEST['action'] == 'fetch_seller_warehouse'){
             $sql.=" FROM ";
 			$sql.=" tracking_lead tl2 ";
             $sql.=" where ";
-			$sql.=" tl.user_name = tl2.user_name ";
+			$sql.=" tl2.email_user_name = tl.email_user_name ";
 			$sql.=" AND tl.city_warehouse = tl2.city_warehouse ";
 			$sql.=" AND tl2.date_create BETWEEN '".$initial_date."' AND '".$final_date."' ";
 			$sql.=" AND tl2.status_name = 'Solicitud' ) as Solicitud , ( ";
@@ -39,7 +39,7 @@ if($_REQUEST['action'] == 'fetch_seller_warehouse'){
                 $sql.=" FROM ";
                 $sql.=" tracking_lead tl2 ";
                 $sql.=" where ";
-                $sql.=" tl.user_name = tl2.user_name ";
+                $sql.=" tl2.email_user_name = tl.email_user_name ";
                 $sql.=" AND tl.city_warehouse = tl2.city_warehouse ";
                 $sql.=" AND tl2.date_create BETWEEN '".$initial_date."' AND '".$final_date."' ";
                 $sql.=" AND tl2.status_name = 'Seguimiento' ) as Seguimiento, ( ";
@@ -48,7 +48,7 @@ if($_REQUEST['action'] == 'fetch_seller_warehouse'){
                     $sql.=" FROM ";
                     $sql.=" tracking_lead tl2 ";
                     $sql.=" where ";
-                    $sql.=" tl.user_name = tl2.user_name ";
+                    $sql.=" tl2.email_user_name = tl.email_user_name ";
                     $sql.=" AND tl.city_warehouse = tl2.city_warehouse ";
                     $sql.=" AND tl2.date_create BETWEEN '".$initial_date."' AND '".$final_date."' ";
                     $sql.=" AND tl2.status_name = 'Concretado' ) as Concretado, ( ";
@@ -57,7 +57,7 @@ if($_REQUEST['action'] == 'fetch_seller_warehouse'){
                         $sql.=" FROM ";
                         $sql.=" tracking_lead tl2 ";
                         $sql.=" where ";
-                        $sql.=" tl.user_name = tl2.user_name ";
+                        $sql.=" tl2.email_user_name = tl.email_user_name ";
                         $sql.=" AND tl.city_warehouse = tl2.city_warehouse ";
                         $sql.=" AND tl2.date_create BETWEEN '".$initial_date."' AND '".$final_date."' ";
                         $sql.=" AND tl2.status_name = 'Cancelado' ) as Cancelado ";

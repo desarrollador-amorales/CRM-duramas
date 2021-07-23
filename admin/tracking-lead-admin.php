@@ -43,9 +43,8 @@ if(isset($_GET['status_name'])){
     <link rel="stylesheet" type="text/css"
         href="https://cdn.datatables.net/datetime/1.0.3/css/dataTables.dateTime.min.css">
     <link href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'>
-
     <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" />
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" /> 
 
 </head>
 
@@ -514,17 +513,13 @@ if(isset($_GET['status_name'])){
     <!-- BEGIN CHAT -->
 
     </div>
-    <!--incio nuevo-->
+    <!--incio nuevo -->
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="../assets/plugins/jquery-ui/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
     <script src="../assets/plugins/boostrapv3/js/bootstrap.min.js" type="text/javascript"></script>
-
-    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-    <script src="https://cdn.datatables.net/datetime/1.0.3/js/dataTables.dateTime.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
-
 
     <script type="text/javascript">
 
@@ -663,7 +658,6 @@ if(isset($_GET['status_name'])){
         var initial_date = $("#min").val();
         var final_date = $("#max").val();
         var status = $("#status").val();
-        //var gender = $("#gender").val();
 
         if (initial_date == '' && final_date == '') {
             $('#example-date').DataTable().destroy();

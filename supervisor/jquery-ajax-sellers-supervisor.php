@@ -63,6 +63,7 @@ if($_REQUEST['action'] == 'fetch_seller_warehouse'){
                         $sql.=" AND tl2.status_name = 'Cancelado' ) as Cancelado ";
                         $sql.=" FROM ";
                         $sql.=" tracking_lead tl, user_supervisor_warehouse usw  WHERE tl.user_name != '' ";
+                        $sql.=" AND tl.date_create BETWEEN '".$initial_date."' AND '".$final_date."'"; 
                         $sql.=" AND usw.name_warehouse = tl.city_warehouse AND usw.id_user_supervisor = '".$id_user_supervisor."'";
                         //Si es que el buscador esta lleno ingresa a la condicion
                          if( !empty($requestData['search']['value']) ) {
