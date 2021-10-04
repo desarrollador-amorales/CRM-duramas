@@ -246,7 +246,66 @@ check_login();
                 </div>
             </div>
 
-        </div>
+
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="grid simple ">
+                        <div class="grid-title">
+                            <h4><span class="semi-bold">Reporte de Facturas por Local</span></h4>
+                            <div class="tools">
+                                <a href="javascript:;" class="collapse"></a>
+                                <a href="#grid-config" data-toggle="modal" class="config"></a>
+                                <a href="javascript:;" class="reload"></a>
+                                <a href="javascript:;" class="remove"></a>
+                            </div>
+                        </div>
+                        <div class="grid-body ">
+
+                            <div class="row well input-daterange">
+                                <div class="col-sm-2">
+                                    <label class="control-label">Desde</label>
+                                    <input class="form-control datepicker" type="text" name="initial_date_fac_local"
+                                        id="initial_date_fac_local" value="<?php echo date("Y-m-01")?>" placeholder="yyyy-mm-dd"
+                                        style="height: 20px;" />
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <label class="control-label">Hasta</label>
+                                    <input class="form-control datepicker" type="text" name="final_date_fac_local" id="final_date_fac_local"
+                                        value="<?php echo date("Y-m-t")?>" placeholder="yyyy-mm-dd"
+                                        style="height: 20px;" />
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <button class="btn btn-info btn-xs" type="submit" name="filter-fac-local" id="filter-fac-local"
+                                        style="margin-top: 25px" data-toggle="tooltip" data-placement="top"
+                                        title="Filtrar">
+                                        <i class="fa fa-filter"></i></button>
+                                </div>
+
+                                <div class="col-sm-12 text-danger" id="error_log_fac_local"></div>
+                            </div>
+
+
+                            <table class="table table-hover table-condensed" id="table-fac-local">
+                                <thead>
+                                    <tr>
+                                        <br>
+                                        <br>
+                                        <th>ID</th>
+                                        <th>Local</th>
+                                        <th>Cliente</th>
+                                        <th>Asesor</th>
+                                        <th># Factura</th>
+                                        <th>Valor Factura</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
 
         
 
@@ -570,6 +629,100 @@ check_login();
     });
 
     </script>
+
+
+
+
+<script type="text/javascript">
+    load_data_fac_local("", ""); // first load
+
+    function load_data_fac_local(initial_date, final_date) {
+        var ajax_url = "jquery-ajax-fac-local.php";
+
+        $('#table-fac-local').DataTable({
+           // "scrollX": true,
+            "order": [
+                [0, "desc"]
+            ],
+            dom: 'Blfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ],
+            "processing": true,
+            "serverSide": true,
+            "stateSave": true,
+            "autoWidth": false,
+            "lengthMenu": [
+                [5, 10, 25, 50, 100, -1],
+                [5, 10, 25, 50, 100, "Todo"]
+            ],
+            "ajax": {
+                "url": ajax_url,
+                "dataType": "json",
+                "type": "POST",
+                "data": {
+                    "action": "fetch_fac_local",
+                    "initial_date_fac_local": initial_date,
+                    "final_date_fac_local": final_date
+                },
+                "dataSrc": "records"
+            },
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+            },
+            "columns": [{
+                    "data": "tracking_lead_id_gen"
+                },
+                {
+                    "data": "city_warehouse"
+                },
+                {
+                    "data": "name_lead"
+                },
+                {
+                    "data": "user_name"
+                },
+                {
+                    "data": "number_factura"
+                },
+                {
+                    "data": "value_factura"
+                }
+            ]
+        });
+    }
+
+    $("#filter-fac-local").click(function() {
+        var initial_date = $("#initial_date_fac_local").val();
+        var final_date = $("#final_date_fac_local").val();
+        //var gender = $("#gender").val();
+
+        if (initial_date == '' && final_date == '') {
+            $('#table-fac-local').DataTable().destroy();
+            load_data_fac_local("", ""); // filter immortalize only
+        } else {
+            var date1 = new Date(initial_date);
+            var date2 = new Date(final_date);
+            var diffTime = Math.abs(date2 - date1);
+            var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+            if (initial_date == '' || final_date == '') {
+                $("#error_log_fac_local").html("Advertencia: Debe seleccionar la fecha inicial y final.</span>");
+            } else {
+                if (date1 > date2) {
+                    $("#error_log_fac_local").html("Advertencia: La fecha Hasta debe ser mayor quela fecha Desde .");
+                } else {
+                    $("#error_log_fac_local").html("");
+                    $('#table-fac-local').DataTable().destroy();
+                    load_data_fac_local(initial_date, final_date);
+                }
+            }
+        }
+    });
+
+    </script>
+
+
 
 
  

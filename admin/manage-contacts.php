@@ -290,11 +290,11 @@ switch($accion){ // evalua las acciones que envia el formulario al presionar los
                 "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
             },
             /**
-            Sirve para exportar a csv excel pdf o imprimir
+            Sirve para exportar a csv excel pdf o imprimir**/
             dom: 'Blfrtip',
             buttons: [
             'copy', 'csv', 'excel', 'pdf', 'print'
-        ]**/
+        ]
         });
     });
     </script>
