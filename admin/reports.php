@@ -721,10 +721,6 @@ check_login();
     });
 
     </script>
-
-
-
-
  
 
     <script type="text/javascript">
