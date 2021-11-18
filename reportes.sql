@@ -95,7 +95,7 @@ FROM
 		
 		
 		
-/**Reporte de campañas por local**/
+/**Reporte de campañas por local sql mejorado**/
 	SELECT x.city_warehouse,x.campania,sum(x.Solicitud) as Solicitud,sum(x.Seguimiento) as Seguimiento,sum(x.Concretado) as Concretado,
 	sum(x.Cancelado) as Cancelado,
 	sum(x.Solicitud+x.Seguimiento+x.Concretado+x.Cancelado) as Total
