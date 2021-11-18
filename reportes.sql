@@ -64,109 +64,66 @@ from
 /* Query para obtener el numero de proformas,facturas y el total de proformas, facturas por ciudad **/
 
 /**Reporte de usuarios por local**/
-select
-	x.*,
-	x.solicitud + x.seguimiento + x.concretado + x.cancelado as Total
-from
+SELECT x.city_warehouse,x.name,sum(x.Solicitud) as Solicitud,sum(x.Seguimiento) as Seguimiento,sum(x.Concretado) as Concretado,
+	sum(x.Cancelado) as Cancelado,
+	sum(x.Solicitud+x.Seguimiento+x.Concretado+x.Cancelado) as Total
+FROM
 	(
-	select
-		tl.city_warehouse , tl.user_name, (
-		select
-			count(*)
-		from
-			tracking_lead tl2
-		where
-			tl.user_name = tl2.user_name
-			and tl.city_warehouse = tl2.city_warehouse
-			and tl2.date_create between '2021-05-01' and '2021-05-31'
-			and tl2.status_name = 'Solicitud' ) as Solicitud , (
-		select
-			count(*)
-		from
-			tracking_lead tl2
-		where
-			tl.user_name = tl2.user_name
-			and tl.city_warehouse = tl2.city_warehouse
-			and tl2.date_create between '2021-05-01' and '2021-05-31'
-			and tl2.status_name = 'Seguimiento' ) as Seguimiento, (
-		select
-			count(*)
-		from
-			tracking_lead tl2
-		where
-			tl.user_name = tl2.user_name
-			and tl.city_warehouse = tl2.city_warehouse
-			and tl2.date_create between '2021-05-01' and '2021-05-31'
-			and tl2.status_name = 'Concretado' ) as Concretado, (
-		select
-			count(*)
-		from
-			tracking_lead tl2
-		where
-			tl.user_name = tl2.user_name
-			and tl.city_warehouse = tl2.city_warehouse
-			and tl2.date_create between '2021-05-01' and '2021-05-31'
-			and tl2.status_name = 'Cancelado' ) as Cancelado
-	from
-		tracking_lead tl
-		where tl.user_name != ''
+	SELECT
+	tl.city_warehouse , u2.name,tl.status_name ,
+	(CASE WHEN tl.status_name = 'Solicitud' Then count(tl.status_name) else 0 END) AS Solicitud	,
+	(CASE WHEN tl.status_name = 'Seguimiento' Then count(tl.status_name) else 0 END) AS Seguimiento,
+	(CASE WHEN tl.status_name = 'Concretado' Then count(tl.status_name) else 0 END) AS Concretado,
+	(CASE WHEN tl.status_name = 'Cancelado' Then count(tl.status_name) else 0 END) AS Cancelado
+	FROM
+		user u2, tracking_lead tl
+	WHERE
+		u2.status = 1
+		AND tl.email_user_name = u2.email
+		AND tl.date_create BETWEEN '2021-11-01' AND '2021-11-30'
+		AND tl.status_name in ('Solicitud', 'Seguimiento', 'Concretado', 'Cancelado')
 	group by
-		tl.user_name , tl.city_warehouse
+		u2.name , tl.city_warehouse,tl.status_name 
 	order by
-		tl.city_warehouse )as x
+		tl.city_warehouse ) as x
+	group by
+	 x.name , x.city_warehouse
+	order by
+		x.city_warehouse
+		
 /**Reporte de usuarios por local**/
 		
 		
 		
 /**Reporte de campañas por local**/
-select x.*,	x.solicitud + x.seguimiento + x.concretado + x.cancelado as Total
-from
-	(
-	select
-		tl.city_warehouse , (select c2.description from campaing c2 where c2.name= tl.form_id) as campania, (
-		select
-			count(*)
-		from
-			tracking_lead tl2
-		where
-			tl.form_id = tl2.form_id 
-			and tl.city_warehouse = tl2.city_warehouse
-			and tl2.date_create between '2021-05-01' and '2021-05-31'
-			and tl2.status_name = 'Solicitud' ) as Solicitud , (
-		select
-			count(*)
-		from
-			tracking_lead tl2
-		where
-			tl.form_id = tl2.form_id 
-			and tl.city_warehouse = tl2.city_warehouse
-			and tl2.date_create between '2021-05-01' and '2021-05-31'
-			and tl2.status_name = 'Seguimiento' ) as Seguimiento, (
-		select
-			count(*)
-		from
-			tracking_lead tl2
-		where
-			tl.form_id = tl2.form_id 
-			and tl.city_warehouse = tl2.city_warehouse
-			and tl2.date_create between '2021-05-01' and '2021-05-31'
-			and tl2.status_name = 'Concretado' ) as Concretado, (
-		select
-			count(*)
-		from
-			tracking_lead tl2
-		where
-			tl.form_id = tl2.form_id 
-			and tl.city_warehouse = tl2.city_warehouse
-			and tl2.date_create between '2021-05-01' and '2021-05-31'
-			and tl2.status_name = 'Cancelado' ) as Cancelado
-	from
-		tracking_lead tl
-	where tl.date_create between '2021-05-01' and '2021-05-31'
+	SELECT x.city_warehouse,x.campania,sum(x.Solicitud) as Solicitud,sum(x.Seguimiento) as Seguimiento,sum(x.Concretado) as Concretado,
+	sum(x.Cancelado) as Cancelado,
+	sum(x.Solicitud+x.Seguimiento+x.Concretado+x.Cancelado) as Total
+		FROM
+			(
+			SELECT
+			tl.city_warehouse , (SELECT c2.description from campaing c2 where c2.name= tl.form_id) as campania,tl.status_name ,
+			(CASE WHEN tl.status_name = 'Solicitud' Then count(tl.status_name) else 0 END) AS Solicitud	,
+			(CASE WHEN tl.status_name = 'Seguimiento' Then count(tl.status_name) else 0 END) AS Seguimiento,
+			(CASE WHEN tl.status_name = 'Concretado' Then count(tl.status_name) else 0 END) AS Concretado,
+			(CASE WHEN tl.status_name = 'Cancelado' Then count(tl.status_name) else 0 END) AS Cancelado
+			FROM
+				user u2, tracking_lead tl, campaing c
+			WHERE
+				u2.status = 1
+				AND tl.email_user_name = u2.email
+				AND tl.date_create BETWEEN '2021-11-01' AND '2021-11-30'
+				AND tl.status_name in ('Solicitud', 'Seguimiento', 'Concretado', 'Cancelado')
+				AND c.name= tl.form_id
+			group by
+				campania, tl.city_warehouse,tl.status_name 
+			order by
+				tl.city_warehouse 
+				) as x
 	group by
-		campania, tl.city_warehouse
+	 x.campania , x.city_warehouse
 	order by
-		tl.city_warehouse )as x
+		x.city_warehouse
 /**Reporte de campañas por local**/
 
 

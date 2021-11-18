@@ -16,58 +16,34 @@ if($_REQUEST['action'] == 'fetch_users_warehouse'){
     }
      
 
-    $sql =" SELECT x.*,(x.Solicitud + x.Seguimiento + x.Concretado + x.Cancelado) as Total ";
-    $sql.=" FROM ";
-	$sql.=" ( ";
-        $sql.=" SELECT ";
-		$sql.=" uw.name_warehouse , u2.name, ( ";
+    $sql =" SELECT x.city_warehouse,x.name,sum(x.Solicitud) as Solicitud,sum(x.Seguimiento) as Seguimiento,sum(x.Concretado) as Concretado, ";
+    $sql.=" sum(x.Cancelado) as Cancelado, ";
+	$sql.=" sum(x.Solicitud+x.Seguimiento+x.Concretado+x.Cancelado) as Total ";
+        $sql.=" FROM ";
+		$sql.=" ( ";
             $sql.=" SELECT ";
-			$sql.=" COUNT(*) ";
-            $sql.=" FROM ";
-			$sql.=" tracking_lead tl2 ";
-            $sql.=" where ";
-			$sql.=" u2.name = tl2.user_name ";
-			$sql.=" AND uw.name_warehouse = tl2.city_warehouse ";
-			$sql.=" AND tl2.date_create BETWEEN '".$initial_date."' AND '".$final_date."' ";
-			$sql.=" AND tl2.status_name = 'Solicitud' ) as Solicitud , ( ";
-                $sql.=" SELECT ";
-                $sql.=" COUNT(*) ";
-                $sql.=" FROM ";
-                $sql.=" tracking_lead tl2 ";
-                $sql.=" where ";
-                $sql.=" u2.name = tl2.user_name ";
-                $sql.=" AND uw.name_warehouse = tl2.city_warehouse ";
-                $sql.=" AND tl2.date_create BETWEEN '".$initial_date."' AND '".$final_date."' ";
-                $sql.=" AND tl2.status_name = 'Seguimiento' ) as Seguimiento, ( ";
-                    $sql.=" SELECT ";
-                    $sql.=" COUNT(*) ";
-                    $sql.=" FROM ";
-                    $sql.=" tracking_lead tl2 ";
-                    $sql.=" where ";
-                    $sql.=" u2.name = tl2.user_name ";
-                    $sql.=" AND uw.name_warehouse = tl2.city_warehouse ";
-                    $sql.=" AND tl2.date_create BETWEEN '".$initial_date."' AND '".$final_date."' ";
-                    $sql.=" AND tl2.status_name = 'Concretado' ) as Concretado, ( ";
-                        $sql.=" SELECT ";
-                        $sql.=" COUNT(*) ";
-                        $sql.=" FROM ";
-                        $sql.=" tracking_lead tl2 ";
-                        $sql.=" where ";
-                        $sql.=" u2.name = tl2.user_name ";
-                        $sql.=" AND uw.name_warehouse = tl2.city_warehouse ";
-                        $sql.=" AND tl2.date_create BETWEEN '".$initial_date."' AND '".$final_date."' ";
-                        $sql.=" AND tl2.status_name = 'Cancelado' ) as Cancelado ";
-                        $sql.=" FROM ";
-                        $sql.=" user u2, user_warehouse uw WHERE u2.id = uw.id_user AND u2.status = 1  ";
+			$sql.=" tl.city_warehouse , u2.name,tl.status_name , ";
+            $sql.=" (CASE WHEN tl.status_name = 'Solicitud' Then count(tl.status_name) else 0 END) AS Solicitud, ";
+			$sql.=" (CASE WHEN tl.status_name = 'Seguimiento' Then count(tl.status_name) else 0 END) AS Seguimiento, ";
+            $sql.=" (CASE WHEN tl.status_name = 'Concretado' Then count(tl.status_name) else 0 END) AS Concretado, ";
+			$sql.=" (CASE WHEN tl.status_name = 'Cancelado' Then count(tl.status_name) else 0 END) AS Cancelado ";
+			$sql.=" FROM ";
+			$sql.=" user u2, tracking_lead tl ";
+			$sql.=" WHERE ";
+                $sql.=" u2.status = 1 ";
+                $sql.=" AND tl.email_user_name = u2.email ";
+                $sql.=" AND tl.date_create BETWEEN '".$initial_date."' AND '".$final_date."' ";
+                $sql.=" AND tl.status_name in ('Solicitud', 'Seguimiento', 'Concretado', 'Cancelado') ";
                         //Si es que el buscador esta lleno ingresa a la condicion
                          if( !empty($requestData['search']['value']) ) {
-                            $sql.=" AND ( uw.name_warehouse LIKE '%".$requestData['search']['value']."%' ";
+                            $sql.=" AND ( tl.city_warehouse LIKE '%".$requestData['search']['value']."%' ";
                             $sql.=" OR u2.name LIKE '%".$requestData['search']['value']."%' )";
                         } 
                         $sql.=" group by ";
-                        $sql.=" u2.name , uw.name_warehouse ";
+                        $sql.=" u2.name , tl.city_warehouse, tl.status_name ";
                         $sql.=" order by ";
-                        $sql.=" uw.name_warehouse) as x ";
+                        $sql.=" tl.city_warehouse) as x ";
+                        $sql.=" group by x.name, x.city_warehouse order by x.city_warehouse ";
                         
 
 
@@ -90,7 +66,7 @@ if($_REQUEST['action'] == 'fetch_users_warehouse'){
         $nestedData = array();
 
         $nestedData['counter'] = $count;
-        $nestedData['city_warehouse'] = $row["name_warehouse"];
+        $nestedData['city_warehouse'] = $row["city_warehouse"];
         $nestedData['user_name'] = $row["name"];
         $nestedData['Solicitud'] = $row["Solicitud"];
         $nestedData['Seguimiento'] = $row["Seguimiento"];
