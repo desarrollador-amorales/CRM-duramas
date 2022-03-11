@@ -43,8 +43,8 @@
                 if($contUserLoop == $contUser){
                     //asignar y actualizar a la tabla de leads, tambien llenar la tabla contactos
                     //echo 'El cliente '.$lead['name_lead'].' fue asignado a el usuario '.$user['name'];                   
-                    mysqli_query($con,"insert into tracking_lead(name_lead,mobile_number,city_warehouse,email_lead,user_name,email_user_name,date_create,platform,form_id,status_name)
-                    values('".$lead['name_lead']."','".$lead['mobile_number']."','".$lead['city_warehouse']."','".$lead['email']."','".$user['name']."','".$user['email']."','".$lead['date_create']."','".$lead['platform']."','".$lead['form_id']."','".$status_initial_res['name']."')");
+                    mysqli_query($con,"insert into tracking_lead(name_lead,mobile_number,city_warehouse,email_lead,user_name,email_user_name,date_create,platform,form_id,status_name,message)
+                    values('".$lead['name_lead']."','".$lead['mobile_number']."','".$lead['city_warehouse']."','".$lead['email']."','".$user['name']."','".$user['email']."','".$lead['date_create']."','".$lead['platform']."','".$lead['form_id']."','".$status_initial_res['name']."','".$lead['message']."')");
                     
                     mysqli_query($con,"insert into contact (name,email,mobile,name_warehouse)values('".$lead['name_lead']."','".$lead['email']."','".$lead['mobile_number']."','".$lead['city_warehouse']."')");
                    
@@ -73,7 +73,7 @@
                     break;
                }
             
-                $contUserLoop+=1;
+                $contUserLoop+=1;       
         
                 continue;  
                 

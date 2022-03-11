@@ -126,6 +126,40 @@ FROM
 		x.city_warehouse
 /**Reporte de campañas por local**/
 
+/**Reporte de Supervisores por local asignado**/
+SELECT x.city_warehouse,x.name,sum(x.Solicitud) as Solicitud,sum(x.Seguimiento) as Seguimiento,sum(x.Concretado) as Concretado,
+	sum(x.Cancelado) as Cancelado,
+	sum(x.Solicitud+x.Seguimiento+x.Concretado+x.Cancelado) as Total
+FROM
+	(
+	SELECT
+	tl.city_warehouse , u2.name,tl.status_name ,
+	(CASE WHEN tl.status_name = 'Solicitud' Then count(tl.status_name) else 0 END) AS Solicitud	,
+	(CASE WHEN tl.status_name = 'Seguimiento' Then count(tl.status_name) else 0 END) AS Seguimiento,
+	(CASE WHEN tl.status_name = 'Concretado' Then count(tl.status_name) else 0 END) AS Concretado,
+	(CASE WHEN tl.status_name = 'Cancelado' Then count(tl.status_name) else 0 END) AS Cancelado
+	FROM
+		user u2, tracking_lead tl, user_supervisor_warehouse usw 
+	WHERE
+		u2.status = 1
+		AND tl.email_user_name = u2.email
+		AND tl.date_create BETWEEN '2021-11-01' AND '2021-11-30'
+		AND tl.status_name in ('Solicitud', 'Seguimiento', 'Concretado', 'Cancelado')
+		AND usw.name_warehouse = tl.city_warehouse 
+		and usw.id_user_supervisor = 10
+	group by
+		u2.name , tl.city_warehouse,tl.status_name 
+	order by
+		tl.city_warehouse ) as x
+	group by
+	 x.name , x.city_warehouse
+	order by
+		x.city_warehouse
+
+/**Reporte de Supervisores por local asignado**/
+
+
+
 
 /**Puede Servir Importante **/
 

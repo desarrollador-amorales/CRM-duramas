@@ -21,9 +21,9 @@ if($_REQUEST['action'] == 'fetch_tracking_lead'){
     }
 
     if ($status == 'General'){
-        $sql="select tl.* from tracking_lead tl WHERE tl.user_name!=''".$date_range;
+        $sql="select x.* from (select tl.*, (select description from campaing where name=tl.form_id) as description from tracking_lead tl WHERE tl.user_name!=''".$date_range.") as x ";
      }else{
-        $sql="select tl.* from tracking_lead tl WHERE tl.user_name!='' AND tl.status_name='".$status."' ".$date_range;
+        $sql="select x.* from (select tl.*, (select description from campaing where name=tl.form_id) as description from tracking_lead tl WHERE tl.user_name!='' AND tl.status_name='".$status."' ".$date_range.")  as x ";
      }
 
 /**
@@ -49,7 +49,7 @@ if($_REQUEST['action'] == 'fetch_tracking_lead'){
 
     //Si es que el buscador esta lleno ingresa a la condicion
      if( !empty($requestData['search']['value']) ) {
-        $sql.=" AND ( user_name LIKE '%".$requestData['search']['value']."%' ";
+        $sql.=" WHERE tracking_lead_id_gen != '' AND ( user_name LIKE '%".$requestData['search']['value']."%' ";
         $sql.=" OR status_name LIKE '%".$requestData['search']['value']."%'";
         $sql.=" OR tracking_lead_id_gen LIKE '%".$requestData['search']['value']."%'";
         $sql.=" OR city_warehouse LIKE '%".$requestData['search']['value']."%'";
@@ -60,6 +60,7 @@ if($_REQUEST['action'] == 'fetch_tracking_lead'){
         $sql.=" OR factura LIKE '%".$requestData['search']['value']."%'";
         $sql.=" OR factura_total LIKE '%".$requestData['search']['value']."%'";
         $sql.=" OR date_create LIKE '%".$requestData['search']['value']."%'";
+        $sql.=" OR description LIKE '%".$requestData['search']['value']."%'";
         $sql.=" OR name_lead LIKE '".$requestData['search']['value']."%')";
     }
 
@@ -84,13 +85,11 @@ if($_REQUEST['action'] == 'fetch_tracking_lead'){
     while($row = mysqli_fetch_array($result)){
         $count++;
         $nestedData = array();
-        
-        $req=mysqli_query($con, "select description from campaing where name='".$row['form_id']."'");
-        $name_campaing=mysqli_fetch_array($req);
 
         $nestedData['tracking_lead_id_gen'] = '<b>'.$row["tracking_lead_id_gen"].'</b>';
         $nestedData['name_lead'] = '<b>'.$row["name_lead"].'</b>';
-        $nestedData['email_lead'] = '<a href="mailto:'.strtolower($row["email_lead"]).'">'.strtolower($row["email_lead"]).'</a>';
+        //$nestedData['email_lead'] = '<a href="mailto:'.strtolower($row["email_lead"]).'">'.strtolower($row["email_lead"]).'</a>';
+        $nestedData['email_lead'] = '<b>'.($row["email_lead"]).'</b>';
         $nestedData['mobile_number'] = '<b>'.$row["mobile_number"].'</b>';
         $nestedData['city_warehouse'] = '<b>'.$row["city_warehouse"].'</b>';
         $nestedData['user_name'] = '<b>'.$row["user_name"].'</b>';
@@ -104,7 +103,7 @@ if($_REQUEST['action'] == 'fetch_tracking_lead'){
             </td>';
         }
         
-        $nestedData['campaing'] = '<b>'.$name_campaing['description'].'</b>';
+        $nestedData['campaing'] = '<b>'.$row['description'].'</b>';
         $nestedData['proforma'] = '<b>'.$row["proforma"].'</b>';
         $nestedData['proforma_total'] = '<b>'.$row["proforma_total"].'</b>';
         $nestedData['factura'] = '<b>'.$row["factura"].'</b>';
@@ -112,7 +111,8 @@ if($_REQUEST['action'] == 'fetch_tracking_lead'){
         $time = strtotime($row["date_create"]);
         //$nestedData['logindate'] = date('h:i:s A - d M, Y', $time);
         $nestedData['date_create'] = '<b>'.date('Y-m-d', $time).'</b>';
-        
+        $mensaje = is_null($row["message"]) ? '' :  $row["message"];
+        $nestedData['message'] = $mensaje;
 
         $data[] = $nestedData;
     }

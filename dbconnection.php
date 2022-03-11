@@ -6,3 +6,4 @@ echo "Connection Fail".mysqli_connect_error();
 }
 
 ?>
+    

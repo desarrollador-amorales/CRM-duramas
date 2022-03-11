@@ -12,6 +12,7 @@ $mobile_number=(isset($_POST['mobile_number']))?$_POST['mobile_number']:"";
 $email_lead=(isset($_POST['email_lead']))?$_POST['email_lead']:""; 
 $city_warehouse=(isset($_POST['city_warehouse']))?$_POST['city_warehouse']:""; 
 $date_create=(isset($_POST['date_create']))?$_POST['date_create']:""; 
+$message=(isset($_POST['message']))?$_POST['message']:""; 
 
 $accion=(isset($_POST['accion']))?$_POST['accion']:""; // validar si accion tiene valor.
 
@@ -198,6 +199,9 @@ if(isset($_GET['status_name'])){
                                                 <input type="hidden" id="date_create" name="date_create"
                                                     class="form-control" value="<?php echo $row['date_create']?>">
 
+                                                <input type="hidden" id="message" name="message"
+                                                    class="form-control" value="<?php echo $row['message']?>">
+
                                                 <button type="submit" class="btn btn-info btn-xs" data-placement="top"
                                                     title="Detalles" value="btnEditarRegistro" name="accion"><i
                                                         class="fa fa-search-plus text-white mr-0"></i>
@@ -339,6 +343,20 @@ if(isset($_GET['status_name'])){
                                                                         <input type="text"
                                                                             class="form-control form-control-sm"
                                                                             value="<?php echo $date_create;?>">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group row">
+                                                                    <label
+                                                                        class="col-lg-12 col-form-label mb-0 pr-0">Mensaje:</label>
+                                                                    <div class="col-lg-12">
+                                                                    <textarea class="form-control"
+                                                                            name="message"
+                                                                            id="message"
+                                                                            rows="3"><?php echo $message;?></textarea>
                                                                     </div>
                                                                 </div>
                                                             </div>

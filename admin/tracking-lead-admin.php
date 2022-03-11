@@ -45,7 +45,6 @@ if(isset($_GET['status_name'])){
     <link href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'>
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" /> 
-
 </head>
 
 <body class="">
@@ -244,6 +243,20 @@ if(isset($_GET['status_name'])){
                                                                         <input type="text" id="date_create"
                                                                             name="date_create"
                                                                             class="form-control form-control-sm">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group row">
+                                                                    <label
+                                                                        class="col-lg-12 col-form-label mb-0 pr-0">Mensaje:</label>
+                                                                    <div class="col-lg-12">
+                                                                    <textarea class="form-control"
+                                                                            name="message"
+                                                                            id="message"
+                                                                            rows="3"></textarea>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -605,6 +618,9 @@ if(isset($_GET['status_name'])){
                 },
                 {
                     "data": "date_create"
+                },
+                {
+                    "data": "message",  "visible": false
                 }
             ]
 
@@ -612,12 +628,23 @@ if(isset($_GET['status_name'])){
 
         $('#example-date tbody').on('click', '.editar', function() {
             var row = $(this).closest('tr');
+            //Campos para recuperar desde Jtable
             var tracking_lead_gen = row.find('td:eq(1)').text();
             var lead_name = row.find('td:eq(2)').text();
             var city_warehouse = row.find('td:eq(5)').text();
             var email_lead = row.find('td:eq(3)').text();
             var mobile_number = row.find('td:eq(4)').text();
             var date_create = row.find('td:eq(14)').text();
+
+            //Campos para recuperar campos ocultos de las tablas
+            var data = $('#example-date').DataTable().row(row).data();
+            var email_lead= (data['email_lead']).replace('<b>', '').replace('</b>', '');
+            var lead_name = (data['name_lead']).replace('<b>', '').replace('</b>', '');
+            var city_warehouse = (data['city_warehouse']).replace('<b>', '').replace('</b>', '');
+            var mobile_number = (data['mobile_number']).replace('<b>', '').replace('</b>', '');
+            var date_create = (data['date_create']).replace('<b>', '').replace('</b>', '');
+            var message = (data['message']).replace('<b>', '').replace('</b>', '');
+
 
             //set values basic info
             $("#name_lead").val(lead_name);
@@ -626,6 +653,7 @@ if(isset($_GET['status_name'])){
             $("#mobile_number").val(mobile_number);
             $("#date_create").val(date_create);
             $("#tracking_lead_id_gen").val(tracking_lead_gen);
+            $("#message").val(message);
 
             mostrarModalDetalles();
         });
@@ -689,6 +717,8 @@ if(isset($_GET['status_name'])){
         format: "yyyy-mm-dd",
         autoclose: true
     });
+
+
     </script>
 
     <script>
@@ -933,8 +963,6 @@ if(isset($_GET['status_name'])){
         }
 
 
-
-
     });
     /**Termina funcion para proformas */
     </script>
@@ -1042,6 +1070,7 @@ if(isset($_GET['status_name'])){
         var table = $('#example-date').DataTable();
         table.ajax.reload();
     });
+
     </script>
 
 </body>
