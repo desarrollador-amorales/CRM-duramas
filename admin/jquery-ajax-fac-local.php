@@ -36,7 +36,6 @@ if($_REQUEST['action'] == 'fetch_fac_local'){
 
 
     while($row = mysqli_fetch_array($result)){
-        $count++;
         $nestedData = array();
 
         $nestedData['tracking_lead_id_gen'] = $row["tracking_lead_id_gen"];

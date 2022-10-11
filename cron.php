@@ -50,6 +50,32 @@
                    
                     mysqli_query($con,"update lead set status='A' where id_lead_gen='".$lead['id_lead_gen']."'");
                     //echo "<br>";
+                    
+                    $mobile_number ='593'.substr($user['mobile'],1,strlen($user['mobile']));
+                    $lead_mobile_number= substr($lead['mobile_number'],1,strlen($lead['mobile_number']));
+                    
+                    $curl = curl_init();
+
+                    curl_setopt_array($curl, array(
+                    CURLOPT_URL => "https://api.ultramsg.com/instance2091/messages/chat",
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => "",
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 30,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => "POST",
+                    CURLOPT_POSTFIELDS => "token=m74gevw9ty4msvwi&to=".$mobile_number."&body=Hola *".$user['name']."* tienes asignado el siguiente lead:\n*NOMBRE:* ".$lead['name_lead'] ."\n*NUM CELULAR:* ".$lead_mobile_number."\n*ALMACEN:* ".$lead['city_warehouse']."\n*Para ponerte en contacto con el cliente haz click en el siguiente enlace* https://wa.me/".$lead_mobile_number."&priority=10&referenceId=",
+                    CURLOPT_HTTPHEADER => array(
+                        "content-type: application/x-www-form-urlencoded"
+                    ),
+                    ));
+
+                    $response = curl_exec($curl);
+                    $err = curl_error($curl);
+
+                    curl_close($curl);
+                                      
+                    
                     /** */
                     $data = [
                         'phone' => '593'.substr($user['mobile'],1,strlen($user['mobile'])), // Receivers phone

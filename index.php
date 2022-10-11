@@ -181,7 +181,7 @@ else
 
 </head>
 <body class="main-bg">
-    <div class="login-container text-c animate__animated animate__flipInX">
+    <div class="login-container text-c animate__animated animate__rotateIn">
         <div>
             <h1 class="logo-badge text-whitesmoke"><span class="fa fa-user-circle"></span></h1>
         </div>
