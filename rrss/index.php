@@ -3,6 +3,7 @@ session_start();
 include("../dbconnection.php");
 
 $mostrarRegistroMensaje=false;
+$mostrarRegistroMensajeValidacion=false;
 
 if (isset($_POST['submit'])) {
     $name=$_POST['name'];
@@ -14,9 +15,31 @@ if (isset($_POST['submit'])) {
     $form_id = "RS";
     $platform = "fb";
 
-    mysqli_query($con,"insert into lead (name_lead, mobile_number, email, city_warehouse, date_create, form_id, platform, message) VALUES( '$name', '$celular', '$email', '$ciudad', '$date_created', '$form_id', '$platform', '$message')");            
+    $nameV=mysqli_query($con, "select name_lead from lead where name_lead like '%$name%'");
+    $validacionNombre=mysqli_fetch_array($nameV);
+
+    $emailV=mysqli_query($con, "select email from lead where email like '%$email%'");
+    $validacionEmail=mysqli_fetch_array($emailV);
+
+    $celularV=mysqli_query($con, "select mobile_number from lead where mobile_number like '%$celular%'");
+    $validacionCelular=mysqli_fetch_array($celularV);
+
+        if ($validacionNombre>1) {
+            $mostrarRegistroMensajeValidacion = true;
+
+        }else if($validacionEmail> 1){
+            $mostrarRegistroMensajeValidacion = true;
+
+        }else if($validacionCelular > 1){
+            $mostrarRegistroMensajeValidacion = true;
+        }
+        else{
+            mysqli_query($con,"insert into lead (name_lead, mobile_number, email, city_warehouse, date_create, form_id, platform, message) VALUES( '$name', '$celular', '$email', '$ciudad', '$date_created', '$form_id', '$platform', '$message')");           
+            $mostrarRegistroMensaje=true;
+
+        }
+
     
-    $mostrarRegistroMensaje=true;
 }
 ?>
 <!DOCTYPE html>
@@ -50,7 +73,7 @@ if (isset($_POST['submit'])) {
     <div class="contact1">
         <div class="container-contact1">
             <div class="contact1-pic js-tilt" data-tilt>
-                <img src="images/img-01.png" alt="IMG">
+                <img src="images/logo_duramas.png" alt="IMG">
             </div>
 
             <form class="contact1-form validate-form" method="post">
@@ -123,6 +146,22 @@ if (isset($_POST['submit'])) {
             </div>
         </div>
 
+        <div class="modal fade" id="myModalMessageValidacion" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                    </div>
+                    <div class="modal-body">
+                    <strong>Este usuario ya ha sido ingresado...!</strong>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
   
@@ -147,6 +186,13 @@ if (isset($_POST['submit'])) {
     <?php if($mostrarRegistroMensaje) {?>
     <script>
     $('#myModalMessage').modal('show');
+    </script>
+    <?php }?>
+
+
+    <?php if($mostrarRegistroMensajeValidacion) {?>
+    <script>
+    $('#myModalMessageValidacion').modal('show');
     </script>
     <?php }?>
 

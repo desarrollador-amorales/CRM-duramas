@@ -55,6 +55,9 @@
                     $lead_mobile_number= substr($lead['mobile_number'],1,strlen($lead['mobile_number']));
                     
                     $curl = curl_init();
+                    $text='https://wa.me/'.$lead_mobile_number.'?text=Gracias por contactarnos a través de nuestras redes sociales. Mi nombre es '.$user['name'].' asesor comercial de la empresa *DURAMAS*. Por favor dejeme saber en que le puedo ayudar.';
+                    $cadena = str_replace(" ","%20",$text);
+                    $mensaje = urlencode($cadena);
 
                     curl_setopt_array($curl, array(
                     CURLOPT_URL => "https://api.ultramsg.com/instance2091/messages/chat",
@@ -64,7 +67,7 @@
                     CURLOPT_TIMEOUT => 30,
                     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                     CURLOPT_CUSTOMREQUEST => "POST",
-                    CURLOPT_POSTFIELDS => "token=m74gevw9ty4msvwi&to=".$mobile_number."&body=Hola *".$user['name']."* tienes asignado el siguiente lead:\n*NOMBRE:* ".$lead['name_lead'] ."\n*NUM CELULAR:* ".$lead_mobile_number."\n*ALMACEN:* ".$lead['city_warehouse']."\n*Para ponerte en contacto con el cliente haz click en el siguiente enlace* https://wa.me/".$lead_mobile_number."&priority=10&referenceId=",
+                    CURLOPT_POSTFIELDS => "token=m74gevw9ty4msvwi&to=".$mobile_number."&body=Hola *".$user['name']."* tienes asignado el siguiente lead:\n*NOMBRE:* ".$lead['name_lead'] ."\n*NUM CELULAR:* ".$lead_mobile_number."\n*ALMACEN:* ".$lead['city_warehouse']."\n*Para ponerte en contacto con el cliente haz click en el siguiente enlace*\n".$mensaje."&priority=1&referenceId=",
                     CURLOPT_HTTPHEADER => array(
                         "content-type: application/x-www-form-urlencoded"
                     ),
@@ -73,28 +76,7 @@
                     $response = curl_exec($curl);
                     $err = curl_error($curl);
 
-                    curl_close($curl);
-                                      
-                    
-                    /** */
-                    $data = [
-                        'phone' => '593'.substr($user['mobile'],1,strlen($user['mobile'])), // Receivers phone
-                        'body' => 'Hola *'.$user['name'].'* tienes asignado el siguiente lead: '.PHP_EOL.'*NOMBRE:* '.$lead['name_lead'] .PHP_EOL.'*NUM CELULAR:* '.$lead['mobile_number'].PHP_EOL.'*ALMACEN:* '.$lead['city_warehouse'].PHP_EOL.'*Para ponerte en contacto con el cliente haz click en el siguiente enlace* https://wa.me/'.$lead['mobile_number'].'', // Message
-                    ];
-                    $json = json_encode($data); // Encode data to JSON
-                    // URL for request POST /message
-                    $token = '3qdwr2vtyf4utj4g';
-                    $instanceId = '295553';
-                    $url = 'https://api.chat-api.com/instance'.$instanceId.'/message?token='.$token;
-                    // Make a POST request
-                    $options = stream_context_create(['http' => [
-                            'method'  => 'POST',
-                            'header'  => 'Content-type: application/json',
-                            'content' => $json
-                        ]
-                    ]);
-                    // Send a request
-                    $result = file_get_contents($url, false, $options);  
+                    curl_close($curl);                                      
 
                     break;
                }
